@@ -1,0 +1,21 @@
+<mat-card class="book-card">
+  <div class="img-book-div">
+    <img class="img-book"
+         [src]="img | image"
+         [alt]="title">
+  </div>
+  <mat-card-content>
+    <div class="book-card-content">
+      <h4>
+        <b>{{ title | slice:0:45 }}{{ title.length > 45 ? '...' : '' }}</b>
+      </h4>
+      <p>{{ noAuthors | i18nPlural: authorMessageMapping }} {{ author | slice:0:45 }}{{ author.length > 45 ? '...' : '' }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-footer>
+    <div class="status-chip"
+         [ngClass]="{ 'green': (status === 1), 'pink': (status === 2) }">
+      <span>{{ (status === 1) ? 'Disponible' : 'En préstamo'}}</span>
+    </div>
+  </mat-card-footer>
+</mat-card>

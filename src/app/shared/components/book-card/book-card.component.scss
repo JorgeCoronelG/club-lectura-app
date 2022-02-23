@@ -1,0 +1,37 @@
+.book-card {
+  height: 325px;
+  width: 225px;
+}
+
+.book-card-content {
+  margin: 10px;
+  height: 110px;
+}
+
+.img-book-div {
+  text-align: center;
+}
+
+.img-book {
+  max-height: 150px;
+  max-width: 100px;
+}
+
+.status-chip {
+  border-radius: 20px;
+  color: white;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 15px;
+  padding: 3px;
+  text-align: center;
+  width: 150px;
+}
+
+.green {
+  background-color: var(--green);
+}
+
+.pink {
+  background-color: var(--pink);
+}
