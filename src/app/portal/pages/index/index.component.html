@@ -1,17 +1,24 @@
-<mat-card class="swiper-card">
-  <mat-card-header>
-    <mat-card-title>Novedades</mat-card-title>
-  </mat-card-header>
-  <mat-card-content *ngIf="latestBooks.length > 0">
-    <app-book-swiper [books]="latestBooks"></app-book-swiper>
-  </mat-card-content>
-</mat-card>
+<div fxLayout="column"
+     fxLayoutGap="20px">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Novedades</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="latestBooks.length > 0">
+      <app-book-swiper [books]="latestBooks"
+                       (onItemClicked)="showBook($event)">
+      </app-book-swiper>
+    </mat-card-content>
+  </mat-card>
 
-<mat-card class="swiper-card">
-  <mat-card-header>
-    <mat-card-title>Los más leídos</mat-card-title>
-  </mat-card-header>
-  <mat-card-content *ngIf="mostReadBooks.length > 0">
-    <app-book-swiper [books]="mostReadBooks"></app-book-swiper>
-  </mat-card-content>
-</mat-card>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Los más leídos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content *ngIf="mostReadBooks.length > 0">
+      <app-book-swiper [books]="mostReadBooks"
+                       (onItemClicked)="showBook($event)">
+      </app-book-swiper>
+    </mat-card-content>
+  </mat-card>
+</div>

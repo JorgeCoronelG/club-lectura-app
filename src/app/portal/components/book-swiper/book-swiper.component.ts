@@ -20,8 +20,6 @@ export class BookSwiperComponent {
 
     this.config = {
       slidesPerView: 1,
-      loop: true,
-      loopFillGroupWithBlank: true,
       pagination: {
         clickable: true
       },
@@ -49,5 +47,9 @@ export class BookSwiperComponent {
         }
       }
     };
+  }
+
+  public itemClick(id: number): void {
+    this.onItemClicked.emit(id);
   }
 }

@@ -3,11 +3,13 @@
   <ng-container *ngFor="let book of books">
     <ng-template swiperSlide>
       <div class="content">
-        <app-book-card [img]="book.image"
+        <app-book-card class="cursor"
+                       [img]="book.image"
                        [title]="book.title"
                        [author]="book.authorsStr!"
                        [noAuthors]="book.authors.length"
-                       [status]="book.status">
+                       [status]="book.status"
+                       (click)="itemClick(book.id)">
         </app-book-card>
       </div>
     </ng-template>
