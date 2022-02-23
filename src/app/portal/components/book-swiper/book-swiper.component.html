@@ -1,0 +1,15 @@
+<swiper [config]="config"
+        class="swiper-custom">
+  <ng-container *ngFor="let book of books">
+    <ng-template swiperSlide>
+      <div class="content">
+        <app-book-card [img]="book.image"
+                       [title]="book.title"
+                       [author]="book.authorsStr!"
+                       [noAuthors]="book.authors.length"
+                       [status]="book.status">
+        </app-book-card>
+      </div>
+    </ng-template>
+  </ng-container>
+</swiper>
