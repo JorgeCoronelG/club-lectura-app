@@ -1,0 +1,63 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer
+               class="sidenav"
+               [ngClass]="{ hidden: !(isHandset$ | async) }"
+               fixedInViewport
+               [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+               [mode]="(isHandset$ | async) ? 'over' : 'side'"
+               [opened]="(isHandset$ | async) === false">
+    <mat-toolbar color="primary">
+      <span>Menú</span>
+    </mat-toolbar>
+    <mat-nav-list>
+      <a mat-list-item href="#">
+        <mat-icon mat-list-icon>home</mat-icon>
+        <span>Inicio</span>
+      </a>
+      <a mat-list-item href="#">
+        <mat-icon mat-list-icon>book</mat-icon>
+        <span>Libros</span>
+      </a>
+      <a mat-list-item href="#">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span>Mi cuenta</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()"
+              *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <img class="logo"
+           src="./assets/img/logo.png"
+           alt="logo">
+      <span>Club Lectura</span>
+
+      <ng-container *ngIf="!(isHandset$ | async)">
+        <div class="navigate-buttons">
+          <button mat-button>Inicio</button>
+          <button mat-button>Libros</button>
+        </div>
+
+        <span class="spacer"></span>
+
+        <button mat-button>
+          <mat-icon>person</mat-icon>
+          Mi cuenta
+        </button>
+      </ng-container>
+    </mat-toolbar>
+
+    <!-- Contenido de la app -->
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>

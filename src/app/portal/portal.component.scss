@@ -1,0 +1,25 @@
+.container {
+  min-height: calc(100vh - 64px - 64px);
+}
+
+@media (max-width: 599.98px) {
+  .container {
+    min-height: calc(100vh - 56px - 56px);
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.navigate-buttons {
+  margin-left: 20px;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 200px;
+}
