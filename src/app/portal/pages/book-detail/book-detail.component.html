@@ -1,0 +1,77 @@
+<div fxLayout.gt-sm="row wrap"
+     fxLayout.lt-md="column"
+     fxLayoutGap.lt-md="25px"
+     *ngIf="book">
+  <div fxFlex.gt-md="30"
+       fxFlex.md="50"
+       fxFlex.lt-md="100"
+       fxLayoutAlign="center">
+    <img class="img"
+         [src]="book.image | image"
+         [alt]="book.title">
+  </div>
+  <div fxFlex.gt-md="70"
+       fxFlex.md="50"
+       fxFlex.lt-md="100">
+    <div fxLayout="column"
+         fxLayoutGap="25px">
+
+      <h1>{{ book.title }}</h1>
+
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>collections_bookmark</mat-icon> ISBN: <u>{{ book.isbn }}</u>
+        </span>
+      </div>
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>person</mat-icon> {{ book.authors.length | i18nPlural:authorMessageMapping }} <u>{{ book.authorsStr }}</u>
+        </span>
+      </div>
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>bookmark</mat-icon> Género: <u>{{ book.literarySubgender?.literaryGender?.name }}</u>
+        </span>
+      </div>
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>bookmark</mat-icon> Subgénero: <u>{{ book.literarySubgender?.name }}</u>
+        </span>
+      </div>
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>numbers</mat-icon> No. páginas: <u>{{ book.noPages }}</u>
+        </span>
+      </div>
+      <div class="icon-text">
+        <span>
+          <mat-icon mat-list-icon>translate</mat-icon> Lenguaje: <u>{{ book.language === 1 ? 'Español' : 'Inglés' }}</u>
+        </span>
+      </div>
+      <div class="icon-text flex">
+        <mat-icon mat-list-icon>check_box</mat-icon> &nbsp;Estatus:
+        <label class="status-chip"
+               [ngClass]="{ 'green': (book.status === 1), 'pink': (book.status === 2) }">
+          {{ (book.status === 1) ? 'Disponible' : 'En préstamo'}}
+        </label>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <div fxLayout="column" fxLayoutGap="35px">
+        <h2>Reseña</h2>
+        <p>{{ book.review }}</p>
+
+        <div fxLayout="row"
+             fxLayoutAlign="start">
+          <button mat-stroked-button
+                  color="warn"
+                  (click)="redirect()">
+            Regresar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

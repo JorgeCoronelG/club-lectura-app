@@ -1,0 +1,56 @@
+h1 {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+p {
+  font-size: 18px;
+  text-align: justify;
+  line-height: 1.5;
+}
+
+.img {
+  max-width: 75%;
+  max-height: 75%;
+}
+
+@media (max-width: 959px) {
+  .img {
+    max-width: 35%;
+    max-height: 35%;
+  }
+}
+
+.flex {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+}
+
+.icon-text {
+  width: 100%;
+  font-size: 24px;
+}
+
+.status-chip {
+  border-radius: 20px;
+  color: white;
+  font-size: 16px;
+  margin-left: 1em;
+  padding: 3px;
+  text-align: center;
+  width: 150px;
+}
+
+.green {
+  background-color: var(--green);
+}
+
+.pink {
+  background-color: var(--pink);
+}
