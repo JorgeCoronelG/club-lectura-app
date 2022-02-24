@@ -17,9 +17,7 @@ export class BookDetailComponent implements OnInit {
               private bookPortalService: BookPortalService) {}
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe(({ id }) => {
-      this.findBookById(id);
-    });
+    this.activatedRoute.params.subscribe(({ id }) => this.findBookById(id));
   }
 
   public redirect(): void {
@@ -27,8 +25,9 @@ export class BookDetailComponent implements OnInit {
   }
 
   private findBookById(id: number): void {
-    this.bookPortalService.findById(id).subscribe(book => {
-      this.book = book;
+    this.bookPortalService.findById(id).subscribe({
+      next: (book) => this.book = book,
+      error: () => this.redirect()
     });
   }
 }
