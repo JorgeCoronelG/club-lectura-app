@@ -41,8 +41,14 @@
 
       <ng-container *ngIf="!(isHandset$ | async)">
         <div class="navigate-buttons">
-          <button mat-button>Inicio</button>
-          <button mat-button>Libros</button>
+          <button mat-button
+                  (click)="navigateByUrl('')">
+            Inicio
+          </button>
+          <button mat-button
+                  (click)="navigateByUrl('/libros')">
+            Libros
+          </button>
         </div>
 
         <span class="spacer"></span>

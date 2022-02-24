@@ -11,13 +11,15 @@ import { IndexComponent } from './pages/index/index.component';
 
 import { PortalRoutingModule } from './portal-routing.module';
 import { PortalComponent } from './portal.component';
+import { BookDetailComponent } from './pages/book-detail/book-detail.component';
 
 
 @NgModule({
   declarations: [
     PortalComponent,
     IndexComponent,
-    BookSwiperComponent
+    BookSwiperComponent,
+    BookDetailComponent
   ],
   imports: [
     CommonModule,

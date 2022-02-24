@@ -1,5 +1,6 @@
 import { Breakpoints, BreakpointObserver, BreakpointState } from "@angular/cdk/layout";
 import { Component } from '@angular/core';
+import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { map, shareReplay } from "rxjs/operators";
 
@@ -11,7 +12,8 @@ import { map, shareReplay } from "rxjs/operators";
 export class PortalComponent {
   public isHandset$: Observable<boolean>;
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver,
+              private router: Router) {
     // TODO: revisar si no hay fuga de memoria
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
@@ -20,4 +22,7 @@ export class PortalComponent {
       );
   }
 
+  public navigateByUrl(url: string): void {
+    this.router.navigateByUrl(url);
+  }
 }
