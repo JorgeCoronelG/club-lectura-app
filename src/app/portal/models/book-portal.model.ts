@@ -16,3 +16,8 @@ export interface BookPortalModel {
   literarySubgender?: LiterarySubgenderModel;
   authorsStr: string;
 }
+
+export interface MinMaxPagesModel {
+  minPages?: number;
+  maxPages?: number;
+}
