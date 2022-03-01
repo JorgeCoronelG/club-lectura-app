@@ -4,14 +4,14 @@ export interface ListResponse<Type> {
   meta?: Meta;
 }
 
-interface Links {
+export interface Links {
   first?: string;
   last?: string;
   prev?: string;
   next?: string;
 }
 
-interface Meta {
+export interface Meta {
   current_page?: number;
   from?: number;
   last_page?: number;
