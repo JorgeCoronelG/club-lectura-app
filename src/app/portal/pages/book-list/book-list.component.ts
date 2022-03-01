@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl } from "@angular/forms";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 import { TypesEnum } from "../../../core/models/filter";
 import { Filters } from "../../../core/models/filters";
 import { ListResponse, Meta } from "../../../core/models/list-response";
@@ -37,7 +38,8 @@ export class BookListComponent implements OnInit {
 
   constructor(private router: Router,
               private formBuilder: FormBuilder,
-              private bookPortalService: BookPortalService) {
+              private bookPortalService: BookPortalService,
+              private toastr: ToastrService) {
     this.languageForm = this.formBuilder.group({
       spanish: false,
       english: false
@@ -57,6 +59,10 @@ export class BookListComponent implements OnInit {
         this.literaryGenders = literaryGenders;
 
         this.noPagesSlides = minMaxPages.minPages!;
+
+        if (bookListResponse.data!.length === 0) {
+          this.toastr.info('No hay registros de libros', 'Información');
+        }
       });
   }
 
