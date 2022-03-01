@@ -4,7 +4,7 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { SwiperModule } from "swiper/angular";
-import { MaterialModule } from "../core/material/material.module";
+import { MaterialModule } from "../material/material.module";
 import { SharedModule } from "../shared/shared.module";
 import { BookSwiperComponent } from './components/book-swiper/book-swiper.component';
 import { BookDetailComponent } from './pages/book-detail/book-detail.component';

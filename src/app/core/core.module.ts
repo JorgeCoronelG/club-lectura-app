@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SpinnerComponent } from './components/spinner/spinner.component';
-import { MaterialModule } from "./material/material.module";
+import { MaterialModule } from "../material/material.module";
 
 
 @NgModule({
