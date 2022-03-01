@@ -1,0 +1,175 @@
+<div fxLayout.gt-xs="row wrap"
+     fxLayout.xs="column"
+     fxLayoutGap.lt-md="15px"
+     fxLayoutAlign="center">
+  <div fxFlex.gt-sm="50"
+       fxFlex.sm="75"
+       fxFlex.xs="100">
+    <div class="flex">
+      <mat-form-field class="w100"
+                      appearance="fill">
+        <mat-label>Buscar por título o autor</mat-label>
+        <input matInput
+               type="text"
+               [(ngModel)]="search">
+        <button matSuffix
+                mat-icon-button
+                aria-label="Clear"
+                (click)="searchOptions()">
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="100">
+    <div fxLayout.gt-xs="row wrap"
+         fxLayout.xs="column">
+      <div fxFlex.gt-md="25"
+           fxFlex.gt-sm="35"
+           fxHide.lt-md
+           fxLayoutAlign="center"
+           fxFlexFill>
+        <div class="container-advanced-search">
+          <h4>Opciones de búsqueda</h4>
+
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>Idioma</mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <section [formGroup]="languageForm">
+                <h4>Selecciona un idioma:</h4>
+                <p><mat-checkbox formControlName="spanish">Español</mat-checkbox></p>
+                <p><mat-checkbox formControlName="english">Inglés</mat-checkbox></p>
+              </section>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Género / Subgénero
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div>
+                <h4>Seleccione un subgénero:</h4>
+                <mat-form-field class="w100"
+                                appearance="fill">
+                  <mat-label>Subgénero</mat-label>
+                  <mat-select multiple
+                              [formControl]="literaryGenderControl">
+                    <mat-optgroup *ngFor="let literaryGender of literaryGenders"
+                                  [label]="literaryGender.name">
+                      <mat-option *ngFor="let literarySubgenders of literaryGender.literarySubgenders"
+                                  [value]="literarySubgenders.id">
+                        {{ literarySubgenders.name }}
+                      </mat-option>
+                    </mat-optgroup>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Estatus
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <section [formGroup]="statusForm">
+                <h4>Selecciona un estatus:</h4>
+                <p><mat-checkbox formControlName="available">Disponible</mat-checkbox></p>
+                <p><mat-checkbox formControlName="onLoan">En préstamo</mat-checkbox></p>
+              </section>
+
+            </mat-expansion-panel>
+
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  No. de páginas
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <div *ngIf="minMaxPages">
+                <mat-slider class="w100"
+                            [thumbLabel]="true"
+                            [min]="minMaxPages.minPages"
+                            [max]="minMaxPages.maxPages"
+                            [step]="10"
+                            [(ngModel)]="noPagesSlides">
+                </mat-slider>
+              </div>
+
+            </mat-expansion-panel>
+
+            <div class="btn-search">
+              <button mat-raised-button
+                      color="primary"
+                      (click)="searchOptions()">
+                <mat-icon>search</mat-icon> Buscar
+              </button>
+            </div>
+
+          </mat-accordion>
+        </div>
+      </div>
+
+      <div fxFlex.gt-md="75"
+           fxFlex.gt-sm="65"
+           fxFlex.lt-md="100">
+        <div fxLayout="row wrap">
+          <div fxFlex="100"
+               fxLayoutAlign="end">
+            <mat-form-field appearance="fill">
+              <mat-label>Ordenar por:</mat-label>
+              <mat-select [(value)]="orderBy"
+                          (valueChange)="searchOptions()">
+                <mat-option *ngFor="let sort of orderBySelectOptions"
+                            [value]="sort.value">
+                  {{ sort.text }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <ng-container *ngIf="booksResponse">
+            <div fxFlex="100"
+                 *ngIf="booksResponse">
+              <div fxLayout.gt-xs="row wrap"
+                   fxLayout.xs="column">
+                <div fxFlex.gt-lg="25"
+                     fxFlex.gt-md="33"
+                     fxFlex.gt-xs="50"
+                     fxFlex.xs="100"
+                     class="flex mb-1"
+                     *ngFor="let book of booksResponse.data">
+                  <app-book-card class="cursor"
+                                 [img]="book.image"
+                                 [title]="book.title"
+                                 [author]="book.authorsStr!"
+                                 [noAuthors]="book.authors.length"
+                                 [status]="book.status"
+                                 (click)="itemClick(book.id)">
+                  </app-book-card>
+                </div>
+              </div>
+            </div>
+
+            <div fxFlex="100">
+              <app-paginator [pageSizeOptions]="[12, 24, 48]"
+                             [meta]="booksResponse.meta!"
+                             (onChanges)="paginatorChanges($event)">
+              </app-paginator>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

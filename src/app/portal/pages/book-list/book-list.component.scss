@@ -1,0 +1,39 @@
+h4 {
+  font-weight: bold;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-search {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  margin-top: 15px;
+}
+
+.container-advanced-search {
+  background-color: white;
+  border-color: var(--gray-border);
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 15px;
+
+  width: 75%;
+}
+
+.mb-1 {
+  margin-bottom: 15px;
+}
+
+.w100 {
+  width: 100%;
+}
