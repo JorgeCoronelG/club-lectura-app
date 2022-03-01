@@ -19,7 +19,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   public errorHandling(error: HttpErrorResponse): void {
-    console.warn(error);
     const errors = error.error as ErrorResponse;
     if (typeof errors.error === 'string') {
       this.toastr.error(errors.error, 'Error');
