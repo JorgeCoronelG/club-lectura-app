@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from "./core/core.module";
 import { ErrorInterceptor } from "./core/interceptors/error.interceptor";
 import { SpinnerInterceptor } from "./core/interceptors/spinner.interceptor";
+import { TokenInterceptor } from "./core/interceptors/token.interceptor";
 
 @NgModule({
   declarations: [
@@ -33,6 +34,11 @@ import { SpinnerInterceptor } from "./core/interceptors/spinner.interceptor";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
       multi: true
     }
   ],

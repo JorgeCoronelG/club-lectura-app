@@ -20,10 +20,16 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   public errorHandling(error: HttpErrorResponse): void {
     const errors = error.error as ErrorResponse;
+
     if (typeof errors.error === 'string') {
       this.toastr.error(errors.error, 'Error');
     } else {
-      // TODO: falta revisar la parte de las validaciones
+      Object.entries(errors.error!).forEach(([, msgs]) => {
+        const messages = msgs as string[];
+        messages.forEach(msg => {
+          this.toastr.error(msg, 'Validación');
+        });
+      });
     }
   }
 }
