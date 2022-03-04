@@ -1,0 +1,23 @@
+.container {
+  min-height: calc(100vh - 64px - 64px - 40px);
+  margin: 20px;
+}
+
+@media (max-width: 599.98px) {
+  .container {
+    min-height: calc(100vh - 56px - 56px - 40px);
+    margin: 20px;
+  }
+}
+
+.hidden {
+  display: none;
+}
+
+.sidenav-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 400px;
+}

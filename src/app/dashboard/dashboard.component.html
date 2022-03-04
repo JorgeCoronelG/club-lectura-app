@@ -1,0 +1,50 @@
+<mat-sidenav-container class="sidenav-container"
+                       [hasBackdrop]="true">
+  <mat-sidenav #drawer
+               class="sidenav"
+               mode="over"
+               fixedInViewport>
+    <mat-toolbar color="primary">
+      <span>Menú</span>
+
+      <span class="spacer"></span>
+
+      <button mat-icon-button
+              (click)="drawer.toggle()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <mat-nav-list>
+      <!-- Por agregar links -->
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button type="button"
+              aria-label="Toggle sidenav"
+              mat-icon-button
+              (click)="drawer.toggle()">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+
+      <img class="logo"
+           src="assets/img/logo.png"
+           alt="logo">
+      <span>Club Lectura Dashboard</span>
+
+      <span class="spacer"></span>
+
+      <button mat-button>
+        <mat-icon>logout</mat-icon>
+        Cerrar sesión
+      </button>
+    </mat-toolbar>
+
+    <!-- Contenido de la app -->
+    <div class="container">
+      <!--<router-outlet></router-outlet>-->
+      {{ user | json }}
+    </div>
+    <app-footer></app-footer>
+  </mat-sidenav-content>
+</mat-sidenav-container>
