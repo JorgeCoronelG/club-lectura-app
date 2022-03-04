@@ -20,7 +20,7 @@ import { SpinnerService } from "../../services/spinner.service";
       justify-content: center;
       position: fixed;
       width: 100%;
-      z-index: 10;
+      z-index: 9999;
     }
   `]
 })
