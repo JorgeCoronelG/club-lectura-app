@@ -15,7 +15,6 @@ const routes: Routes = [
       { path: 'libro/:id', component: BookDetailComponent, data: { title: 'Detalle del libro' } }
     ]
   },
-  { path: '', redirectTo: '', pathMatch: 'full' },
   { path: '**', redirectTo: '' }
 ];
 

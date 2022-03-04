@@ -22,7 +22,8 @@
         <mat-icon mat-list-icon>book</mat-icon>
         <span>Libros</span>
       </a>
-      <a mat-list-item href="#">
+      <a mat-list-item
+         routerLink="/auth/login">
         <mat-icon mat-list-icon>person</mat-icon>
         <span>Mi cuenta</span>
       </a>
@@ -39,7 +40,7 @@
       </button>
 
       <img class="logo"
-           src="./assets/img/logo.png"
+           src="assets/img/logo.png"
            alt="logo">
       <span>Club Lectura</span>
 
@@ -57,7 +58,8 @@
 
         <span class="spacer"></span>
 
-        <button mat-button>
+        <button mat-button
+                (click)="navigateByUrl('/auth/login')">
           <mat-icon>person</mat-icon>
           Mi cuenta
         </button>
