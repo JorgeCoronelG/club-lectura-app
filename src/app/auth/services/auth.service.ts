@@ -18,8 +18,12 @@ export class AuthService {
               private userSessionService: UserSessionService,
               private http: HttpClient) {}
 
+  get url(): string {
+    return `${this.environmentService.environmentApi}${this._baseUrl}`;
+  }
+
   public login(data: UserModel): Observable<UserSession> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/login`;
+    const url = `${this.url}/login`;
     return this.http.post<SingleResponse<UserSession>>(url, data)
       .pipe(
         map(res => res.data!),
@@ -28,5 +32,10 @@ export class AuthService {
           this.userSessionService.setToken(user.token!);
         })
       );
+  }
+
+  public restorePassword(email: string): Observable<any> {
+    const url = `${this.url}/restore-password`;
+    return this.http.post(url, { email });
   }
 }
