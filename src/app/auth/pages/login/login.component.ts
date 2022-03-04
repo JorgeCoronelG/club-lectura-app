@@ -46,4 +46,8 @@ export class LoginComponent implements OnInit {
       this.router.navigateByUrl('/dashboard');
     });
   }
+
+  public redirectPortal(): void {
+    this.router.navigateByUrl('/portal');
+  }
 }

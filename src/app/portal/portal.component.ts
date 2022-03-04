@@ -14,7 +14,6 @@ export class PortalComponent {
 
   constructor(private breakpointObserver: BreakpointObserver,
               private router: Router) {
-    // TODO: revisar si no hay fuga de memoria
     this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
       .pipe(
         map<BreakpointState, boolean>(result => result.matches),
