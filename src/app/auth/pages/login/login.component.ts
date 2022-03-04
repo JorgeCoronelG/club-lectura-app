@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { FormErrors } from "../../../core/utils/form-errors";
+import { ResetPasswordComponent } from "../../components/reset-password/reset-password.component";
 import { UserModel } from "../../models/user.model";
 import { AuthService } from "../../services/auth.service";
 
@@ -16,7 +18,8 @@ export class LoginComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
-              private authService: AuthService) {
+              private authService: AuthService,
+              private dialog: MatDialog) {
     this.loginForm = this.formBuilder.group({
       email: [localStorage.getItem('email-session') || '',
         [Validators.required, Validators.email, Validators.maxLength(120)]],
@@ -49,5 +52,11 @@ export class LoginComponent implements OnInit {
 
   public redirectPortal(): void {
     this.router.navigateByUrl('/portal');
+  }
+
+  public openDialog(): void {
+    this.dialog.open(ResetPasswordComponent, {
+      width: '350px'
+    });
   }
 }
