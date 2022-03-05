@@ -1,5 +1,8 @@
+import { BreakpointObserver, Breakpoints, BreakpointState } from "@angular/cdk/layout";
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
+import { Observable } from "rxjs";
+import { map, shareReplay } from "rxjs/operators";
 import { UserSession } from "../core/models/user-session";
 import { UserSessionService } from "../core/services/user-session.service";
 
@@ -9,9 +12,17 @@ import { UserSessionService } from "../core/services/user-session.service";
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  public isHandset$: Observable<boolean>;
 
-  constructor(private userSessionService: UserSessionService,
-              private router: Router) {}
+  constructor(private breakpointObserver: BreakpointObserver,
+              private userSessionService: UserSessionService,
+              private router: Router) {
+    this.isHandset$ = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+        map<BreakpointState, boolean>(result => result.matches),
+        shareReplay()
+      );
+  }
 
   get user(): UserSession {
     return this.userSessionService.user;

@@ -15,7 +15,88 @@
       </button>
     </mat-toolbar>
     <mat-nav-list>
-      <!-- Por agregar links -->
+      <div class="profile-card">
+        <img [src]="user.photo! | image" alt="Soufiane FADIL">
+        <div class="header">
+          <h2>{{ user.name + ' ' + user.paternalSurname + ' ' + user.maternalSurname }}</h2>
+          <h4>{{ user.email }}</h4>
+        </div>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <h2 mat-subheader>Módulos</h2>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>assessment</mat-icon>
+        <span>Dashboard</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span>Usuarios</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>face</mat-icon>
+        <span>Autores</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>volunteer_activism</mat-icon>
+        <span>Donación</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>menu_book</mat-icon>
+        <span>Libros</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>fact_check</mat-icon>
+        <span>Préstamos</span>
+      </a>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>event_busy</mat-icon>
+        <span>Multas</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <h2 mat-subheader>Lector</h2>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>fact_check</mat-icon>
+        <span>Préstamos</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+      <h2 mat-subheader>Cuenta</h2>
+
+      <a mat-list-item
+         routerLinkActive="list-item-active">
+        <mat-icon mat-list-icon>person</mat-icon>
+        <span>Mi perfil</span>
+      </a>
+
+      <ng-container *ngIf="(isHandset$ | async)">
+
+        <a mat-list-item
+           routerLinkActive="list-item-active">
+          <mat-icon mat-list-icon>logout</mat-icon>
+          <span>Cerrar sesión</span>
+        </a>
+      </ng-container>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
@@ -32,13 +113,15 @@
            alt="logo">
       <span>Dashboard</span>
 
-      <span class="spacer"></span>
+      <ng-container *ngIf="!(isHandset$ | async)">
+        <span class="spacer"></span>
 
-      <button mat-button
-              (click)="logout()">
-        <mat-icon>logout</mat-icon>
-        Cerrar sesión
-      </button>
+        <button mat-button
+                (click)="logout()">
+          <mat-icon>logout</mat-icon>
+          Cerrar sesión
+        </button>
+      </ng-container>
     </mat-toolbar>
 
     <!-- Contenido de la app -->
