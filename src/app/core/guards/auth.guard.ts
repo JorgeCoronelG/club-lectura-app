@@ -28,6 +28,10 @@ export class AuthGuard implements CanActivate, CanLoad {
   }
 
   private isAuthenticated(): Observable<boolean> {
+    if (this.userSessionService.user.id) {
+      return of(true);
+    }
+
     return this.userSessionService.getUserSession()
       .pipe(
         map(() => true),
