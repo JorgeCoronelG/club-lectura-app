@@ -7,9 +7,9 @@
   <mat-card-content>
     <div class="book-card-content">
       <h4>
-        <b>{{ title | slice:0:45 }}{{ title.length > 45 ? '...' : '' }}</b>
+        <b>{{ title | slice:0:44 }}{{ title.length > 45 ? '...' : '' }}</b>
       </h4>
-      <p>{{ noAuthors | i18nPlural: authorMessageMapping }} {{ author | slice:0:45 }}{{ author.length > 45 ? '...' : '' }}</p>
+      <p>{{ noAuthors | i18nPlural: authorMessageMapping }} {{ author | slice:0:44 }}{{ author.length > 45 ? '...' : '' }}</p>
     </div>
   </mat-card-content>
   <mat-card-footer>
