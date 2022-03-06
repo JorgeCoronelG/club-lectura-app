@@ -5,17 +5,19 @@ import { RouterModule } from "@angular/router";
 import { MaterialModule } from "../material/material.module";
 import { BookCardComponent } from './components/book-card/book-card.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { TraslatePaginator } from "./components/paginator/traslate-paginator";
-import { ImagePipe } from './pipes/image.pipe';
 import { PaginatorComponent } from './components/paginator/paginator.component';
+import { TraslatePaginator } from "./components/paginator/traslate-paginator";
+import { CompleteNamePipe } from './pipes/complete-name.pipe';
+import { ImagePipe } from './pipes/image.pipe';
 
 
 @NgModule({
   declarations: [
     BookCardComponent,
     FooterComponent,
-    ImagePipe,
-    PaginatorComponent
+    PaginatorComponent,
+    CompleteNamePipe,
+    ImagePipe
   ],
   imports: [
     CommonModule,
@@ -25,8 +27,9 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
   exports: [
     BookCardComponent,
     FooterComponent,
-    ImagePipe,
-    PaginatorComponent
+    PaginatorComponent,
+    CompleteNamePipe,
+    ImagePipe
   ],
   providers: [
     {
