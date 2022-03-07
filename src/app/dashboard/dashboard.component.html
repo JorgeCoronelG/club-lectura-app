@@ -34,37 +34,43 @@
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin])">
         <mat-icon mat-list-icon>person</mat-icon>
         <span>Usuarios</span>
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>face</mat-icon>
         <span>Autores</span>
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>volunteer_activism</mat-icon>
         <span>Donación</span>
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>menu_book</mat-icon>
         <span>Libros</span>
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>fact_check</mat-icon>
         <span>Préstamos</span>
       </a>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>event_busy</mat-icon>
         <span>Multas</span>
       </a>
@@ -74,7 +80,8 @@
       <h2 mat-subheader>Lector</h2>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Reader])">
         <mat-icon mat-list-icon>fact_check</mat-icon>
         <span>Préstamos</span>
       </a>
@@ -84,7 +91,8 @@
       <h2 mat-subheader>Cuenta</h2>
 
       <a mat-list-item
-         routerLinkActive="list-item-active">
+         routerLinkActive="list-item-active"
+         *ngIf="isAuthorize([role.Capturist, role.Reader])">
         <mat-icon mat-list-icon>person</mat-icon>
         <span>Mi perfil</span>
       </a>

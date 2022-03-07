@@ -39,6 +39,7 @@ export class AuthGuard implements CanActivate, CanLoad {
         tap((isAuthenticated) => {
           if (!isAuthenticated) {
             this.userSessionService.removeToken();
+            this.userSessionService.clearUser();
             this.router.navigateByUrl('/auth/login');
           }
         })
