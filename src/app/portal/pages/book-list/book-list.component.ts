@@ -6,9 +6,9 @@ import { TypesEnum } from "../../../core/models/filter";
 import { Filters } from "../../../core/models/filters";
 import { ListResponse, Meta } from "../../../core/models/list-response";
 import { MinMaxPagesModel, BookPortalModel } from "../../models/book-portal.model";
-import { LanguageBookEnum } from "../../models/language-book.enum";
+import { LanguageBookEnum } from "../../enums/language-book.enum";
 import { LiteraryGenderModel } from "../../models/literary-gender.model";
-import { StatusBookEnum } from "../../models/status-book.enum";
+import { StatusBookEnum } from "../../enums/status-book.enum";
 import { BookPortalService } from "../../services/book-portal.service";
 
 @Component({

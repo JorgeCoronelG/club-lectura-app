@@ -1,7 +1,7 @@
 import { AuthorsModel } from "./authors.model";
-import { LanguageBookEnum } from "./language-book.enum";
+import { LanguageBookEnum } from "../enums/language-book.enum";
 import { LiterarySubgenderModel } from "./literary-subgender.model";
-import { StatusBookEnum } from "./status-book.enum";
+import { StatusBookEnum } from "../enums/status-book.enum";
 
 export interface BookPortalModel {
   id: number;

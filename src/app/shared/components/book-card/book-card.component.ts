@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { StatusBookEnum } from "../../../portal/models/status-book.enum";
+import { StatusBookEnum } from "../../../portal/enums/status-book.enum";
 
 @Component({
   selector: 'app-book-card',
