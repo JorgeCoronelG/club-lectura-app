@@ -41,6 +41,10 @@ export class UserSessionService {
     localStorage.removeItem(this._apiToken);
   }
 
+  public clearUser(): void {
+    this._userSession = <UserSession>{};
+  }
+
   public logout(): Observable<any> {
     const url = `${this.url}/logout`;
     return this.http.get(url);
