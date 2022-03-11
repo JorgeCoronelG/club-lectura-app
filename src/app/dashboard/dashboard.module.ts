@@ -17,9 +17,9 @@ import { DashboardComponent } from './dashboard.component';
     CommonModule,
     RouterModule,
     FlexLayoutModule,
+    DashboardRoutingModule,
     MaterialModule,
-    SharedModule,
-    DashboardRoutingModule
+    SharedModule
   ]
 })
 export class DashboardModule { }

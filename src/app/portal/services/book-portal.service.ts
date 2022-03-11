@@ -1,10 +1,11 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, tap, forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
 import { ListResponse } from "../../core/models/list-response";
 import { SingleResponse } from "../../core/models/single-response";
 import { EnvironmentService } from "../../core/services/environment.service";
+import { HttpFunctions } from "../../core/utils/http-functions";
 import { BookPortalModel, MinMaxPagesModel } from "../models/book-portal.model";
 import { LiteraryGenderModel } from "../models/literary-gender.model";
 import { LiteraryGenderService } from "./literary-gender.service";
@@ -20,11 +21,7 @@ export class BookPortalService {
               private http: HttpClient) {}
 
   public findAll(sort: string, itemsPerPage: number = 12, page: number = 1, search: string|null = null): Observable<ListResponse<BookPortalModel>> {
-    const params = new HttpParams()
-      .append('sort', sort)
-      .append('per_page', itemsPerPage)
-      .append('page', page)
-      .append('q', (search === null) ? '' : encodeURI(search));
+    const params = HttpFunctions.getPaginateParams(sort, itemsPerPage, page, search);
 
     const url = `${this.environmentService.environmentApi}${this._baseUrl}`;
     return this.http.get<ListResponse<BookPortalModel>>(url, { params })
