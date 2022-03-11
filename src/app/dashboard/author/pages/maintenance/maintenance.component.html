@@ -1,1 +1,57 @@
-<p>maintenance works!</p>
+<div fxLayout="row wrap"
+     fxLayoutAlign="center">
+  <div fxFlex.xl="50"
+       fxFlex.lg="65"
+       fxFlex.md="75"
+       fxFlex.sm="85"
+       fxFlex.xs="100">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Catálogo de Autores</mat-card-title>
+        <span class="spacer"></span>
+        <button mat-raised-button
+                color="primary"
+                (click)="openDialog()">
+          <mat-icon>add</mat-icon> Nuevo
+        </button>
+      </mat-card-header>
+
+      <div class="mt-20">
+        <mat-divider [inset]="true"></mat-divider>
+      </div>
+
+      <mat-card-content class="mt-20"
+                        *ngIf="data">
+        <div fxLayoutGap="15px">
+          <mat-form-field class="w-100">
+            <mat-label>Buscar por nombre</mat-label>
+            <input matInput
+                   type="text"
+                   [(ngModel)]="search">
+            <button matSuffix
+                    mat-icon-button
+                    aria-label="Clear"
+                    (click)="searchOptions()">
+              <mat-icon>search</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <app-table-crud [data]="data"
+                          [columns]="columns"
+                          [titles]="columnsTitle"
+                          (orderBy)="sort($event)"
+                          (onEdit)="openDialog($event)"
+                          (onDelete)="delete($event)">
+          </app-table-crud>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions *ngIf="authorResponse">
+        <app-paginator [pageSizeOptions]="[5, 10, 25]"
+                       [meta]="authorResponse.meta!"
+                       (onChanges)="paginatorChanges($event)">
+        </app-paginator>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

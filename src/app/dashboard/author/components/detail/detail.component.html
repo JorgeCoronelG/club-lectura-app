@@ -1,0 +1,46 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <h2 mat-dialog-title>{{ (data) ? 'Actualizar' : 'Nuevo' }} autor</h2>
+
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content>
+      <form class="mt-20"
+            [formGroup]="authorForm">
+        <mat-form-field class="w-100"
+                        appearance="fill">
+          <mat-label>Nombre</mat-label>
+          <input matInput
+                 type="text"
+                 placeholder="Ejemplo: Sthepen King"
+                 formControlName="name">
+
+          <mat-error *ngIf="formErrors.required('name')">
+            El nombre es requerido.
+          </mat-error>
+
+          <mat-error *ngIf="formErrors.minLength('name')">
+            El nombre debe tener al menos {{ formErrors.minLengthNumber('name') }} caracteres.
+          </mat-error>
+
+          <mat-error *ngIf="formErrors.maxLength('name')">
+            El nombre debe de tener meno de {{ formErrors.maxLengthNumber('name') }} caracteres.
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-raised-button
+              color="warn"
+              [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon> Cerrar
+      </button>
+      <button mat-raised-button
+              color="primary"
+              (click)="save()">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>
