@@ -23,8 +23,16 @@ export class FormErrors {
     return this.form.get(field)?.hasError('maxlength') && this.form.get(field)?.touched;
   }
 
+  public maxLengthNumber(field: string): number {
+    return this.errorObject(field, 'maxlength').requiredLength;
+  }
+
   public minLength(field: string): boolean | undefined {
     return this.form.get(field)?.hasError('minlength') && this.form.get(field)?.touched;
+  }
+
+  public minLengthNumber(field: string): number {
+    return this.errorObject(field, 'minlength').requiredLength;
   }
 
   public required(field: string): boolean | undefined {
