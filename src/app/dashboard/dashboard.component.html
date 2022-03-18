@@ -18,8 +18,8 @@
       <div class="profile-card">
         <img [src]="user.photo! | image" alt="Soufiane FADIL">
         <div class="header">
-          <h2>{{ (user | completeName) | slice: 0:39 }}{{ (user | completeName).length > 40 ? '...' : '' }}</h2>
-          <h4>{{ user.email | slice:0:34 }}{{ user.email!.length > 35 ? '...' : '' }}</h4>
+          <h2>{{ user.completeName | slice: 0:39 }}{{ user.completeName.length > 40 ? '...' : '' }}</h2>
+          <h4>{{ user.email | slice:0:34 }}{{ user.email.length > 35 ? '...' : '' }}</h4>
         </div>
       </div>
 

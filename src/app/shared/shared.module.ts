@@ -10,7 +10,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { TraslatePaginator } from "./components/paginator/traslate-paginator";
 import { TableCrudComponent } from './components/table-crud/table-crud.component';
-import { CompleteNamePipe } from './pipes/complete-name.pipe';
 import { ImagePipe } from './pipes/image.pipe';
 
 
@@ -21,7 +20,6 @@ import { ImagePipe } from './pipes/image.pipe';
     PaginatorComponent,
     TableCrudComponent,
     DeleteConfirmComponent,
-    CompleteNamePipe,
     ImagePipe
   ],
   imports: [
@@ -36,7 +34,6 @@ import { ImagePipe } from './pipes/image.pipe';
     PaginatorComponent,
     TableCrudComponent,
     DeleteConfirmComponent,
-    CompleteNamePipe,
     ImagePipe
   ],
   providers: [
