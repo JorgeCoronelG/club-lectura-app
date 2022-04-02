@@ -1,6 +1,7 @@
 import { Component, ViewChild, Input, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
+import { HeaderColumnsTable } from "../../../core/models/header-columns-table";
 
 @Component({
   selector: 'app-table-crud',
@@ -11,7 +12,7 @@ export class TableCrudComponent implements AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
 
   @Input('columns')
-  public displayedColumns: string[] = [];
+  public displayedColumns: HeaderColumnsTable[] = [];
   @Input('data')
   public dataSource!: MatTableDataSource<any>;
   @Input('titles')
@@ -45,5 +46,15 @@ export class TableCrudComponent implements AfterViewInit {
 
   public delete(id: number): void {
     this.onDelete.emit(id);
+  }
+
+  public getColumnsArray(): string[] {
+    let columns: string[] = [];
+
+    this.displayedColumns.forEach(displayColumn => {
+      columns.push(displayColumn.column);
+    });
+
+    return columns;
   }
 }
