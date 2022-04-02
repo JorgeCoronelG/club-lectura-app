@@ -7,7 +7,7 @@
   <!-- Columns -->
   <ng-container [matColumnDef]="displayColumn.column"
                 *ngFor="let displayColumn of displayedColumns">
-    <ng-container *ngIf="displayColumn.column !== 'acciones'; else actions">
+    <ng-container *ngIf="displayColumn.column !== 'actions'; else actions">
       <ng-container *ngIf="displayColumn.isSortable; else noSortable">
         <th mat-header-cell
             *matHeaderCellDef

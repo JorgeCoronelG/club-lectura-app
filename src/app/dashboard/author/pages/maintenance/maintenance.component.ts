@@ -4,8 +4,8 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ToastrService } from "ngx-toastr";
 import { of, delay } from "rxjs";
 import { switchMap } from "rxjs/operators";
-import { TypesEnum } from "../../../../core/models/filter";
-import { Filters } from "../../../../core/models/filters";
+import { Filters, TypesEnum } from "../../../../core/models/filters";
+import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
 import { ListResponse, Meta } from "../../../../core/models/list-response";
 import { DeleteConfirmComponent } from "../../../../shared/components/delete-confirm/delete-confirm.component";
 import { DetailComponent } from "../../components/detail/detail.component";
@@ -24,7 +24,10 @@ export class MaintenanceComponent implements OnInit {
   public filters: Filters = { filters: [] };
   public search: string = '';
   public orderBy: string = '-id';
-  public columns: string[] = ['name', 'acciones'];
+  public columns: HeaderColumnsTable[] = [
+    { column: 'name', isSortable: true },
+    { column: 'actions', isSortable: false }
+  ];
   public columnsTitle: any = {
     name: 'Nombre'
   };
