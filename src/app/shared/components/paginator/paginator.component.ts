@@ -23,8 +23,8 @@ export class PaginatorComponent {
   public pageChange(pageEvent: PageEvent) {
     let meta = { ...this._meta };
 
-    meta.current_page = pageEvent.pageIndex + 1;
-    meta.per_page = pageEvent.pageSize;
+    meta.currentPage = pageEvent.pageIndex + 1;
+    meta.perPage = pageEvent.pageSize;
 
     this.onChanges.emit(meta);
   }
