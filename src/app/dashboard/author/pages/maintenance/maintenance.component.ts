@@ -102,8 +102,12 @@ export class MaintenanceComponent implements OnInit {
     this.clearFilters();
 
     // Filtro para el nombre
-    if (this.search.length > 0) {
+    if (this.search.trim().length > 0) {
       this.generateFilter('name', TypesEnum.String, this.search);
+
+      if (this.authorResponse?.meta) {
+        this.authorResponse.meta.currentPage = 1;
+      }
     }
 
     this.findAll();
@@ -111,15 +115,15 @@ export class MaintenanceComponent implements OnInit {
 
   private findAll(): void {
     const searchQuery = (this.filters.filters.length === 0) ? '' : JSON.stringify(this.filters);
-    let currentPage = 1;
-    let perPage = 5;
+    let currentPageInit = 1;
+    let perPageInit = 5;
     if (this.authorResponse?.meta) {
-      const { current_page, per_page } = this.authorResponse?.meta;
-      currentPage = current_page!;
-      perPage = per_page!;
+      const { currentPage, perPage } = this.authorResponse?.meta;
+      currentPageInit = currentPage!;
+      perPageInit = perPage!;
     }
 
-    this.authorService.findAll(this.orderBy, perPage, currentPage, searchQuery).subscribe(authorResponse => {
+    this.authorService.findAll(this.orderBy, perPageInit, currentPageInit, searchQuery).subscribe(authorResponse => {
       this.authorResponse = authorResponse;
       this.data = new MatTableDataSource<AuthorModel>(authorResponse.data);
     });
