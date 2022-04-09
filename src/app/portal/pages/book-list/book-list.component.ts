@@ -84,6 +84,7 @@ export class BookListComponent implements OnInit {
     // Filtro general de libro o autor
     if (this.search.length > 0) {
       this.generateFilter('searchGeneral', TypesEnum.String, this.search);
+      this.initCurrentPage();
     }
 
     // Filtro para el idioma
@@ -96,6 +97,7 @@ export class BookListComponent implements OnInit {
     }
     if (languageFilter.length > 0) {
       this.generateFilter('language', TypesEnum.Array, languageFilter);
+      this.initCurrentPage();
     }
 
     // Filtro para el estatus
@@ -108,17 +110,20 @@ export class BookListComponent implements OnInit {
     }
     if (statusFilter.length > 0) {
       this.generateFilter('status', TypesEnum.Array, statusFilter);
+      this.initCurrentPage();
     }
 
     // Filtro para el subgénero
     if (this.literaryGenderControl.value && this.literaryGenderControl.value.length > 0) {
       this.generateFilter('literarySubgender', TypesEnum.Array, this.literaryGenderControl.value);
+      this.initCurrentPage();
     }
 
     // Filtro para el # de páginas
     if (this.noPagesSlides > this.minMaxPages?.minPages!) {
       this.generateFilter('noPageMin', TypesEnum.Int, this.minMaxPages?.minPages);
       this.generateFilter('noPageMax', TypesEnum.Int, this.noPagesSlides);
+      this.initCurrentPage();
     }
 
     this.findAll();
@@ -126,8 +131,8 @@ export class BookListComponent implements OnInit {
 
   private findAll(): void {
     const searchQuery = (this.filters.filters.length === 0) ? '' : JSON.stringify(this.filters);
-    const { current_page, per_page } = this.booksResponse?.meta!;
-    this.bookPortalService.findAll(this.orderBy, per_page, current_page, searchQuery).subscribe(booksResponse => {
+    const { currentPage, perPage } = this.booksResponse?.meta!;
+    this.bookPortalService.findAll(this.orderBy, perPage, currentPage, searchQuery).subscribe(booksResponse => {
       this.booksResponse = booksResponse;
     });
   }
@@ -138,5 +143,11 @@ export class BookListComponent implements OnInit {
 
   private generateFilter(field: string, type: TypesEnum, value: any): void {
     this.filters.filters?.push({ field, type, value });
+  }
+
+  private initCurrentPage(): void {
+    if (this.booksResponse?.meta) {
+      this.booksResponse.meta.currentPage = 1;
+    }
   }
 }
