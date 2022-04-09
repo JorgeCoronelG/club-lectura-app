@@ -5,3 +5,14 @@ table {
 th.mat-sort-header-sorted {
   color: black;
 }
+
+.td-data {
+  padding: 5px;
+}
+
+.table-container {
+  position: relative;
+  min-height: 200px;
+  max-height: 400px;
+  overflow: auto;
+}
