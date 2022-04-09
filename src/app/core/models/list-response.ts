@@ -12,10 +12,10 @@ export interface Links {
 }
 
 export interface Meta {
-  current_page?: number;
+  currentPage?: number;
   from?: number;
-  last_page?: number;
-  per_page?: number;
+  lastPage?: number;
+  perPage?: number;
   to?: number;
   total?: number;
 }
