@@ -15,8 +15,12 @@ export class LiteraryGenderService {
   constructor(private environmentService: EnvironmentService,
               private http: HttpClient) {}
 
+  get url(): string {
+    return `${this.environmentService.environmentApi}${this._baseUrl}`;
+  }
+
   public findAll(): Observable<LiteraryGenderModel[]> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/find-all`;
+    const url = `${this.url}/find-all`;
     return this.http.get<ListResponse<LiteraryGenderModel>>(url)
       .pipe(
         map(res => res.data!)

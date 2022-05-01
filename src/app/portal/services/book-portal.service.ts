@@ -20,10 +20,14 @@ export class BookPortalService {
               private literaryGenderService: LiteraryGenderService,
               private http: HttpClient) {}
 
+  get url(): string {
+    return `${this.environmentService.environmentApi}${this._baseUrl}`;
+  }
+
   public findAll(sort: string, itemsPerPage: number = 12, page: number = 1, search: string|null = null): Observable<ListResponse<BookPortalModel>> {
     const params = HttpFunctions.getPaginateParams(sort, itemsPerPage, page, search);
 
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}`;
+    const url = `${this.url}`;
     return this.http.get<ListResponse<BookPortalModel>>(url, { params })
       .pipe(
         tap(res => res.data!.forEach(this.getAuthorStrCard))
@@ -31,7 +35,7 @@ export class BookPortalService {
   }
 
   public findLatest(): Observable<BookPortalModel[]> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/latest`;
+    const url = `${this.url}/latest`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
         map(res => res.data!),
@@ -40,7 +44,7 @@ export class BookPortalService {
   }
 
   public findMostRead(): Observable<BookPortalModel[]> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/most-read`;
+    const url = `${this.url}/most-read`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
         map(res => res.data!),
@@ -49,16 +53,15 @@ export class BookPortalService {
   }
 
   public findById(id: number): Observable<BookPortalModel> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/detail/${id}`;
+    const url = `${this.url}/detail/${id}`;
     return this.http.get<SingleResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!),
-        tap(this.getAuthorStrCard)
+        map(res => res.data!)
       );
   }
 
   public getMinMaxPages(): Observable<MinMaxPagesModel> {
-    const url = `${this.environmentService.environmentApi}${this._baseUrl}/min-max-pages`;
+    const url = `${this.url}/min-max-pages`;
     return this.http.get<SingleResponse<MinMaxPagesModel>>(url)
       .pipe(
         map(res => res.data!)
