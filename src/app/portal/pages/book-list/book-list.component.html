@@ -11,7 +11,8 @@
         <mat-label>Buscar por título o autor</mat-label>
         <input matInput
                type="text"
-               [(ngModel)]="search">
+               [(ngModel)]="search"
+               (keydown.enter)="searchOptions()">
         <button matSuffix
                 mat-icon-button
                 aria-label="Clear"
