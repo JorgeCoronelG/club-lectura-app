@@ -25,7 +25,12 @@
       </div>
       <div class="icon-text">
         <span>
-          <mat-icon mat-list-icon>person</mat-icon> {{ book.authors.length | i18nPlural:authorMessageMapping }} <u>{{ book.authorsStr }}</u>
+          <mat-icon mat-list-icon>person</mat-icon> {{ book.authors.length | i18nPlural:authorMessageMapping }}
+          <u>
+           <ng-container *ngFor="let author of book.authors">
+             {{ author.name }}.
+           </ng-container>
+          </u>
         </span>
       </div>
       <div class="icon-text">
