@@ -6,14 +6,14 @@ import { MaterialModule } from "../../material/material.module";
 import { SharedModule } from "../../shared/shared.module";
 
 import { AuthorRoutingModule } from './author-routing.module';
-import { DetailComponent } from './components/detail/detail.component';
-import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
+import { AuthorDetailComponent } from './components/author-detail/author-detail.component';
+import { AuthorMaintenanceComponent } from './pages/author-maintenance/author-maintenance.component';
 
 
 @NgModule({
   declarations: [
-    MaintenanceComponent,
-    DetailComponent
+    AuthorMaintenanceComponent,
+    AuthorDetailComponent
   ],
   imports: [
     CommonModule,

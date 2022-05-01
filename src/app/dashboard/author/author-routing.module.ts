@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MaintenanceComponent } from "./pages/maintenance/maintenance.component";
+import { AuthorMaintenanceComponent } from "./pages/author-maintenance/author-maintenance.component";
 
 const routes: Routes = [
-  { path: '', component: MaintenanceComponent },
+  { path: '', component: AuthorMaintenanceComponent },
   { path: '**', redirectTo: '' }
 ];
 

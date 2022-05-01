@@ -8,16 +8,16 @@ import { Filters, TypesEnum } from "../../../../core/models/filters";
 import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
 import { ListResponse, Meta } from "../../../../core/models/list-response";
 import { DeleteConfirmComponent } from "../../../../shared/components/delete-confirm/delete-confirm.component";
-import { DetailComponent } from "../../components/detail/detail.component";
+import { AuthorDetailComponent } from "../../components/author-detail/author-detail.component";
 import { AuthorModel } from "../../models/author.model";
 import { AuthorService } from "../../services/author.service";
 
 @Component({
-  selector: 'app-maintenance',
-  templateUrl: './maintenance.component.html',
-  styleUrls: ['./maintenance.component.scss']
+  selector: 'app-author-maintenance',
+  templateUrl: './author-maintenance.component.html',
+  styleUrls: ['./author-maintenance.component.scss']
 })
-export class MaintenanceComponent implements OnInit {
+export class AuthorMaintenanceComponent implements OnInit {
   public authorResponse?: ListResponse<AuthorModel>;
   public data?: MatTableDataSource<AuthorModel>;
 
@@ -43,7 +43,7 @@ export class MaintenanceComponent implements OnInit {
   public openDialog(id?: number): void {
     if (!id) {
       // Registro nuevo
-      const dialogRef = this.dialog.open(DetailComponent, {
+      const dialogRef = this.dialog.open(AuthorDetailComponent, {
         width: '350px',
         data: null
       });
@@ -56,7 +56,7 @@ export class MaintenanceComponent implements OnInit {
     } else {
       // Registro existente
       this.authorService.findById(id).subscribe(author => {
-        const dialogRef = this.dialog.open(DetailComponent, {
+        const dialogRef = this.dialog.open(AuthorDetailComponent, {
           width: '350px',
           data: author
         });

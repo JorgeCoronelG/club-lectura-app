@@ -15,16 +15,16 @@
                  placeholder="Ejemplo: Sthepen King"
                  formControlName="name">
 
-          <mat-error *ngIf="formErrors.required('name')">
+          <mat-error *ngIf="formErrors.customError('name', 'required')">
             El nombre es requerido.
           </mat-error>
 
-          <mat-error *ngIf="formErrors.minLength('name')">
+          <mat-error *ngIf="formErrors.customError('name', 'minlength')">
             El nombre debe tener al menos {{ formErrors.minLengthNumber('name') }} caracteres.
           </mat-error>
 
-          <mat-error *ngIf="formErrors.maxLength('name')">
-            El nombre debe de tener meno de {{ formErrors.maxLengthNumber('name') }} caracteres.
+          <mat-error *ngIf="formErrors.customError('name', 'maxlength')">
+            El nombre debe tener menos de {{ formErrors.maxLengthNumber('name') }} caracteres.
           </mat-error>
         </mat-form-field>
       </form>

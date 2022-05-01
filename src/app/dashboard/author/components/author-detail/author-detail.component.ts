@@ -7,15 +7,15 @@ import { AuthorModel } from "../../models/author.model";
 import { AuthorService } from "../../services/author.service";
 
 @Component({
-  selector: 'app-detail',
-  templateUrl: './detail.component.html',
-  styleUrls: ['./detail.component.scss']
+  selector: 'app-author-detail',
+  templateUrl: './author-detail.component.html',
+  styleUrls: ['./author-detail.component.scss']
 })
-export class DetailComponent {
+export class AuthorDetailComponent {
   public authorForm: FormGroup;
   public formErrors: FormErrors;
 
-  constructor(private dialogRef: MatDialogRef<DetailComponent>,
+  constructor(private dialogRef: MatDialogRef<AuthorDetailComponent>,
               private formBuilder: FormBuilder,
               private toastr: ToastrService,
               private authorService: AuthorService,
