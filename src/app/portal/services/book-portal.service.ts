@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { ListResponse } from "../../core/models/list-response";
 import { SingleResponse } from "../../core/models/single-response";
 import { EnvironmentService } from "../../core/services/environment.service";
-import { HttpFunctions } from "../../core/utils/http-functions";
+import { getPaginateParams } from "../../core/utils/http-functions";
 import { BookPortalModel, MinMaxPagesModel } from "../models/book-portal.model";
 import { LiteraryGenderModel } from "../models/literary-gender.model";
 import { LiteraryGenderService } from "./literary-gender.service";
@@ -25,7 +25,7 @@ export class BookPortalService {
   }
 
   public findAll(sort: string, itemsPerPage: number = 12, page: number = 1, search: string|null = null): Observable<ListResponse<BookPortalModel>> {
-    const params = HttpFunctions.getPaginateParams(sort, itemsPerPage, page, search);
+    const params = getPaginateParams(sort, itemsPerPage, page, search);
 
     const url = `${this.url}`;
     return this.http.get<ListResponse<BookPortalModel>>(url, { params })

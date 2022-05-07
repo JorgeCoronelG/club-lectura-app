@@ -5,7 +5,7 @@ import { map } from "rxjs/operators";
 import { ListResponse } from "../../../core/models/list-response";
 import { SingleResponse } from "../../../core/models/single-response";
 import { EnvironmentService } from "../../../core/services/environment.service";
-import { HttpFunctions } from "../../../core/utils/http-functions";
+import { getPaginateParams } from "../../../core/utils/http-functions";
 import { AuthorModel } from "../models/author.model";
 
 @Injectable({
@@ -22,7 +22,7 @@ export class AuthorService {
   }
 
   public findAll(sort: string, itemsPerPage: number, page: number, search: string): Observable<ListResponse<AuthorModel>> {
-    const params = HttpFunctions.getPaginateParams(sort, itemsPerPage, page, search);
+    const params = getPaginateParams(sort, itemsPerPage, page, search);
 
     return this.http.get<ListResponse<AuthorModel>>(this.url, { params });
   }

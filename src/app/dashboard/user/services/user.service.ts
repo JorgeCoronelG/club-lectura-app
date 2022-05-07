@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { ListResponse } from "../../../core/models/list-response";
 import { EnvironmentService } from "../../../core/services/environment.service";
-import { HttpFunctions } from "../../../core/utils/http-functions";
+import { getPaginateParams } from "../../../core/utils/http-functions";
 import { UserModel } from "../models/user.model";
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   public findAll(sort: string, itemsPerPage: number, page: number, search: string): Observable<ListResponse<UserModel>> {
-    const params = HttpFunctions.getPaginateParams(sort, itemsPerPage, page, search);
+    const params = getPaginateParams(sort, itemsPerPage, page, search);
 
     return this.http.get<ListResponse<UserModel>>(this.url, { params });
   }

@@ -4,7 +4,7 @@ import { ToastrService } from "ngx-toastr";
 import { Filters, TypesEnum } from "../../../../core/models/filters";
 import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
 import { ListResponse, Meta } from "../../../../core/models/list-response";
-import { Utils } from "../../../../core/utils/utils";
+import { convertCamelCaseToSnakeCase } from "../../../../core/utils/utils";
 import { UserModel } from "../../models/user.model";
 import { UserService } from "../../services/user.service";
 
@@ -57,7 +57,7 @@ export class MaintenanceComponent implements OnInit {
   }
 
   public sort(orderBy: string): void {
-    this.orderBy = (orderBy.length === 0) ? '-id' : Utils.convertCamelCaseToSnakeCase(orderBy);
+    this.orderBy = (orderBy.length === 0) ? '-id' : convertCamelCaseToSnakeCase(orderBy);
     this.prepareFilters();
   }
 
