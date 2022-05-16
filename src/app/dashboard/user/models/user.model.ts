@@ -16,8 +16,10 @@ export interface UserModel {
   code?: string;
   photo?: string;
   status?: StatusUserEnum;
+  statusStr?: string;
   emailVerifiedAt?: string;
   verified?: boolean;
+  type?: number;
   student?: StudentModel;
   academic?: AcademicModel;
   external?: ExternalModel;
