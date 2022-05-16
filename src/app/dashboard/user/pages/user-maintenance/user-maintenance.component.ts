@@ -1,19 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { ToastrService } from "ngx-toastr";
 import { Filters, TypesEnum } from "../../../../core/models/filters";
 import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
 import { ListResponse, Meta } from "../../../../core/models/list-response";
 import { convertCamelCaseToSnakeCase } from "../../../../core/utils/utils";
+import { UserDetailComponent } from "../../components/user-detail/user-detail.component";
 import { UserModel } from "../../models/user.model";
 import { UserService } from "../../services/user.service";
 
 @Component({
-  selector: 'app-maintenance',
-  templateUrl: './maintenance.component.html',
-  styleUrls: ['./maintenance.component.scss']
+  selector: 'app-user-maintenance',
+  templateUrl: './user-maintenance.component.html',
+  styleUrls: ['./user-maintenance.component.scss']
 })
-export class MaintenanceComponent implements OnInit {
+export class UserMaintenanceComponent implements OnInit {
   public userResponse?: ListResponse<UserModel>;
   public data?: MatTableDataSource<UserModel>;
 
@@ -25,7 +27,7 @@ export class MaintenanceComponent implements OnInit {
     { column: 'completeName', isSortable: true },
     { column: 'email', isSortable: true },
     { column: 'phone', isSortable: false },
-    { column: 'status', isSortable: true },
+    { column: 'statusStr', isSortable: true },
     { column: 'actions', isSortable: false }
   ];
   public columnsTitle: any = {
@@ -33,10 +35,11 @@ export class MaintenanceComponent implements OnInit {
     completeName: 'Nombre',
     email: 'Correo',
     phone: 'Teléfono',
-    status: 'Estatus'
+    statusStr: 'Estatus'
   };
 
   constructor(private userService: UserService,
+              private dialog: MatDialog,
               private toastr: ToastrService) {}
 
   ngOnInit(): void {
@@ -44,7 +47,14 @@ export class MaintenanceComponent implements OnInit {
   }
 
   public openDialog(id?: number): void {
-    //
+    if (!id) {
+      const dialogRef = this.dialog.open(UserDetailComponent, {
+        width: '100%',
+        data: null
+      });
+    } else {
+      //
+    }
   }
 
   public delete(id: number) {

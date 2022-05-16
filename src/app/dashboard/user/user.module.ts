@@ -4,14 +4,16 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MaterialModule } from "../../material/material.module";
 import { SharedModule } from "../../shared/shared.module";
-import { MaintenanceComponent } from './pages/maintenance/maintenance.component';
+import { UserMaintenanceComponent } from './pages/user-maintenance/user-maintenance.component';
 
 import { UserRoutingModule } from './user-routing.module';
+import { UserDetailComponent } from './components/user-detail/user-detail.component';
 
 
 @NgModule({
   declarations: [
-    MaintenanceComponent
+    UserMaintenanceComponent,
+    UserDetailComponent
   ],
   imports: [
     CommonModule,
