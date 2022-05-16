@@ -1,0 +1,114 @@
+<div fxLayout="row wrap">
+  <div fxFlex="100">
+    <h2 mat-dialog-title>{{ (data) ? 'Actualizar' : 'Nuevo' }} usuario</h2>
+
+    <mat-divider></mat-divider>
+
+    <mat-dialog-content>
+      <form class="mt-20"
+            [formGroup]="userForm">
+        <div fxLayout="row wrap"
+             fxLayout.xs="column"
+             fxLayoutGap.gt-xs="15px">
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Nombre completo</mat-label>
+              <input matInput
+                     type="text"
+                     placeholder="Ejemplo: Pedro Sánchez Hernández"
+                     formControlName="completeName">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Correo electrónico</mat-label>
+              <input matInput
+                     type="email"
+                     placeholder="Ejemplo: ejemplo@gmail.com"
+                     formControlName="email">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Teléfono</mat-label>
+              <input matInput
+                     type="text"
+                     placeholder="Ejemplo: 4421764689"
+                     formControlName="phone">
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Fecha de nacimiento</mat-label>
+              <input matInput
+                     [matDatepicker]="datepicker"
+                     formControlName="birthday">
+              <mat-hint>DD/MM/AAAA</mat-hint>
+              <mat-datepicker-toggle matSuffix
+                                     [for]="datepicker">
+              </mat-datepicker-toggle>
+              <mat-datepicker #datepicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Género</mat-label>
+              <mat-select formControlName="gender">
+                <mat-option *ngFor="let gender of genders" [value]="gender.key">
+                  {{ gender.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="calc(33% - 15px)"
+               fxFlex.lt-lg="calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Roles</mat-label>
+              <mat-select formControlName="roles"
+                          multiple>
+                <mat-option *ngFor="let rol of roles"
+                            [value]="rol.id">
+                  {{ rol.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-raised-button
+              color="warn"
+              [mat-dialog-close]="false">
+        <mat-icon>close</mat-icon> Cerrar
+      </button>
+      <button mat-raised-button
+              color="primary">
+        <mat-icon>save</mat-icon> Guardar
+      </button>
+    </mat-dialog-actions>
+  </div>
+</div>
