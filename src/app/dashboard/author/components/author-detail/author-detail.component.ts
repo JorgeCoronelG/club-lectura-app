@@ -50,7 +50,7 @@ export class AuthorDetailComponent {
     }
   }
 
-  public close(refresh: boolean): void {
+  private close(refresh: boolean): void {
     this.dialogRef.close(refresh);
   }
 }

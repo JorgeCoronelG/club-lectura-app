@@ -78,6 +78,10 @@ export class BookListComponent implements OnInit {
     this.router.navigate(['/portal/libro', id]);
   }
 
+  public trackByBookId(index: number, book: BookPortalModel): number {
+    return book.id;
+  }
+
   private prepareFilters(): void {
     this.clearFilters();
 

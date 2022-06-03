@@ -10,8 +10,8 @@
         <div fxLayout="row wrap"
              fxLayout.xs="column"
              fxLayoutGap.gt-xs="15px">
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
@@ -20,11 +20,22 @@
                      type="text"
                      placeholder="Ejemplo: Pedro Sánchez Hernández"
                      formControlName="completeName">
+              <mat-error *ngIf="formErrors.customError('completeName', 'required')">
+                El nombre es requerido.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('completeName', 'minlength')">
+                El nombre debe tener al menos {{ formErrors.minLengthNumber('completeName') }} caracteres.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('completeName', 'maxlength')">
+                El nombre debe tener menos de {{ formErrors.maxLengthNumber('completeName') }} caracteres.
+              </mat-error>
             </mat-form-field>
           </div>
 
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
@@ -33,11 +44,22 @@
                      type="email"
                      placeholder="Ejemplo: ejemplo@gmail.com"
                      formControlName="email">
+              <mat-error *ngIf="formErrors.customError('email', 'required')">
+                El correo electrónico es requerido.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('email', 'email')">
+                El correo electrónico no tiene el formato correcto.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('email', 'maxlength')">
+                El correo electrónico debe tener menos de {{ formErrors.maxLengthNumber('email') }} caracteres.
+              </mat-error>
             </mat-form-field>
           </div>
 
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
@@ -46,11 +68,18 @@
                      type="text"
                      placeholder="Ejemplo: 4421764689"
                      formControlName="phone">
+              <mat-error *ngIf="formErrors.customError('phone', 'required')">
+                El teléfono es requerido.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('phone', 'pattern')">
+                El teléfono debe tener 10 dígitos.
+              </mat-error>
             </mat-form-field>
           </div>
 
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
@@ -59,6 +88,15 @@
                      [matDatepicker]="datepicker"
                      formControlName="birthday">
               <mat-hint>DD/MM/AAAA</mat-hint>
+
+              <mat-error *ngIf="formErrors.customError('birthday', 'required')">
+                La fecha de nacimiento es requerido.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('birthday', 'invalidDate')">
+                La fecha debe ser menor a la fecha actual.
+              </mat-error>
+
               <mat-datepicker-toggle matSuffix
                                      [for]="datepicker">
               </mat-datepicker-toggle>
@@ -66,22 +104,26 @@
             </mat-form-field>
           </div>
 
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
               <mat-label>Género</mat-label>
               <mat-select formControlName="gender">
-                <mat-option *ngFor="let gender of genders" [value]="gender.key">
+                <mat-option *ngFor="let gender of genders"
+                            [value]="gender.id">
                   {{ gender.name }}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="formErrors.customError('gender', 'required')">
+                El género es requerido.
+              </mat-error>
             </mat-form-field>
           </div>
 
-          <div fxFlex.gt-md="calc(33% - 15px)"
-               fxFlex.lt-lg="calc(50% - 15px)"
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
                fxFlex.xs="100">
             <mat-form-field class="w-100"
                             appearance="fill">
@@ -93,7 +135,143 @@
                   {{ rol.name }}
                 </mat-option>
               </mat-select>
+              <mat-error *ngIf="formErrors.customError('roles', 'required')">
+                Debe seleccionar al menos un rol.
+              </mat-error>
+
+              <mat-error *ngIf="formErrors.customError('roles', 'invalidRoleCombination')">
+                El rol Administrador y Capturista no pueden asignarse a usuario.
+              </mat-error>
             </mat-form-field>
+          </div>
+
+          <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+               fxFlex.lt-lg="0 0 calc(50% - 15px)"
+               fxFlex.xs="100">
+            <mat-form-field class="w-100"
+                            appearance="fill">
+              <mat-label>Tipo de usuario</mat-label>
+              <mat-select formControlName="type"
+                          #type>
+                <mat-option *ngFor="let type of typeUsers"
+                            [value]="type.id">
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="formErrors.customError('type', 'required')">
+                El tipo de usuario es requerido.
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div fxFlex="calc(100% - 15px)"
+               class="mt-20"
+               *ngIf="type.value === 1">
+            <h3 mat-dialog-title>Estudiante</h3>
+            <mat-divider></mat-divider>
+
+            <div fxLayout="row wrap"
+                 fxLayout.xs="column"
+                 fxLayoutGap.gt-xs="15px"
+                 class="mt-20"
+                 formGroupName="student">
+              <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+                   fxFlex.lt-lg="0 0 calc(50% - 15px)"
+                   fxFlex.xs="100">
+                <mat-form-field class="w-100"
+                                appearance="fill">
+                  <mat-label>Turno</mat-label>
+                  <mat-select formControlName="turn">
+                    <mat-option *ngFor="let turn of turnUser"
+                                [value]="turn.id">
+                      {{ turn.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formErrors.customError('student.turn', 'required')">
+                    El turno es requerido.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+                   fxFlex.lt-lg="0 0 calc(50% - 15px)"
+                   fxFlex.xs="100">
+                <mat-form-field class="w-100"
+                                appearance="fill">
+                  <mat-label>Grupo</mat-label>
+                  <input matInput
+                         type="text"
+                         placeholder="Ejemplo: 1TPROG-AV"
+                         formControlName="group">
+                  <mat-error *ngIf="formErrors.customError('student.group', 'required')">
+                    El grupo es requerido
+                  </mat-error>
+
+                  <mat-error *ngIf="formErrors.customError('student.group', 'minlength')">
+                    El grupo debe tener al menos {{ formErrors.minLengthNumber('student.group') }} caracteres.
+                  </mat-error>
+
+                  <mat-error *ngIf="formErrors.customError('student.group', 'maxlength')">
+                    El grupo debe tener menos de {{ formErrors.maxLengthNumber('student.group') }} caracteres.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div fxFlex="calc(100% - 15px)"
+               class="mt-20"
+               *ngIf="type.value === 2">
+            <h3 mat-dialog-title>Académico</h3>
+            <mat-divider></mat-divider>
+
+            <div fxLayout="row wrap"
+                 fxLayout.xs="column"
+                 fxLayoutGap.gt-xs="15px"
+                 class="mt-20"
+                 formGroupName="academic">
+              <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+                   fxFlex.lt-lg="0 0 calc(50% - 15px)"
+                   fxFlex.xs="100">
+                <mat-form-field class="w-100"
+                                appearance="fill">
+                  <mat-label>Matrícula</mat-label>
+                  <input matInput
+                         type="text"
+                         placeholder="Ejemplo: 2017113010"
+                         formControlName="registration">
+                  <mat-error *ngIf="formErrors.customError('academic.registration', 'required')">
+                    La matrícula es requerido.
+                  </mat-error>
+
+                  <mat-error *ngIf="formErrors.customError('academic.registration', 'minlength')">
+                    La matrícula debe tener al menos {{ formErrors.minLengthNumber('academic.registration') }} caracteres.
+                  </mat-error>
+
+                  <mat-error *ngIf="formErrors.customError('academic.registration', 'maxlength')">
+                    La matrícula debe tener menos de {{ formErrors.maxLengthNumber('academic.registration') }} caracteres.
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxFlex.gt-md="0 0 calc(33% - 15px)"
+                   fxFlex.lt-lg="0 0 calc(50% - 15px)"
+                   fxFlex.xs="100">
+                <mat-form-field class="w-100"
+                                appearance="fill">
+                  <mat-label>Tipo</mat-label>
+                  <mat-select formControlName="typeAcademic">
+                    <mat-option *ngFor="let type of typeAcademic"
+                                [value]="type.id">
+                      {{ type.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="formErrors.customError('academic.typeAcademic', 'required')">
+                    El tipo es requerido
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -106,7 +284,8 @@
         <mat-icon>close</mat-icon> Cerrar
       </button>
       <button mat-raised-button
-              color="primary">
+              color="primary"
+              (click)="save()">
         <mat-icon>save</mat-icon> Guardar
       </button>
     </mat-dialog-actions>

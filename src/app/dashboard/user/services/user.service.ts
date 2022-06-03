@@ -1,7 +1,9 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, tap } from "rxjs";
+import { map } from "rxjs/operators";
 import { ListResponse } from "../../../core/models/list-response";
+import { SingleResponse } from "../../../core/models/single-response";
 import { EnvironmentService } from "../../../core/services/environment.service";
 import { StatusUserEnum } from "../enums/status-user.enum";
 import { getPaginateParams } from "../../../core/utils/http-functions";
@@ -30,6 +32,12 @@ export class UserService {
           return res;
         })
       );
+  }
+
+  public store(user: UserModel): Observable<UserModel> {
+    return this.http.post<SingleResponse<UserModel>>(this.url, user).pipe(
+      map(res => res.data!)
+    );
   }
 
   public transformInfo(user: UserModel): void {

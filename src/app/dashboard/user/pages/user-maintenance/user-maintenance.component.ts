@@ -52,6 +52,12 @@ export class UserMaintenanceComponent implements OnInit {
         width: '100%',
         data: null
       });
+
+      dialogRef.afterClosed().subscribe(refresh => {
+        if (refresh) {
+          this.prepareFilters();
+        }
+      })
     } else {
       //
     }

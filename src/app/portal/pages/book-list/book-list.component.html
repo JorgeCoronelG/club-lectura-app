@@ -149,7 +149,7 @@
                      fxFlex.gt-xs="50"
                      fxFlex.xs="100"
                      class="flex mb-1"
-                     *ngFor="let book of booksResponse.data">
+                     *ngFor="let book of booksResponse.data; trackBy:trackByBookId">
                   <app-book-card class="cursor"
                                  [img]="book.image"
                                  [title]="book.title"

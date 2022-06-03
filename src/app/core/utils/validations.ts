@@ -1,15 +1,16 @@
 import { FormControl } from "@angular/forms";
+import * as moment from "moment/moment";
+import { ErrorControl } from "../models/error-control";
 
-export const phoneRegex = '/^[0-9]{10}$/';
+export const phoneRegex = /^\d{10}$/;
 
-export const dateBeforeNow = (control: FormControl): { [s: string]: boolean } | null => {
+export const dateBeforeNow = (control: FormControl): ErrorControl | null => {
   if (control.value) {
-    const today = new Date().getTime();
+    const today = moment();
+    const currentValue = moment(control.value);
 
-    if (control.value.getTime() >= today) {
-      return {
-        invalidDate: true
-      };
+    if (currentValue.isAfter(today)) {
+      return { invalidDate: true };
     }
   }
 
