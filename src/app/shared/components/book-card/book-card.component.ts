@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { StatusBookEnum } from "../../../portal/enums/status-book.enum";
+import { I18nPlural } from "../../../core/models/i18n-plural";
+import { StatusBookEnum, StatusBookNameEnum } from "../../../portal/enums/status-book.enum";
 
 @Component({
   selector: 'app-book-card',
@@ -16,9 +17,15 @@ export class BookCardComponent {
   @Input()
   public noAuthors!: number;
   @Input()
-  public status!: StatusBookEnum.Available | StatusBookEnum.OnLoan;
+  set status(status: StatusBookEnum.Available | StatusBookEnum.OnLoan) {
+    this._status = status;
+    this._statusName = StatusBookNameEnum[StatusBookEnum[status] as keyof typeof StatusBookNameEnum];
+  }
 
-  public authorMessageMapping: { [k: string]: string } = { '=1': 'Autor:', 'other': 'Autores:' };
+  public _status!: StatusBookEnum.Available | StatusBookEnum.OnLoan;
+  public _statusName: string = '';
+
+  public authorMessageMapping: I18nPlural = { '=1': 'Autor:', 'other': 'Autores:' };
 
   constructor() {}
 

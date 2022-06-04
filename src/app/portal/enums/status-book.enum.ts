@@ -1,6 +1,9 @@
 export enum StatusBookEnum {
   Available = 1,
-  OnLoan = 2,
-  Lost = 3,
-  NotRecovered = 4
+  OnLoan = 2
+}
+
+export enum StatusBookNameEnum {
+  Available = 'Disponible',
+  OnLoan = 'En préstamo'
 }

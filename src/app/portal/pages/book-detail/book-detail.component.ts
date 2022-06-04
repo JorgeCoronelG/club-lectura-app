@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
+import { I18nPlural } from "../../../core/models/i18n-plural";
 import { BookPortalModel } from "../../models/book-portal.model";
 import { BookPortalService } from "../../services/book-portal.service";
 
@@ -10,7 +11,7 @@ import { BookPortalService } from "../../services/book-portal.service";
 })
 export class BookDetailComponent implements OnInit {
   public book?: BookPortalModel;
-  public authorMessageMapping: { [k: string]: string } = { '=1': 'Autor:', 'other': 'Autores:' };
+  public authorMessageMapping: I18nPlural = { '=1': 'Autor:', 'other': 'Autores:' };
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
