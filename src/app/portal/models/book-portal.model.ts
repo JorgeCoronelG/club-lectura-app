@@ -9,12 +9,12 @@ export interface BookPortalModel {
   image: string;
   status: StatusBookEnum.Available | StatusBookEnum.OnLoan;
   authors: AuthorsModel[];
+  allAuthors: string;
   isbn?: string;
   noPages?: number;
   language?: LanguageBookEnum;
   review?: string;
   literarySubgender?: LiterarySubgenderModel;
-  authorsStr: string;
 }
 
 export interface MinMaxPagesModel {

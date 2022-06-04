@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     return this.userSessionService.user;
   }
 
-  get role() {
+  get role(): typeof Role {
     return Role;
   }
 

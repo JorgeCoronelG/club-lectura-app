@@ -14,8 +14,8 @@
   </mat-card-content>
   <mat-card-footer>
     <div class="status-chip"
-         [ngClass]="{ 'green': (status === 1), 'pink': (status === 2) }">
-      <span>{{ (status === 1) ? 'Disponible' : 'En préstamo'}}</span>
+         [ngClass]="{ 'green': (status === statusBook.Available), 'pink': (status === statusBook.OnLoan) }">
+      <span>{{ (status === statusBook.Available) ? 'Disponible' : 'En préstamo'}}</span>
     </div>
   </mat-card-footer>
 </mat-card>

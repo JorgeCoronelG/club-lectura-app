@@ -24,13 +24,14 @@ export class BookPortalService {
     return `${this.environmentService.environmentApi}${this._baseUrl}`;
   }
 
-  public findAll(sort: string, itemsPerPage: number = 12, page: number = 1, search: string|null = null): Observable<ListResponse<BookPortalModel>> {
+  public findAll(sort: string, itemsPerPage: number = 12, page: number = 1, search: string|null = null)
+    : Observable<ListResponse<BookPortalModel>> {
     const params = getPaginateParams(sort, itemsPerPage, page, search);
 
     const url = `${this.url}`;
     return this.http.get<ListResponse<BookPortalModel>>(url, { params })
       .pipe(
-        tap(res => res.data!.forEach(this.getAuthorStrCard))
+        tap(res => res.data!)
       );
   }
 
@@ -38,8 +39,7 @@ export class BookPortalService {
     const url = `${this.url}/latest`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!),
-        tap(books => books.forEach(this.getAuthorStrCard))
+        map(res => res.data!)
       )
   }
 
@@ -47,8 +47,7 @@ export class BookPortalService {
     const url = `${this.url}/most-read`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!),
-        tap(books => books.forEach(this.getAuthorStrCard))
+        map(res => res.data!)
       )
   }
 
@@ -74,20 +73,5 @@ export class BookPortalService {
 
   public combineRequestListBook(sort: string): Observable<[ListResponse<BookPortalModel>, MinMaxPagesModel, LiteraryGenderModel[]]> {
     return forkJoin([this.findAll(sort), this.getMinMaxPages(), this.literaryGenderService.findAll()]);
-  }
-
-  private getAuthorStrCard(book: BookPortalModel): void {
-    let authorArray: string[] = [];
-
-    book.authors.forEach(author => {
-      const authorSplit = author.name.split(' ');
-      if (authorSplit.length >= 2) {
-        authorArray.push(`${authorSplit[0]} ${authorSplit[1]}`);
-      } else {
-        authorArray.push(authorSplit[1]);
-      }
-    });
-
-    book.authorsStr = authorArray.join(', ');
   }
 }

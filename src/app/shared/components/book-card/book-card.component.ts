@@ -21,4 +21,8 @@ export class BookCardComponent {
   public authorMessageMapping: { [k: string]: string } = { '=1': 'Autor:', 'other': 'Autores:' };
 
   constructor() {}
+
+  get statusBook(): typeof StatusBookEnum {
+    return StatusBookEnum;
+  }
 }
