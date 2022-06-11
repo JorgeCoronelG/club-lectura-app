@@ -30,6 +30,20 @@ const routes: Routes = [
         canLoad: [ PermissionGuard ]
       },
       {
+        path: 'genero-literario',
+        loadChildren: () => import('./literary-gender/literary-gender.module').then(m => m.LiteraryGenderModule),
+        data: { title: 'Género literario', roles: [ Role.Admin, Role.Capturist ] },
+        canActivate: [ PermissionGuard ],
+        canLoad: [ PermissionGuard ]
+      },
+      {
+        path: 'subgenero-literario',
+        loadChildren: () => import('./literary-subgender/literary-subgender.module').then(m => m.LiterarySubgenderModule),
+        data: { title: 'Subgénero literario', roles: [ Role.Admin, Role.Capturist ] },
+        canActivate: [ PermissionGuard ],
+        canLoad: [ PermissionGuard ]
+      },
+      {
         path: 'donaciones',
         loadChildren: () => import('./donation/donation.module').then(m => m.DonationModule),
         data: { title: 'Donaciones', roles: [ Role.Admin, Role.Capturist ] },

@@ -16,7 +16,8 @@
     </mat-toolbar>
     <mat-nav-list>
       <div class="profile-card">
-        <img [src]="user.photo! | image" alt="Soufiane FADIL">
+        <img [src]="user.photo! | image"
+             alt="avatar">
         <div class="header">
           <h2>{{ user.completeName | slice: 0:39 }}{{ user.completeName.length > 40 ? '...' : '' }}</h2>
           <h4>{{ user.email | slice:0:34 }}{{ user.email.length > 35 ? '...' : '' }}</h4>
@@ -48,6 +49,22 @@
          *ngIf="isAuthorize([role.Admin, role.Capturist])">
         <mat-icon mat-list-icon>face</mat-icon>
         <span>Autores</span>
+      </a>
+
+      <a mat-list-item
+         routerLink="./genero-literario"
+         (click)="drawer.toggle()"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
+        <mat-icon mat-list-icon>turned_in</mat-icon>
+        <span>Género literario</span>
+      </a>
+
+      <a mat-list-item
+         routerLink="./subgenero-literario"
+         (click)="drawer.toggle()"
+         *ngIf="isAuthorize([role.Admin, role.Capturist])">
+        <mat-icon mat-list-icon>turned_in</mat-icon>
+        <span>Subgénero Literario</span>
       </a>
 
       <a mat-list-item
