@@ -50,14 +50,14 @@
       </div>
       <div class="icon-text">
         <span>
-          <mat-icon mat-list-icon>translate</mat-icon> Lenguaje: <u>{{ book.language === 1 ? 'Español' : 'Inglés' }}</u>
+          <mat-icon mat-list-icon>translate</mat-icon> Lenguaje: <u>{{ languageBook }}</u>
         </span>
       </div>
       <div class="icon-text flex">
         <mat-icon mat-list-icon>check_box</mat-icon> &nbsp;Estatus:
         <label class="status-chip"
-               [ngClass]="{ 'green': (book.status === 1), 'pink': (book.status === 2) }">
-          {{ (book.status === 1) ? 'Disponible' : 'En préstamo'}}
+               [ngClass]="{ 'green': (book.status === statusBook.Available), 'pink': (book.status === statusBook.OnLoan) }">
+          {{ _statusBook }}
         </label>
       </div>
 
