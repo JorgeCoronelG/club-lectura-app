@@ -42,8 +42,8 @@
 
               <section [formGroup]="languageForm">
                 <h4>Selecciona un idioma:</h4>
-                <p><mat-checkbox formControlName="spanish">Español</mat-checkbox></p>
-                <p><mat-checkbox formControlName="english">Inglés</mat-checkbox></p>
+                <p><mat-checkbox formControlName="spanish">{{ languageBookName.Spanish }}</mat-checkbox></p>
+                <p><mat-checkbox formControlName="english">{{ languageBookName.English }}</mat-checkbox></p>
               </section>
 
             </mat-expansion-panel>
@@ -84,8 +84,8 @@
 
               <section [formGroup]="statusForm">
                 <h4>Selecciona un estatus:</h4>
-                <p><mat-checkbox formControlName="available">Disponible</mat-checkbox></p>
-                <p><mat-checkbox formControlName="onLoan">En préstamo</mat-checkbox></p>
+                <p><mat-checkbox formControlName="available">{{ statusBookName.Available }}</mat-checkbox></p>
+                <p><mat-checkbox formControlName="onLoan">{{ statusBookName.OnLoan }}</mat-checkbox></p>
               </section>
 
             </mat-expansion-panel>
@@ -126,17 +126,23 @@
            fxFlex.lt-md="100">
         <div fxLayout="row wrap">
           <div fxFlex="100"
-               fxLayoutAlign="end">
-            <mat-form-field appearance="fill">
-              <mat-label>Ordenar por:</mat-label>
-              <mat-select [(value)]="orderBy"
-                          (valueChange)="searchOptions()">
-                <mat-option *ngFor="let sort of orderBySelectOptions"
-                            [value]="sort.value">
-                  {{ sort.text }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+               fxLayoutAlign.gt-xs="end">
+            <div fxFlex.gt-lg="35"
+                 fxFlex.gt-md="45"
+                 fxFlex.gt-xs="50"
+                 fxFlex.xs="100">
+              <mat-form-field class="w-100"
+                              appearance="fill">
+                <mat-label>Ordenar por:</mat-label>
+                <mat-select [(value)]="orderBy"
+                            (valueChange)="searchOptions()">
+                  <mat-option *ngFor="let sort of orderBySelectOptions"
+                              [value]="sort.value">
+                    {{ sort.text }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
 
           <ng-container *ngIf="booksResponse">

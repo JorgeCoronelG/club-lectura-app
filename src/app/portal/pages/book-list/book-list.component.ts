@@ -5,9 +5,9 @@ import { ToastrService } from "ngx-toastr";
 import { Filters, TypesEnum } from "../../../core/models/filters";
 import { ListResponse, Meta } from "../../../core/models/list-response";
 import { MinMaxPagesModel, BookPortalModel } from "../../models/book-portal.model";
-import { LanguageBookEnum } from "../../enums/language-book.enum";
+import { LanguageBookEnum, LanguageBookNameEnum } from "../../enums/language-book.enum";
 import { LiteraryGenderModel } from "../../models/literary-gender.model";
-import { StatusBookEnum } from "../../enums/status-book.enum";
+import { StatusBookEnum, StatusBookNameEnum } from "../../enums/status-book.enum";
 import { BookPortalService } from "../../services/book-portal.service";
 
 @Component({
@@ -63,6 +63,14 @@ export class BookListComponent implements OnInit {
           this.toastr.info('No hay registros de libros', 'Información');
         }
       });
+  }
+
+  get languageBookName(): typeof LanguageBookNameEnum {
+    return LanguageBookNameEnum;
+  }
+
+  get statusBookName(): typeof StatusBookNameEnum {
+    return StatusBookNameEnum;
   }
 
   public searchOptions(): void {
