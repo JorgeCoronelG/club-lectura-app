@@ -2,9 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from "@angular/material/dialog";
 import { MatTableDataSource } from "@angular/material/table";
 import { ToastrService } from "ngx-toastr";
+import { of, delay } from "rxjs";
+import { switchMap } from "rxjs/operators";
 import { Filters, TypesEnum } from "../../../../core/models/filters";
 import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
 import { ListResponse, Meta } from "../../../../core/models/list-response";
+import { DeleteConfirmComponent } from "../../../../shared/components/delete-confirm/delete-confirm.component";
+import {
+  LiteraryGenderDetailComponent
+} from "../../components/literary-gender-detail/literary-gender-detail.component";
 import { LiteraryGenderModel } from "../../models/literary-gender.model";
 import { LiteraryGenderService } from "../../services/literary-gender.service";
 
@@ -37,11 +43,45 @@ export class LiteraryGenderMaintenanceComponent implements OnInit {
   }
 
   public openDialog(id?: number): void {
-    //
+    if (!id) {
+      const dialogRef = this.dialog.open(LiteraryGenderDetailComponent, {
+        width: '350px',
+        data: null
+      });
+
+      dialogRef.afterClosed().subscribe(refresh => {
+        if (refresh) {
+          this.prepareFilters();
+        }
+      });
+    } else {
+      this.literaryGenderService.findById(id).subscribe(literaryGender => {
+        const dialogRef = this.dialog.open(LiteraryGenderDetailComponent, {
+          width: '350px',
+          data: literaryGender
+        });
+
+        dialogRef.afterClosed().subscribe(refresh => {
+          if (refresh) {
+            this.prepareFilters();
+          }
+        });
+      });
+    }
   }
 
   public delete(id: number) {
-    //
+    const dialogRef = this.dialog.open(DeleteConfirmComponent);
+
+    dialogRef.afterClosed().pipe(
+      switchMap(confirm =>  (confirm) ? this.literaryGenderService.delete(id) : of(false)),
+      delay(100)
+    ).subscribe(confirm => {
+      if (confirm) {
+        this.toastr.success(`Género literario eliminado.`, 'Proceso exitoso');
+        this.prepareFilters();
+      }
+    });
   }
 
   public paginatorChanges(meta: Meta): void {

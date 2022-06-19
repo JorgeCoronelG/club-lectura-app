@@ -8,11 +8,13 @@ import { SharedModule } from "../../shared/shared.module";
 
 import { LiteraryGenderRoutingModule } from './literary-gender-routing.module';
 import { LiteraryGenderMaintenanceComponent } from './pages/literary-gender-maintenance/literary-gender-maintenance.component';
+import { LiteraryGenderDetailComponent } from './components/literary-gender-detail/literary-gender-detail.component';
 
 
 @NgModule({
   declarations: [
-    LiteraryGenderMaintenanceComponent
+    LiteraryGenderMaintenanceComponent,
+    LiteraryGenderDetailComponent
   ],
   imports: [
     CommonModule,
