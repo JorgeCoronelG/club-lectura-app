@@ -2,8 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { ListResponse } from "../../../core/models/list-response";
-import { SingleResponse } from "../../../core/models/single-response";
+import { ListResponse, SingleResponse } from "../../../core/models";
 import { EnvironmentService } from "../../../core/services/environment.service";
 import { getPaginateParams } from "../../../core/utils/http-functions";
 import { AuthorModel } from "../models/author.model";
@@ -31,14 +30,14 @@ export class AuthorService {
     const url = `${this.url}/${id}`;
     return this.http.get<SingleResponse<AuthorModel>>(url)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 
   public store(author: AuthorModel): Observable<AuthorModel> {
     return this.http.post<SingleResponse<AuthorModel>>(this.url, author)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 
@@ -46,7 +45,7 @@ export class AuthorService {
     const url = `${this.url}/${author.id}`;
     return this.http.put<SingleResponse<AuthorModel>>(url, author)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 

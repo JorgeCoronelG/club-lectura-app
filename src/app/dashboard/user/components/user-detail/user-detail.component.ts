@@ -3,8 +3,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from "@angular/forms"
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { ToastrService } from "ngx-toastr";
 import { Role } from "../../../../core/enums/role";
-import { ErrorControl } from "../../../../core/models/error-control";
-import { Select } from "../../../../core/models/select";
+import { Select, ErrorControl } from "../../../../core/models";
 import { FormErrors } from "../../../../core/utils/form-errors";
 import { phoneRegex, dateBeforeNow } from "../../../../core/utils/validations";
 import { GenderEnum } from "../../enums/gender.enum";

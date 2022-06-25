@@ -45,7 +45,7 @@
 
       <mat-card-actions *ngIf="userResponse">
         <app-paginator [pageSizeOptions]="[5, 10, 25]"
-                       [meta]="userResponse.meta!"
+                       [meta]="userResponse.meta"
                        (onChanges)="paginatorChanges($event)">
         </app-paginator>
       </mat-card-actions>

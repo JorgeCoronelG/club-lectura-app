@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import { ListResponse } from "../../../core/models/list-response";
+import { ListResponse } from "../../../core/models";
 import { EnvironmentService } from "../../../core/services/environment.service";
 import { RoleModel } from "../models/role.model";
 
@@ -22,7 +22,7 @@ export class RoleService {
   public findAll(): Observable<RoleModel[]> {
     return this.http.get<ListResponse<RoleModel>>(`${this.url}/find-all`)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 }

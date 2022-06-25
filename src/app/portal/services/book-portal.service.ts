@@ -2,8 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 import { Observable, tap, forkJoin } from "rxjs";
 import { map } from "rxjs/operators";
-import { ListResponse } from "../../core/models/list-response";
-import { SingleResponse } from "../../core/models/single-response";
+import { ListResponse, SingleResponse } from "../../core/models";
 import { EnvironmentService } from "../../core/services/environment.service";
 import { getPaginateParams } from "../../core/utils/http-functions";
 import { BookPortalModel, MinMaxPagesModel } from "../models/book-portal.model";
@@ -31,7 +30,7 @@ export class BookPortalService {
     const url = `${this.url}`;
     return this.http.get<ListResponse<BookPortalModel>>(url, { params })
       .pipe(
-        tap(res => res.data!)
+        tap(res => res.data)
       );
   }
 
@@ -39,7 +38,7 @@ export class BookPortalService {
     const url = `${this.url}/latest`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       )
   }
 
@@ -47,7 +46,7 @@ export class BookPortalService {
     const url = `${this.url}/most-read`;
     return this.http.get<ListResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       )
   }
 
@@ -55,7 +54,7 @@ export class BookPortalService {
     const url = `${this.url}/detail/${id}`;
     return this.http.get<SingleResponse<BookPortalModel>>(url)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 
@@ -63,7 +62,7 @@ export class BookPortalService {
     const url = `${this.url}/min-max-pages`;
     return this.http.get<SingleResponse<MinMaxPagesModel>>(url)
       .pipe(
-        map(res => res.data!)
+        map(res => res.data)
       );
   }
 

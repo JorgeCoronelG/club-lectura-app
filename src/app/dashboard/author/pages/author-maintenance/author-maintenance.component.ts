@@ -4,9 +4,7 @@ import { MatTableDataSource } from "@angular/material/table";
 import { ToastrService } from "ngx-toastr";
 import { of, delay } from "rxjs";
 import { switchMap } from "rxjs/operators";
-import { Filters, TypesEnum } from "../../../../core/models/filters";
-import { HeaderColumnsTable } from "../../../../core/models/header-columns-table";
-import { ListResponse, Meta } from "../../../../core/models/list-response";
+import { ListResponse, Filters, HeaderColumnsTable, Meta, TypesEnum } from "../../../../core/models";
 import { DeleteConfirmComponent } from "../../../../shared/components/delete-confirm/delete-confirm.component";
 import { AuthorDetailComponent } from "../../components/author-detail/author-detail.component";
 import { AuthorModel } from "../../models/author.model";
@@ -119,8 +117,8 @@ export class AuthorMaintenanceComponent implements OnInit {
     let perPageInit = 5;
     if (this.authorResponse?.meta) {
       const { currentPage, perPage } = this.authorResponse?.meta;
-      currentPageInit = currentPage!;
-      perPageInit = perPage!;
+      currentPageInit = currentPage;
+      perPageInit = perPage;
     }
 
     this.authorService.findAll(this.orderBy, perPageInit, currentPageInit, searchQuery).subscribe(authorResponse => {

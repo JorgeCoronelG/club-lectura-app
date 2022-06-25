@@ -1,3 +1,3 @@
 export interface SingleResponse<Type> {
-  data?: Type;
+  data: Type;
 }

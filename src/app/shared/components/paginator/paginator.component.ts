@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { PageEvent } from "@angular/material/paginator";
-import { Meta } from "../../../core/models/list-response";
+import { Meta } from "../../../core/models";
 
 @Component({
   selector: 'app-paginator',

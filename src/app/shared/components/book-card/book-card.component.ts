@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { I18nPlural } from "../../../core/models/i18n-plural";
+import { I18nPlural } from "../../../core/models";
 import { StatusBookEnum, StatusBookNameEnum } from "../../../portal/enums/status-book.enum";
 
 @Component({

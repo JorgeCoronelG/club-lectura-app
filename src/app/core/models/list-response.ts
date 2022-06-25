@@ -1,21 +1,21 @@
 export interface ListResponse<Type> {
-  data?: Type[];
-  links?: Links;
-  meta?: Meta;
+  data: Type[];
+  links: Links;
+  meta: Meta;
 }
 
 export interface Links {
-  first?: string;
+  first: string;
   last?: string;
-  prev?: string;
-  next?: string;
+  prev: string;
+  next: string;
 }
 
 export interface Meta {
-  currentPage?: number;
+  currentPage: number;
   from?: number;
-  lastPage?: number;
-  perPage?: number;
+  lastPage: number;
+  perPage: number;
   to?: number;
-  total?: number;
+  total: number;
 }

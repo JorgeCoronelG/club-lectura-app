@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router";
-import { I18nPlural } from "../../../core/models/i18n-plural";
+import { I18nPlural } from "../../../core/models";
 import { LanguageBookNameEnum, LanguageBookEnum } from "../../enums/language-book.enum";
 import { StatusBookEnum, StatusBookNameEnum } from "../../enums/status-book.enum";
 import { BookPortalModel } from "../../models/book-portal.model";

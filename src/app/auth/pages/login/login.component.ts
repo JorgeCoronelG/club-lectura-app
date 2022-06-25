@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     const user: UserModel = this.loginForm.value;
     this.authService.login(user).subscribe(() => {
       if (user.rememberMe) {
-        localStorage.setItem('email-session', user.email!);
+        localStorage.setItem('email-session', user.email);
       } else {
         localStorage.removeItem('email-session');
       }
