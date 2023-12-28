@@ -6,7 +6,7 @@ import {
   VexConfigs,
   VexTheme
 } from './vex-config.interface';
-import deepClone from '@vex/utils/deep-clone';
+import deepClone from '../utils/deep-clone';
 
 const baseConfig: VexConfig = {
   id: VexConfigName.apollo,

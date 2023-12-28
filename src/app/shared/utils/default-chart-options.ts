@@ -1,4 +1,4 @@
-import { ApexOptions } from '@vex/components/vex-chart/vex-chart.component';
+import { ApexOptions } from '@shared/components/vex-chart/vex-chart.component';
 import { mergeDeep } from './merge-deep';
 
 export const defaultChartOptions = (

@@ -15,7 +15,7 @@ import {
   NavigationItem,
   NavigationLink
 } from '../../../../core/navigation/navigation-item.interface';
-import { dropdownAnimation } from '@vex/animations/dropdown.animation';
+import { dropdownAnimation } from '../../../../shared/animations/dropdown.animation';
 import {
   NavigationEnd,
   Router,

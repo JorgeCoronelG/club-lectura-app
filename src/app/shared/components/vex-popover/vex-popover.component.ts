@@ -1,6 +1,6 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { VexPopoverContent, VexPopoverRef } from './vex-popover-ref';
-import { popoverAnimation } from '../../animations/popover.animation';
+import { popoverAnimation } from '@shared/animations/popover.animation';
 import {
   NgComponentOutlet,
   NgSwitch,

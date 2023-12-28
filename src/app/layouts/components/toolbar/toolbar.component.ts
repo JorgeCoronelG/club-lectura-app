@@ -6,11 +6,11 @@ import {
   inject,
   OnInit
 } from '@angular/core';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { VexConfigService } from '@vex/config/vex-config.service';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter, map, startWith, switchMap } from 'rxjs/operators';
 import { NavigationService } from '../../../core/navigation/navigation.service';
-import { VexPopoverService } from '@vex/components/vex-popover/vex-popover.service';
+import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
 import { MegaMenuComponent } from './mega-menu/mega-menu.component';
 import { Observable, of } from 'rxjs';
 import { NavigationComponent } from '../navigation/navigation.component';
@@ -23,7 +23,7 @@ import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
-import { checkRouterChildsData } from '@vex/utils/check-router-childs-data';
+import { checkRouterChildsData } from '@shared/utils/check-router-childs-data';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({

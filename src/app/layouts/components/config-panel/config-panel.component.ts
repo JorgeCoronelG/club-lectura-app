@@ -1,5 +1,5 @@
 import { Component, Inject } from '@angular/core';
-import { VexConfigService } from '@vex/config/vex-config.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 import {
   MatSlideToggleChange,
   MatSlideToggleModule
@@ -20,14 +20,14 @@ import {
   VexConfig,
   VexConfigName,
   VexThemeProvider
-} from '@vex/config/vex-config.interface';
-import { CSSValue } from '@vex/interfaces/css-value.type';
-import { isNil } from '@vex/utils/is-nil';
-import { defaultRoundedButtonBorderRadius } from '@vex/config/constants';
+} from '@shared/config/vex-config.interface';
+import { CSSValue } from '@shared/interfaces/css-value.type';
+import { isNil } from '@shared/utils/is-nil';
+import { defaultRoundedButtonBorderRadius } from '@shared/config/constants';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import { VEX_THEMES } from '@vex/config/config.token';
+import { VEX_THEMES } from '@shared/config/config.token';
 
 @Component({
   selector: 'vex-config-panel',

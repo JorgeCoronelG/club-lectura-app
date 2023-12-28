@@ -14,7 +14,7 @@ import {
 } from './vex-config.interface';
 import { CSSValue } from '../interfaces/css-value.type';
 import { map } from 'rxjs/operators';
-import { VEX_CONFIG, VEX_THEMES } from '@vex/config/config.token';
+import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
 
 @Injectable({
   providedIn: 'root'

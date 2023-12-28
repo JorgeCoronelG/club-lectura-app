@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterOutlet } from '@angular/router';
-import { VexConfigService } from '@vex/config/vex-config.service';
-import { VexSidebarComponent } from '@vex/components/vex-sidebar/vex-sidebar.component';
+import { VexConfigService } from '@shared/config/vex-config.service';
+import { VexSidebarComponent } from '@shared/components/vex-sidebar/vex-sidebar.component';
 
 import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
 import { SidenavComponent } from '../components/sidenav/sidenav.component';
@@ -17,8 +17,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { BaseLayoutComponent } from '../base-layout/base-layout.component';
 import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
 import { SearchComponent } from '../components/toolbar/search/search.component';
-import { VexProgressBarComponent } from '@vex/components/vex-progress-bar/vex-progress-bar.component';
-import { VexConfig } from '@vex/config/vex-config.interface';
+import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex-progress-bar.component';
+import { VexConfig } from '@shared/config/vex-config.interface';
 
 @Component({
   selector: 'vex-layout',

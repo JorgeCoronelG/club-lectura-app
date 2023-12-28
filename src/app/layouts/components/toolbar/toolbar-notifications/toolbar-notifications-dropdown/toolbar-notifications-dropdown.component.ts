@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Notification } from '../interfaces/notification.interface';
 import { DateTime } from 'luxon';
-import { trackById } from '@vex/utils/track-by';
-import { VexDateFormatRelativePipe } from '@vex/pipes/vex-date-format-relative/vex-date-format-relative.pipe';
+import { trackById } from '@shared/utils/track-by';
+import { VexDateFormatRelativePipe } from '@shared/pipes/vex-date-format-relative/vex-date-format-relative.pipe';
 import { RouterLink } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { NgClass, NgFor } from '@angular/common';

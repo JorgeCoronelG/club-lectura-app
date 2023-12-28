@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NavigationEnd, Router } from '@angular/router';
-import { VexConfigService } from '@vex/config/vex-config.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter } from 'rxjs/operators';
 
 import {
   VexColorScheme,
   VexConfigName,
   VexTheme
-} from '@vex/config/vex-config.interface';
+} from '@shared/config/vex-config.interface';
 
 @Injectable({
   providedIn: 'root'

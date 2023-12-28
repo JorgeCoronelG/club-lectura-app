@@ -12,9 +12,9 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatNativeDateModule } from '@angular/material/core';
 import { provideIcons } from './core/icons/icons.provider';
 import { provideLuxon } from './core/luxon/luxon.provider';
-import { provideVex } from '@vex/vex.provider';
+import { provideVex } from '@shared/vex.provider';
 import { provideNavigation } from './core/navigation/navigation.provider';
-import { vexConfigs } from '@vex/config/vex-configs';
+import { vexConfigs } from '@shared/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 
 export const appConfig: ApplicationConfig = {

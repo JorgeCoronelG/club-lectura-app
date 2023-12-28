@@ -1,5 +1,5 @@
 import { LayoutComponent } from './layouts/layout/layout.component';
-import { VexRoutes } from '@vex/interfaces/vex-route.interface';
+import { VexRoutes } from '@shared/interfaces/vex-route.interface';
 
 export const appRoutes: VexRoutes = [
   {

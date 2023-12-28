@@ -1,8 +1,8 @@
 import type { Config } from 'tailwindcss';
 import defaultTheme from 'tailwindcss/defaultTheme';
 import colors from 'tailwindcss/colors';
-import addThemesPlugin, { VexThemes } from './src/@vex/tailwind/plugins/themes';
-import addIconsPlugin from './src/@vex/tailwind/plugins/icons';
+import addThemesPlugin, { VexThemes } from './src/app/shared/tailwind/plugins/themes';
+import addIconsPlugin from './src/app/shared/tailwind/plugins/icons';
 import chroma from 'chroma-js';
 import { PluginUtils } from 'tailwindcss/types/config';
 import addTypographyPlugin from '@tailwindcss/typography';

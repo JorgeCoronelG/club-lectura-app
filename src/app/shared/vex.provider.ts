@@ -10,13 +10,13 @@ import {
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
-import { VexSplashScreenService } from '@vex/services/vex-splash-screen.service';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
-import { VexDemoService } from '@vex/services/vex-demo.service';
-import { VexPlatformService } from '@vex/services/vex-platform.service';
-import { VexConfig, VexThemeProvider } from '@vex/config/vex-config.interface';
-import { VEX_CONFIG, VEX_THEMES } from '@vex/config/config.token';
-import { VexHighlightModule } from '@vex/components/vex-highlight/vex-highlight.module';
+import { VexSplashScreenService } from '@shared/services/vex-splash-screen.service';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
+import { VexDemoService } from '@shared/services/vex-demo.service';
+import { VexPlatformService } from '@shared/services/vex-platform.service';
+import { VexConfig, VexThemeProvider } from '@shared/config/vex-config.interface';
+import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
+import { VexHighlightModule } from '@shared/components/vex-highlight/vex-highlight.module';
 
 export function provideVex(options: {
   config: VexConfig;

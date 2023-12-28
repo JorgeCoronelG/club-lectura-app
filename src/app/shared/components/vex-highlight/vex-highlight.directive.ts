@@ -19,9 +19,6 @@ import { VexHighlightService } from './vex-highlight.service';
   standalone: true
 })
 export class VexHighlightDirective implements OnChanges {
-  /** Highlighted Code */
-  highlightedCode?: string;
-
   /** An optional array of language names and aliases restricting detection to only those languages.
    * The subset can also be set with configure, but the local parameter overrides the option if set.
    */
@@ -32,6 +29,9 @@ export class VexHighlightDirective implements OnChanges {
 
   /** Stream that emits when code string is highlighted */
   @Output() highlighted = new EventEmitter<VexHighlightResult>();
+
+  /** Highlighted Code */
+  highlightedCode?: string;
 
   constructor(
     private _highlightService: VexHighlightService,

@@ -7,7 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { filter } from 'rxjs/operators';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { SearchService } from './search.service';

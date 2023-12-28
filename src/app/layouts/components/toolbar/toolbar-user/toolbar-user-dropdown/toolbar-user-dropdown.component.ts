@@ -5,8 +5,8 @@ import {
   OnInit
 } from '@angular/core';
 import { MenuItem } from '../interfaces/menu-item.interface';
-import { trackById } from '@vex/utils/track-by';
-import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
+import { trackById } from '@shared/utils/track-by';
+import { VexPopoverRef } from '@shared/components/vex-popover/vex-popover-ref';
 import { RouterLink } from '@angular/router';
 import { MatRippleModule } from '@angular/material/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';

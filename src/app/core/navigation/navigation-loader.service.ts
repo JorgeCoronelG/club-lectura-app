@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { VexLayoutService } from '@vex/services/vex-layout.service';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { NavigationItem } from './navigation-item.interface';
 import { BehaviorSubject, Observable } from 'rxjs';
 

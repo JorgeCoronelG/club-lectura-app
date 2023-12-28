@@ -47,8 +47,10 @@ export class VexChartComponent implements OnInit, OnChanges {
   @Input() options: ApexOptions = {};
   @Input() series: ApexAxisChartSeries | ApexNonAxisChartSeries = [];
   @Input() autoUpdateSeries = true;
-  public chart?: ApexCharts;
+
   @ViewChild('chart', { static: true }) private chartElement?: ElementRef;
+
+  public chart?: ApexCharts;
 
   constructor(private ngZone: NgZone) {}
 

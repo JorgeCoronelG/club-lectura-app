@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { VexPopoverRef } from '@vex/components/vex-popover/vex-popover-ref';
+import { VexPopoverRef } from '@shared/components/vex-popover/vex-popover-ref';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
