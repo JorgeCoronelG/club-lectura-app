@@ -1,24 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  ContentChild,
-  DestroyRef,
-  inject,
-  Inject,
-  OnInit
-} from '@angular/core';
+import { AfterViewInit, Component, ContentChild, DestroyRef, inject, Inject, OnInit } from '@angular/core';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
-import {
-  MatSidenavContainer,
-  MatSidenavModule
-} from '@angular/material/sidenav';
-import {
-  Event,
-  NavigationEnd,
-  Router,
-  RouterOutlet,
-  Scroll
-} from '@angular/router';
+import { MatSidenavContainer } from '@angular/material/sidenav';
+import { Event, NavigationEnd, Router, RouterOutlet, Scroll } from '@angular/router';
 import { filter, map, startWith, withLatestFrom } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { checkRouterChildsData } from '@shared/utils/check-router-childs-data';
@@ -29,6 +12,7 @@ import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex
 import { isNil } from '@shared/utils/is-nil';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VexConfig } from '@shared/config/vex-config.interface';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-base-layout',
@@ -38,7 +22,7 @@ import { VexConfig } from '@shared/config/vex-config.interface';
   imports: [
     VexProgressBarComponent,
     SearchComponent,
-    MatSidenavModule,
+    MaterialModule,
     NgTemplateOutlet,
     RouterOutlet,
     AsyncPipe,

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavigationService } from '../../../core/navigation/navigation.service';
+import { NavigationService } from '@core/navigation/navigation.service';
 import { NavigationItemComponent } from './navigation-item/navigation-item.component';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { Observable } from 'rxjs';
-import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
+import { NavigationItem } from '@core/navigation/navigation-item.interface';
 
 @Component({
   selector: 'vex-navigation',

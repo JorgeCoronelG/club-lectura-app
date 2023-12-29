@@ -10,25 +10,14 @@ import {
   OnInit,
   SimpleChanges
 } from '@angular/core';
-import {
-  NavigationDropdown,
-  NavigationItem,
-  NavigationLink
-} from '../../../../core/navigation/navigation-item.interface';
-import { dropdownAnimation } from '../../../../shared/animations/dropdown.animation';
-import {
-  NavigationEnd,
-  Router,
-  RouterLink,
-  RouterLinkActive
-} from '@angular/router';
+import { NavigationDropdown, NavigationItem, NavigationLink } from '@core/navigation/navigation-item.interface';
+import { dropdownAnimation } from '@shared/animations/dropdown.animation';
+import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { NavigationService } from '../../../../core/navigation/navigation.service';
-
-import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
+import { NavigationService } from '@core/navigation/navigation.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-sidenav-item',
@@ -38,11 +27,10 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    MaterialModule,
     NgIf,
-    MatRippleModule,
     RouterLinkActive,
     RouterLink,
-    MatIconModule,
     NgClass,
     NgFor
   ]

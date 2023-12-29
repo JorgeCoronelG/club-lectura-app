@@ -1,19 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { MenuItem } from '../interfaces/menu-item.interface';
 import { trackById } from '@shared/utils/track-by';
 import { VexPopoverRef } from '@shared/components/vex-popover/vex-popover-ref';
 import { RouterLink } from '@angular/router';
-import { MatRippleModule } from '@angular/material/core';
 import { NgClass, NgFor, NgIf } from '@angular/common';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MaterialModule } from '@core/material/material.module';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -29,12 +20,8 @@ export interface OnlineStatus {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatIconModule,
-    MatButtonModule,
-    MatTooltipModule,
-    MatMenuModule,
+    MaterialModule,
     NgFor,
-    MatRippleModule,
     RouterLink,
     NgClass,
     NgIf

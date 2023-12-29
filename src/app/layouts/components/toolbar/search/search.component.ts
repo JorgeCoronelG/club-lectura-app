@@ -1,20 +1,11 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  inject,
-  OnDestroy,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { filter } from 'rxjs/operators';
 import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { SearchService } from './search.service';
 import { AsyncPipe, NgIf } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-search',
@@ -22,8 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['./search.component.scss'],
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatIconModule,
+    MaterialModule,
     ReactiveFormsModule,
     NgIf,
     AsyncPipe

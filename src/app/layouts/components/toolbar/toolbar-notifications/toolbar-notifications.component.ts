@@ -1,15 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
-import { ToolbarNotificationsDropdownComponent } from './toolbar-notifications-dropdown/toolbar-notifications-dropdown.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import {
+  ToolbarNotificationsDropdownComponent
+} from './toolbar-notifications-dropdown/toolbar-notifications-dropdown.component';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-toolbar-notifications',
@@ -17,7 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./toolbar-notifications.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonModule, MatIconModule]
+  imports: [MaterialModule]
 })
 export class ToolbarNotificationsComponent implements OnInit {
   @ViewChild('originRef', { static: true, read: ElementRef })

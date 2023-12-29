@@ -1,15 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild
-} from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-toolbar-search',
@@ -17,7 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./toolbar-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatButtonModule, MatIconModule, MatFormFieldModule, MatInputModule]
+  imports: [MaterialModule]
 })
 export class ToolbarSearchComponent implements OnInit {
   isOpen: boolean = false;

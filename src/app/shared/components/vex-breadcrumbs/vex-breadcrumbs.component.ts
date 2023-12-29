@@ -3,7 +3,7 @@ import { trackByValue } from '../../utils/track-by';
 import { VexBreadcrumbComponent } from './vex-breadcrumb/vex-breadcrumb.component';
 import { RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-breadcrumbs',
@@ -23,7 +23,7 @@ import { MatIconModule } from '@angular/material/icon';
     </div>
   `,
   standalone: true,
-  imports: [VexBreadcrumbComponent, RouterLink, NgFor, MatIconModule]
+  imports: [VexBreadcrumbComponent, RouterLink, NgFor, MaterialModule]
 })
 export class VexBreadcrumbsComponent {
   @Input() crumbs: string[] = [];

@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTime } from 'luxon';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
 import { RouterLink } from '@angular/router';
-import { MatListModule } from '@angular/material/list';
-import { MatDividerModule } from '@angular/material/divider';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-quickpanel',
@@ -12,11 +9,8 @@ import { MatDividerModule } from '@angular/material/divider';
   styleUrls: ['./quickpanel.component.scss'],
   standalone: true,
   imports: [
-    MatDividerModule,
-    MatListModule,
-    RouterLink,
-    MatRippleModule,
-    MatProgressBarModule
+    MaterialModule,
+    RouterLink
   ]
 })
 export class QuickpanelComponent implements OnInit {

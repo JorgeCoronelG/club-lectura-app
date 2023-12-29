@@ -1,14 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import {
-  LOADING_BAR_CONFIG,
-  LoadingBarConfig,
-  LoadingBarModule,
-  LoadingBarService
-} from '@ngx-loading-bar/core';
+import { LOADING_BAR_CONFIG, LoadingBarConfig, LoadingBarModule, LoadingBarService } from '@ngx-loading-bar/core';
 import { delayWhen, interval, Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-progress-bar',
@@ -17,7 +12,7 @@ import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    MatProgressBarModule,
+    MaterialModule,
     LoadingBarModule,
     LoadingBarRouterModule,
     AsyncPipe

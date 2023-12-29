@@ -1,20 +1,14 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
 import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-user-dropdown.component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatRippleModule } from '@angular/material/core';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-toolbar-user',
   templateUrl: './toolbar-user.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [MatRippleModule, MatIconModule]
+  imports: [MaterialModule]
 })
 export class ToolbarUserComponent implements OnInit {
   dropdownOpen: boolean = false;

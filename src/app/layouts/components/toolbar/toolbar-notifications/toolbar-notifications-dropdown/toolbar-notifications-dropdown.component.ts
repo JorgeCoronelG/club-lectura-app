@@ -4,11 +4,8 @@ import { DateTime } from 'luxon';
 import { trackById } from '@shared/utils/track-by';
 import { VexDateFormatRelativePipe } from '@shared/pipes/vex-date-format-relative/vex-date-format-relative.pipe';
 import { RouterLink } from '@angular/router';
-import { MatRippleModule } from '@angular/material/core';
 import { NgClass, NgFor } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatButtonModule } from '@angular/material/button';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-toolbar-notifications-dropdown',
@@ -16,11 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrls: ['./toolbar-notifications-dropdown.component.scss'],
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatMenuModule,
-    MatIconModule,
+    MaterialModule,
     NgFor,
-    MatRippleModule,
     RouterLink,
     NgClass,
     VexDateFormatRelativePipe

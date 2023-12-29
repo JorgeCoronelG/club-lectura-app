@@ -1,33 +1,16 @@
 import { Component, Inject } from '@angular/core';
 import { VexConfigService } from '@shared/config/vex-config.service';
-import {
-  MatSlideToggleChange,
-  MatSlideToggleModule
-} from '@angular/material/slide-toggle';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { map } from 'rxjs/operators';
-import { MatRadioChange, MatRadioModule } from '@angular/material/radio';
-import {
-  AsyncPipe,
-  KeyValuePipe,
-  NgClass,
-  NgFor,
-  NgIf,
-  UpperCasePipe
-} from '@angular/common';
+import { MatRadioChange } from '@angular/material/radio';
+import { AsyncPipe, KeyValuePipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Observable } from 'rxjs';
-import {
-  VexColorScheme,
-  VexConfig,
-  VexConfigName,
-  VexThemeProvider
-} from '@shared/config/vex-config.interface';
+import { VexColorScheme, VexConfig, VexConfigName, VexThemeProvider } from '@shared/config/vex-config.interface';
 import { CSSValue } from '@shared/interfaces/css-value.type';
 import { isNil } from '@shared/utils/is-nil';
 import { defaultRoundedButtonBorderRadius } from '@shared/config/constants';
-import { MatButtonModule } from '@angular/material/button';
-import { MatRippleModule } from '@angular/material/core';
-import { MatIconModule } from '@angular/material/icon';
 import { VEX_THEMES } from '@shared/config/config.token';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-config-panel',
@@ -35,14 +18,10 @@ import { VEX_THEMES } from '@shared/config/config.token';
   styleUrls: ['./config-panel.component.scss'],
   standalone: true,
   imports: [
+    MaterialModule,
     NgIf,
-    MatIconModule,
-    MatRippleModule,
     NgFor,
-    MatButtonModule,
     NgClass,
-    MatSlideToggleModule,
-    MatRadioModule,
     AsyncPipe,
     UpperCasePipe,
     KeyValuePipe

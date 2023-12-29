@@ -1,15 +1,8 @@
-import {
-  Component,
-  DestroyRef,
-  ElementRef,
-  HostBinding,
-  inject,
-  OnInit
-} from '@angular/core';
+import { Component, DestroyRef, ElementRef, HostBinding, inject, OnInit } from '@angular/core';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter, map, startWith, switchMap } from 'rxjs/operators';
-import { NavigationService } from '../../../core/navigation/navigation.service';
+import { NavigationService } from '@core/navigation/navigation.service';
 import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
 import { MegaMenuComponent } from './mega-menu/mega-menu.component';
 import { Observable, of } from 'rxjs';
@@ -17,14 +10,12 @@ import { NavigationComponent } from '../navigation/navigation.component';
 import { ToolbarUserComponent } from './toolbar-user/toolbar-user.component';
 import { ToolbarNotificationsComponent } from './toolbar-notifications/toolbar-notifications.component';
 import { NavigationItemComponent } from '../navigation/navigation-item/navigation-item.component';
-import { MatMenuModule } from '@angular/material/menu';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { NavigationItem } from '../../../core/navigation/navigation-item.interface';
+import { NavigationItem } from '@core/navigation/navigation-item.interface';
 import { checkRouterChildsData } from '@shared/utils/check-router-childs-data';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-toolbar',
@@ -32,11 +23,9 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['./toolbar.component.scss'],
   standalone: true,
   imports: [
-    MatButtonModule,
-    MatIconModule,
+    MaterialModule,
     NgIf,
     RouterLink,
-    MatMenuModule,
     NgClass,
     NgFor,
     NavigationItemComponent,

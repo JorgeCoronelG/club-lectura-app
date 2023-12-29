@@ -11,20 +11,23 @@ import { SidenavComponent } from '../components/sidenav/sidenav.component';
 import { ToolbarComponent } from '../components/toolbar/toolbar.component';
 import { FooterComponent } from '../components/footer/footer.component';
 import { QuickpanelComponent } from '../components/quickpanel/quickpanel.component';
-import { ConfigPanelToggleComponent } from '../components/config-panel/config-panel-toggle/config-panel-toggle.component';
+import {
+  ConfigPanelToggleComponent
+} from '../components/config-panel/config-panel-toggle/config-panel-toggle.component';
 import { ConfigPanelComponent } from '../components/config-panel/config-panel.component';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BaseLayoutComponent } from '../base-layout/base-layout.component';
-import { MatDrawerMode, MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawerMode } from '@angular/material/sidenav';
 import { SearchComponent } from '../components/toolbar/search/search.component';
 import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex-progress-bar.component';
 import { VexConfig } from '@shared/config/vex-config.interface';
+import { MaterialModule } from '@core/material/material.module';
 
 @Component({
   selector: 'vex-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss'],
   imports: [
+    MaterialModule,
     BaseLayoutComponent,
     NgIf,
     AsyncPipe,
@@ -35,8 +38,6 @@ import { VexConfig } from '@shared/config/vex-config.interface';
     ConfigPanelToggleComponent,
     VexSidebarComponent,
     ConfigPanelComponent,
-    MatDialogModule,
-    MatSidenavModule,
     NgTemplateOutlet,
     RouterOutlet,
     SearchComponent,
