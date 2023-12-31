@@ -13,6 +13,7 @@ import { provideQuillConfig } from 'ngx-quill';
 import { MaterialModule } from '@shared/material/material.module';
 import { spinnerLoadingProvider } from '@shared/components/spinner-loading/spinner-loading.provider';
 import { retryProvider } from '@shared/interceptors/retry/retry.provider';
+import { apiTokenProvider } from '@shared/interceptors/api-token/api-token.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -85,5 +86,6 @@ export const appConfig: ApplicationConfig = {
     }),
     spinnerLoadingProvider(),
     retryProvider(),
+    apiTokenProvider(),
   ]
 };
