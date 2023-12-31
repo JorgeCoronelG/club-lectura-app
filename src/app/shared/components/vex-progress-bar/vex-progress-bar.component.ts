@@ -3,7 +3,7 @@ import { LOADING_BAR_CONFIG, LoadingBarConfig, LoadingBarModule, LoadingBarServi
 import { delayWhen, interval, Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
   selector: 'vex-progress-bar',

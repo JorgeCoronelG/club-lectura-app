@@ -4,14 +4,15 @@ import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
-import { provideIcons } from '@core/icons/icons.provider';
-import { provideLuxon } from '@core/luxon/luxon.provider';
+import { provideIcons } from '@shared/icons/icons.provider';
+import { provideLuxon } from '@shared/luxon/luxon.provider';
 import { provideVex } from '@shared/vex.provider';
-import { provideNavigation } from '@core/navigation/navigation.provider';
+import { provideNavigation } from '@shared/navigation/navigation.provider';
 import { vexConfigs } from '@shared/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 import { spinnerLoadingProvider } from '@shared/components/spinner-loading/spinner-loading.provider';
+import { retryProvider } from '@shared/interceptors/retry/retry.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -82,6 +83,7 @@ export const appConfig: ApplicationConfig = {
         ]
       }
     }),
-    spinnerLoadingProvider
+    spinnerLoadingProvider(),
+    retryProvider(),
   ]
 };

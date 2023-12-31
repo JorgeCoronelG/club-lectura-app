@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { fadeInUp400ms } from '@shared/animations/fade-in-up.animation';
 import { NgIf } from '@angular/common';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
   templateUrl: './forgot-password.component.html',

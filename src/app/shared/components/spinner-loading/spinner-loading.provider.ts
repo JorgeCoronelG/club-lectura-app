@@ -1,9 +1,13 @@
-import { Provider } from '@angular/core';
+import { EnvironmentProviders, Provider } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SpinnerLoadingInterceptor } from '@core/interceptors/spinner-loading.interceptor';
+import { SpinnerLoadingInterceptor } from '@shared/interceptors/spinner-loading/spinner-loading.interceptor';
 
-export const spinnerLoadingProvider: Provider = {
-  provide: HTTP_INTERCEPTORS,
-  useClass: SpinnerLoadingInterceptor,
-  multi: true
-};
+export function spinnerLoadingProvider(): Array<Provider | EnvironmentProviders> {
+  return [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: SpinnerLoadingInterceptor,
+      multi: true
+    }
+  ];
+}

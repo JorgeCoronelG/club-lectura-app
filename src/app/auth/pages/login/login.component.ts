@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { Router, RouterLink } from '@angular/router';
 import { fadeInUp400ms } from '@shared/animations/fade-in-up.animation';
 import { NgIf, NgOptimizedImage } from '@angular/common';
-import { MaterialModule } from '@core/material/material.module';
+import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
   templateUrl: './login.component.html',
