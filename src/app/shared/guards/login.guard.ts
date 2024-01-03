@@ -3,7 +3,7 @@ import { UserSessionService } from '@shared/services/user-session.service';
 import { inject } from '@angular/core';
 
 export function loginGuard(): CanActivateChildFn {
-  return () => {
+  return (): boolean => {
     const userSessionService: UserSessionService = inject(UserSessionService);
     const router: Router = inject(Router);
 

@@ -1,6 +1,7 @@
 import { LayoutComponent } from '@shared/layouts/layout/layout.component';
 import { VexRoutes } from '@shared/interfaces/vex-route.interface';
 import { loginGuard } from '@shared/guards/login.guard';
+import { authGuard } from '@shared/guards/auth.guard';
 
 export const appRoutes: VexRoutes = [
   {
@@ -13,7 +14,10 @@ export const appRoutes: VexRoutes = [
   {
     path: 'dashboard',
     component: LayoutComponent,
-    children: []
+    children: [],
+    canActivateChild: [
+      authGuard
+    ]
   },
   {
     path: '**',
