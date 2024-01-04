@@ -112,7 +112,7 @@ Here are just a few example variables, almost everything is done through variabl
 
 ## Adding Menu Items
 
-Our Menu is generated completely dynamic and is therefore very easy to customize and use, the simplest way is to simply inject the NavigationService and just override the `items` instance variable. Navigation Items have the `NavigationItem` type which you can use for autocompletion and type-safety. (Generally, all our components have typings available!)
+Our Menu is generated completely dynamic and is therefore very easy to customize and use, the simplest way is to simply inject the MenuService and just override the `items` instance variable. Navigation Items have the `NavigationItem` type which you can use for autocompletion and type-safety. (Generally, all our components have typings available!)
 
 You can add 3 different types: **Subheading, Link, Dropdown**
 
@@ -127,7 +127,7 @@ Here's an example inside the AppComponent:
 export class AppComponent {
   title = 'vex';
 
-  constructor(private navigationService: NavigationService) {
+  constructor(private navigationService: MenuService) {
     this.navigationService.items = [
       {
         label: 'Subheading'

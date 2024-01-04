@@ -2,7 +2,7 @@ import { Component, DestroyRef, ElementRef, HostBinding, inject, OnInit } from '
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter, map, startWith, switchMap } from 'rxjs/operators';
-import { NavigationService } from '@shared/navigation/navigation.service';
+import { MenuService } from '@shared/navigation/menu.service';
 import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
 import { MegaMenuComponent } from './mega-menu/mega-menu.component';
 import { Observable, of } from 'rxjs';
@@ -68,7 +68,7 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private readonly layoutService: VexLayoutService,
     private readonly configService: VexConfigService,
-    private readonly navigationService: NavigationService,
+    private readonly navigationService: MenuService,
     private readonly popoverService: VexPopoverService,
     private readonly router: Router
   ) {}

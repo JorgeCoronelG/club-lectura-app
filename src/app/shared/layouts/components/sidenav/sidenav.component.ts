@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NavigationService } from '@shared/navigation/navigation.service';
+import { MenuService } from '@shared/navigation/menu.service';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { VexConfigService } from '@shared/config/vex-config.service';
 import { map, startWith, switchMap } from 'rxjs/operators';
@@ -52,7 +52,7 @@ export class SidenavComponent implements OnInit {
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
   constructor(
-    private navigationService: NavigationService,
+    private navigationService: MenuService,
     private layoutService: VexLayoutService,
     private configService: VexConfigService,
     private readonly popoverService: VexPopoverService,

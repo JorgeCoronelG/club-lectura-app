@@ -14,7 +14,7 @@ import { NavigationDropdown, NavigationItem, NavigationLink } from '@shared/navi
 import { dropdownAnimation } from '@shared/animations/dropdown.animation';
 import { NavigationEnd, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { NavigationService } from '@shared/navigation/navigation.service';
+import { MenuService } from '@shared/navigation/menu.service';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MaterialModule } from '@shared/material/material.module';
@@ -50,7 +50,7 @@ export class SidenavItemComponent implements OnInit, OnChanges {
   constructor(
     private router: Router,
     private cd: ChangeDetectorRef,
-    private navigationService: NavigationService
+    private navigationService: MenuService
   ) {}
 
   @HostBinding('class')

@@ -4,19 +4,19 @@ import {
   inject,
   Provider
 } from '@angular/core';
-import { NavigationService } from './navigation.service';
-import { NavigationLoaderService } from './navigation-loader.service';
+import { MenuService } from './menu.service';
+import { MenuLoaderService } from './menu-loader.service';
 
 export function provideNavigation(): Array<Provider | EnvironmentProviders> {
   return [
     {
       provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(NavigationService),
+      useValue: () => inject(MenuService),
       multi: true
     },
     {
       provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(NavigationLoaderService),
+      useValue: () => inject(MenuLoaderService),
       multi: true
     }
   ];

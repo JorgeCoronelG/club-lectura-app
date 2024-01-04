@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationLoaderService {
+export class MenuLoaderService {
   private readonly _items: BehaviorSubject<NavigationItem[]> =
     new BehaviorSubject<NavigationItem[]>([]);
 

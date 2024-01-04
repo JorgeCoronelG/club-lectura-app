@@ -6,19 +6,19 @@ import {
   NavigationSubheading
 } from './navigation-item.interface';
 import { Observable, Subject } from 'rxjs';
-import { NavigationLoaderService } from './navigation-loader.service';
+import { MenuLoaderService } from './menu-loader.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NavigationService {
+export class MenuService {
   items$: Observable<NavigationItem[]> = this.navigationLoaderService.items$;
 
   private _openChangeSubject = new Subject<NavigationDropdown>();
   openChange$ = this._openChangeSubject.asObservable();
 
   constructor(
-    private readonly navigationLoaderService: NavigationLoaderService
+    private readonly navigationLoaderService: MenuLoaderService
   ) {}
 
   triggerOpenChange(item: NavigationDropdown) {

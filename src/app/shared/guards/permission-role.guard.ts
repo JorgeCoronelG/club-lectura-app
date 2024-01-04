@@ -12,7 +12,7 @@ export function permissionRoleGuard(
       return false;
     }
 
-    const authorize: number | undefined = rolesId.find(id => userSessionService.user.rol.id === id);
+    const authorize = rolesId.find(id => userSessionService.user.rol.id === id);
 
     return authorize != undefined;
   }

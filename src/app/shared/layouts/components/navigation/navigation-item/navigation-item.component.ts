@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NavigationItem, NavigationLink } from '@shared/navigation/navigation-item.interface';
 import { filter, map, startWith } from 'rxjs/operators';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { NavigationService } from '@shared/navigation/navigation.service';
+import { MenuService } from '@shared/navigation/menu.service';
 import { trackByRoute } from '@shared/utils/track-by';
 import { AsyncPipe, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
@@ -37,7 +37,7 @@ export class NavigationItemComponent implements OnInit {
   trackByRoute = trackByRoute;
 
   constructor(
-    private navigationService: NavigationService,
+    private navigationService: MenuService,
     private router: Router
   ) {}
 

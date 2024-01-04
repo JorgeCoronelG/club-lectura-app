@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavigationService } from '@shared/navigation/navigation.service';
+import { MenuService } from '@shared/navigation/menu.service';
 import { NavigationItemComponent } from './navigation-item/navigation-item.component';
 import { AsyncPipe, NgFor } from '@angular/common';
 import { Observable } from 'rxjs';
@@ -15,5 +15,5 @@ import { NavigationItem } from '@shared/navigation/navigation-item.interface';
 export class NavigationComponent {
   items$: Observable<NavigationItem[]> = this.navigationService.items$;
 
-  constructor(private navigationService: NavigationService) {}
+  constructor(private navigationService: MenuService) {}
 }
