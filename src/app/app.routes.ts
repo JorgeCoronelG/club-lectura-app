@@ -16,7 +16,7 @@ export const appRoutes: VexRoutes = [
     component: LayoutComponent,
     children: [],
     canActivateChild: [
-      authGuard
+      authGuard,
     ]
   },
   {
