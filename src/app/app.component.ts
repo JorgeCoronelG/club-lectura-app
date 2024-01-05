@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SpinnerLoadingComponent } from '@shared/components/spinner-loading/spinner-loading.component';
+import { SpinnerLoadingComponent } from '@shared/interceptors/spinner-loading/spinner-loading.component';
 
 @Component({
   selector: 'vex-root',

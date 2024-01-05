@@ -11,7 +11,7 @@ import { provideNavigation } from '@shared/navigation/navigation.provider';
 import { vexConfigs } from '@shared/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { MaterialModule } from '@shared/material/material.module';
-import { spinnerLoadingProvider } from '@shared/components/spinner-loading/spinner-loading.provider';
+import { spinnerLoadingProvider } from '@shared/interceptors/spinner-loading/spinner-loading.provider';
 import { retryProvider } from '@shared/interceptors/retry/retry.provider';
 import { apiTokenProvider } from '@shared/interceptors/api-token/api-token.provider';
 

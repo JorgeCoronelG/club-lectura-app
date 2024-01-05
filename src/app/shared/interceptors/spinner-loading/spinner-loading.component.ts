@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
-import { SpinnerLoadingService } from '@shared/components/spinner-loading/spinner-loading.service';
+import { SpinnerLoadingService } from '@shared/interceptors/spinner-loading/spinner-loading.service';
 
 @Component({
   selector: 'app-spinner-loading',
