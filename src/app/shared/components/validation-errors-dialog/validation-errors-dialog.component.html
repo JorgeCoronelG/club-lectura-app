@@ -1,0 +1,22 @@
+<div class="flex items-center" mat-dialog-title>
+  <h2 class="flex-auto">
+    Error de validación
+  </h2>
+</div>
+
+<mat-divider class="text-border">
+
+</mat-divider>
+
+<mat-dialog-content class="flex flex-col">
+  <div class="flex flex-row" *ngFor="let error of errors">
+    <mat-icon svgIcon="mat:chevron_right"></mat-icon>
+    <span>{{ error }}</span>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close type="button">
+    Cerrar
+  </button>
+</mat-dialog-actions>
