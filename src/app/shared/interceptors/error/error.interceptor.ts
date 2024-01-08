@@ -56,7 +56,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       let validationErrors: string[] = [];
       Object.entries(error).forEach(([, msgs]) => {
         const errors = msgs as string[];
-        validationErrors.concat(errors);
+        validationErrors = validationErrors.concat(errors);
       });
 
       this.dialog.open(ValidationErrorsDialogComponent, { data: validationErrors });
@@ -67,7 +67,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     this.snackbar.open(message, 'Cerrar', {
       horizontalPosition: 'end',
       verticalPosition: 'top',
-      duration: 3500
+      duration: 5000
     });
   }
 }
