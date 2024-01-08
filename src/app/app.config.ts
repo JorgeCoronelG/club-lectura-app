@@ -12,9 +12,7 @@ import { vexConfigs } from '@shared/config/vex-configs';
 import { provideQuillConfig } from 'ngx-quill';
 import { MaterialModule } from '@shared/material/material.module';
 import { spinnerLoadingProvider } from '@shared/interceptors/spinner-loading/spinner-loading.provider';
-import { retryProvider } from '@shared/interceptors/retry/retry.provider';
 import { apiTokenProvider } from '@shared/interceptors/api-token/api-token.provider';
-import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 import { matDialogProvider } from '@shared/providers/mat-dialog.provider';
 import { errorProvider } from '@shared/interceptors/error/error.provider';
 
@@ -90,7 +88,6 @@ export const appConfig: ApplicationConfig = {
     }),
     matDialogProvider(),
     spinnerLoadingProvider(),
-    retryProvider(),
     apiTokenProvider(),
     errorProvider()
   ]

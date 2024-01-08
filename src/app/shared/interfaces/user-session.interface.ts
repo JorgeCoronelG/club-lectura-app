@@ -1,4 +1,4 @@
-import { Rol } from '@shared/interfaces/role.interface';
+import { Rol } from '@shared/models/role.model';
 
 export interface UserSession {
   id: number;
