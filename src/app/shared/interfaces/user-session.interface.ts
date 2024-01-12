@@ -1,9 +1,7 @@
-import { Rol } from '@shared/models/role.model';
-
 export interface UserSession {
   id: number;
   nombreCompleto: string;
   correo: string;
+  rolId: number;
   token: string;
-  rol: Rol;
 }

@@ -1,4 +1,3 @@
-import { LayoutComponent } from '@shared/layouts/layout/layout.component';
 import { VexRoutes } from '@shared/interfaces/vex-route.interface';
 import { loginGuard } from '@shared/guards/login.guard';
 import { authGuard } from '@shared/guards/auth.guard';
@@ -8,15 +7,14 @@ export const appRoutes: VexRoutes = [
     path: '',
     loadChildren: () => import('./auth/auth.routes'),
     canActivateChild: [
-      loginGuard
+      loginGuard()
     ]
   },
   {
     path: 'dashboard',
-    component: LayoutComponent,
-    children: [],
+    loadChildren: () => import('./dashboard/dashboard.routes'),
     canActivateChild: [
-      authGuard,
+      authGuard(),
     ]
   },
   {

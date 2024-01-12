@@ -1,31 +1,29 @@
 import { Component } from '@angular/core';
-import { VexLayoutService } from '@shared/services/vex-layout.service';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { RouterOutlet } from '@angular/router';
-import { VexConfigService } from '@shared/config/vex-config.service';
-import { VexSidebarComponent } from '@shared/components/vex-sidebar/vex-sidebar.component';
-
 import { AsyncPipe, NgIf, NgTemplateOutlet } from '@angular/common';
-import { SidenavComponent } from '../components/sidenav/sidenav.component';
-import { ToolbarComponent } from '../components/toolbar/toolbar.component';
-import { FooterComponent } from '../components/footer/footer.component';
-import { QuickpanelComponent } from '../components/quickpanel/quickpanel.component';
+import { BaseLayoutComponent } from '@shared/layouts/base-layout/base-layout.component';
+import { ConfigPanelComponent } from '@shared/layouts/components/config-panel/config-panel.component';
 import {
   ConfigPanelToggleComponent
-} from '../components/config-panel/config-panel-toggle/config-panel-toggle.component';
-import { ConfigPanelComponent } from '../components/config-panel/config-panel.component';
-import { BaseLayoutComponent } from '../base-layout/base-layout.component';
-import { MatDrawerMode } from '@angular/material/sidenav';
-import { SearchComponent } from '../components/toolbar/search/search.component';
+} from '@shared/layouts/components/config-panel/config-panel-toggle/config-panel-toggle.component';
+import { FooterComponent } from '@shared/layouts/components/footer/footer.component';
+import { QuickpanelComponent } from '@shared/layouts/components/quickpanel/quickpanel.component';
+import { RouterOutlet } from '@angular/router';
+import { SearchComponent } from '@shared/layouts/components/toolbar/search/search.component';
+import { SidenavComponent } from '@shared/layouts/components/sidenav/sidenav.component';
+import { ToolbarComponent } from '@shared/layouts/components/toolbar/toolbar.component';
 import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex-progress-bar.component';
-import { VexConfig } from '@shared/config/vex-config.interface';
+import { VexSidebarComponent } from '@shared/components/vex-sidebar/vex-sidebar.component';
 import { MaterialModule } from '@shared/material/material.module';
+import { combineLatest, Observable } from 'rxjs';
+import { VexConfig } from '@shared/config/vex-config.interface';
+import { map } from 'rxjs/operators';
+import { MatDrawerMode } from '@angular/material/sidenav';
+import { VexLayoutService } from '@shared/services/vex-layout.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 
 @Component({
-  selector: 'vex-layout',
-  templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss'],
+  selector: 'app-dashboard',
+  standalone: true,
   imports: [
     MaterialModule,
     BaseLayoutComponent,
@@ -43,9 +41,10 @@ import { MaterialModule } from '@shared/material/material.module';
     SearchComponent,
     VexProgressBarComponent
   ],
-  standalone: true
+  templateUrl: './dashboard.component.html',
+  styles: ['']
 })
-export class LayoutComponent {
+export class DashboardComponent {
   config$: Observable<VexConfig> = this.configService.config$;
   sidenavCollapsed$: Observable<boolean> = this.layoutService.sidenavCollapsed$;
   sidenavDisableClose$: Observable<boolean> = this.layoutService.isDesktop$;

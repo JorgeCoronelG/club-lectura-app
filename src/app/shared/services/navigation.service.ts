@@ -3,12 +3,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { NavigationDropdown, NavigationLink } from '@shared/navigation/navigation-item.interface';
+import { Menu } from '@shared/models/menu.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NavigationService {
-  private _baseUrl = 'navigation';
+  private _baseUrl = 'navigation/';
 
   private http: HttpClient = inject(HttpClient);
 
@@ -23,6 +25,48 @@ export class NavigationService {
 
     return this.http.get<{hasPermission: boolean}>(url, { params }).pipe(
       map(({ hasPermission }) => hasPermission)
+    );
+  }
+
+  getNavigationMenu(): Observable<Array<NavigationLink | NavigationDropdown>> {
+    const url = `${this.url}navigation`;
+    return this.http.get<Menu[]>(url).pipe(
+      map<Menu[], Array<NavigationLink | NavigationDropdown>>(menus => {
+        let navigationItems: Array<NavigationLink | NavigationDropdown> = [];
+
+        menus.forEach(menu => {
+          const haveChildren = menu.submenu.length > 0;
+          let children: Array<NavigationLink> = [];
+
+          if (haveChildren) {
+            menu.submenu.forEach(({ pathRuta, etiqueta }) => {
+              children.push({
+                type: 'link',
+                route: pathRuta,
+                label: etiqueta
+              });
+            });
+          }
+
+          if (haveChildren) {
+            navigationItems.push({
+              type: 'dropdown',
+              label: menu.etiqueta,
+              icon: menu.icono,
+              children
+            });
+          } else {
+            navigationItems.push({
+              type: 'link',
+              route: menu.pathRuta,
+              label: menu.etiqueta,
+              icon: menu.icono
+            });
+          }
+        });
+
+        return navigationItems;
+      })
     );
   }
 }
