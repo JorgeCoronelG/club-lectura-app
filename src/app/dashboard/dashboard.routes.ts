@@ -1,4 +1,6 @@
 import { VexRoutes } from '@shared/interfaces/vex-route.interface';
+import { permissionRoleGuard } from '@shared/guards/permission-role.guard';
+import { RolesEnum } from '@shared/enums/roles.enum';
 
 const routes: VexRoutes = [
   {
@@ -13,6 +15,13 @@ const routes: VexRoutes = [
       {
         path: 'inicio',
         loadChildren: () => import('./home/home.routes')
+      },
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./users/user.routes'),
+        canActivateChild: [
+          permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA])
+        ]
       }
     ]
   }
