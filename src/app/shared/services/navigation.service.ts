@@ -19,7 +19,7 @@ export class NavigationService {
   }
 
   hasPermission(pathRoute: string): Observable<boolean> {
-    const url = `${this.url}/has-permission`;
+    const url = `${this.url}has-permission`;
     const params = new HttpParams()
       .append('pathRoute', pathRoute);
 
