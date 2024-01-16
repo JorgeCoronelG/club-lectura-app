@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor, HttpErrorResponse
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorResponse } from '@shared/interceptors/error/error-response.interface';
@@ -13,13 +8,17 @@ import {
   ValidationErrorsDialogComponent
 } from '@shared/components/validation-errors-dialog/validation-errors-dialog.component';
 import { Router } from '@angular/router';
+import { UserSessionService } from '@shared/services/user-session.service';
+import { MenuLoaderService } from '@shared/navigation/menu-loader.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private snackbar: MatSnackBar,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private userSessionService: UserSessionService,
+    private menuLoaderService: MenuLoaderService
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -33,7 +32,9 @@ export class ErrorInterceptor implements HttpInterceptor {
         this.validationErrors(error as ErrorResponse);
 
         if (status === 401) {
-          // TODO: crear lógica cuando no está autorizado y limpiar la sesión
+          this.userSessionService.removeToken();
+          this.userSessionService.clearUser();
+          this.menuLoaderService.loadDefaultNavigation();
           this.router.navigateByUrl('/login');
         }
 
