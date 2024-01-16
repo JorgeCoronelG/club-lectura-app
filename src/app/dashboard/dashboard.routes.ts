@@ -43,6 +43,13 @@ const routes: VexRoutes = [
         canActivateChild: [
           permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA])
         ]
+      },
+      {
+        path: 'prestamos',
+        loadChildren: () => import('./loans/loans.routes'),
+        canActivateChild: [
+          permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA, RolesEnum.LECTOR])
+        ]
       }
     ]
   }
