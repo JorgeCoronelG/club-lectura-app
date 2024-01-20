@@ -7,7 +7,7 @@ const routes: VexRoutes = [
     title: 'Gestión de autores',
     loadComponent: () => import('./pages/autors-managment/autors-managment.component').then(c => c.AutorsManagmentComponent),
     canActivate: [
-      permissionPathRouteGuard('/dashboard/autores')
+      permissionPathRouteGuard('/autores')
     ]
   },
 ];

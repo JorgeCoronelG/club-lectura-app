@@ -5,7 +5,7 @@ import { DeepPartial } from '../interfaces/deep-partial.type';
 import { mergeDeep } from '../utils/merge-deep';
 import { VexLayoutService } from '../services/vex-layout.service';
 import { vexConfigs } from './vex-configs';
-import { VexColorScheme, VexConfig, VexConfigName, VexConfigs, VexThemeProvider } from './vex-config.interface';
+import { VexColorScheme, VexConfig, VexConfigs, VexThemeProvider } from './vex-config.interface';
 import { CSSValue } from '../interfaces/css-value.type';
 import { map } from 'rxjs/operators';
 import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
@@ -33,16 +33,6 @@ export class VexConfigService {
 
   select<R>(selector: (config: VexConfig) => R): Observable<R> {
     return this.config$.pipe(map(selector));
-  }
-
-  setConfig(configName: VexConfigName) {
-    const settings = this.configMap[configName];
-
-    if (!settings) {
-      throw new Error(`Config with name '${configName}' does not exist!`);
-    }
-
-    this._configSubject.next(settings);
   }
 
   updateConfig(config: DeepPartial<VexConfig>) {

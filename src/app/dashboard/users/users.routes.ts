@@ -12,7 +12,7 @@ const routes: VexRoutes = [
     title: 'Gestión de usuarios',
     loadComponent: () => import('./pages/users-management/users-management.component').then(c => c.UsersManagementComponent),
     canActivate: [
-      permissionPathRouteGuard('/dashboard/usuarios/gestion')
+      permissionPathRouteGuard('/usuarios/gestion')
     ]
   },
   {
@@ -20,7 +20,7 @@ const routes: VexRoutes = [
     title: 'Permisos para usuarios',
     loadComponent: () => import('./pages/users-permission/users-permission.component').then(c => c.UsersPermissionComponent),
     canActivate: [
-      permissionPathRouteGuard('/dashboard/usuarios/permisos')
+      permissionPathRouteGuard('/usuarios/permisos')
     ]
   }
 ];

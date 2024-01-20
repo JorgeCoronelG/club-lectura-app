@@ -1,4 +1,4 @@
-<div *ngIf="config$ | async as setting" class="config-panel">
+<div *ngIf="config$ | async" class="config-panel">
   <h2 class="headline mb-4">
     <mat-icon class="mr-3" svgIcon="mat:settings"></mat-icon>
     <span>Configuración</span>
@@ -43,69 +43,6 @@
           svgIcon="mat:check"></mat-icon>
       </div>
       <p class="ml-1 font-medium text-sm">{{ theme.name | uppercase }}</p>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">DISEÑOS PRECONSTRUIDOS</h5>
-
-    <div
-      *ngFor="let config of configs; let first = first"
-      [class.mt-6]="!first"
-      class="rounded">
-      <div
-        class="layout-image rounded overflow-hidden relative hover:bg-hover shadow-md">
-        <img alt="config" [src]="config.imgSrc" class="w-full block" />
-        <div
-          class="layout-image-overlay flex items-center justify-center gap-1">
-          <button
-            (click)="setConfig(config.id, ColorSchemeName.LIGHT)"
-            class="bg-white text-black flex-none !min-w-[70px]"
-            mat-raised-button
-            type="button">
-            CLARO
-          </button>
-          <button
-            (click)="setConfig(config.id, ColorSchemeName.DARK)"
-            class="!bg-black !text-white flex-none !min-w-[70px]"
-            mat-raised-button
-            type="button">
-            OSCURO
-          </button>
-        </div>
-      </div>
-      <div class="text-center body-2 mt-2">{{ config.name }}</div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">ESQUINAS REDONDEADAS</h5>
-
-    <div class="grid grid-cols-4 gap-4">
-      <div
-        (click)="selectBorderRadius(borderRadius)"
-        *ngFor="let borderRadius of roundedCornerValues"
-        [class.border-gray-300]=""
-        [ngClass]="{
-          'border-gray-300': isSelectedBorderRadius(borderRadius, setting),
-          'border-transparent': !isSelectedBorderRadius(borderRadius, setting)
-        }"
-        class="aspect-square bgbg-primary-60010 flex justify-end items-end cursor-pointer border-2 hover:border-gray-200 group transition duration-400 ease-out-swift rounded-tl">
-        <div
-          [ngClass]="{
-            'bg-primary-600 border-primary-600': isSelectedBorderRadius(
-              borderRadius,
-              setting
-            ),
-            'bg-foreground border-gray-500 group-hover:bg-app-bar':
-              !isSelectedBorderRadius(borderRadius, setting)
-          }"
-          [style.border-top-left-radius]="
-            borderRadius.value + borderRadius.unit
-          "
-          class="h-7 w-7 border-2 transition duration-400 ease-out-swift"
-          style="margin-bottom: -2px; margin-right: -2px"></div>
-      </div>
     </div>
   </div>
 </div>

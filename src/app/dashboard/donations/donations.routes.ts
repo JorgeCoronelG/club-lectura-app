@@ -7,7 +7,7 @@ const routes: VexRoutes = [
     title: 'Donaciones',
     loadComponent: () => import('./pages/donations-managment/donations-managment.component').then(c => c.DonationsManagmentComponent),
     canActivate: [
-      permissionPathRouteGuard('/dashboard/donaciones')
+      permissionPathRouteGuard('/donaciones')
     ]
   },
 ];

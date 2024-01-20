@@ -5,8 +5,6 @@ export enum VexTheme {
 }
 
 export enum VexConfigName {
-  apollo = 'apollo',
-  poseidon = 'poseidon',
   ares = 'ares',
 }
 

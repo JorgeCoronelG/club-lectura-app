@@ -15,7 +15,7 @@ const routes: VexRoutes = [
     loadComponent: () => import('./pages/loans-managment/loans-managment.component').then(c => c.LoansManagmentComponent),
     canActivate: [
       permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA]),
-      permissionPathRouteGuard('/dashboard/prestamos/gestion')
+      permissionPathRouteGuard('/prestamos/gestion')
     ]
   },
   {
@@ -24,7 +24,7 @@ const routes: VexRoutes = [
     loadComponent: () => import('./pages/my-loans/my-loans.component').then(c => c.MyLoansComponent),
     canActivate: [
       permissionRoleGuard([RolesEnum.LECTOR]),
-      permissionPathRouteGuard('/dashboard/prestamos/mis-prestamos')
+      permissionPathRouteGuard('/prestamos/mis-prestamos')
     ]
   }
 ];

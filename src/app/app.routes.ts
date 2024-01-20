@@ -4,14 +4,14 @@ import { authGuard } from '@shared/guards/auth.guard';
 
 export const appRoutes: VexRoutes = [
   {
-    path: '',
+    path: 'auth',
     loadChildren: () => import('./auth/auth.routes'),
     canActivateChild: [
       loginGuard()
     ]
   },
   {
-    path: 'dashboard',
+    path: '',
     loadChildren: () => import('./dashboard/dashboard.routes'),
     canActivateChild: [
       authGuard(),
@@ -19,6 +19,6 @@ export const appRoutes: VexRoutes = [
   },
   {
     path: '**',
-    redirectTo: ''
+    redirectTo: 'auth'
   }
 ];

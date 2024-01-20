@@ -3,7 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter } from 'rxjs/operators';
 
-import { VexColorScheme, VexConfigName, VexTheme } from '@shared/config/vex-config.interface';
+import { VexColorScheme, VexTheme } from '@shared/config/vex-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +26,6 @@ export class VexDemoService {
       )
       .subscribe(() => {
         const route = this.router.routerState.root.snapshot;
-        if (route.queryParamMap.has('layout')) {
-          this.configService.setConfig(
-            route.queryParamMap.get('layout') as VexConfigName
-          );
-        }
 
         if (route.queryParamMap.has('style')) {
           this.configService.updateConfig({

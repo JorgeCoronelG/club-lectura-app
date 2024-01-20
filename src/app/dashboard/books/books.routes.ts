@@ -15,7 +15,7 @@ const routes: VexRoutes = [
     loadComponent: () => import('./pages/books-managment/books-managment.component').then(c => c.BooksManagmentComponent),
     canActivate: [
       permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA]),
-      permissionPathRouteGuard('/dashboard/libros/gestion')
+      permissionPathRouteGuard('/libros/gestion')
     ]
   },
   {
@@ -24,7 +24,7 @@ const routes: VexRoutes = [
     loadComponent: () => import('./pages/library/library.component').then(c => c.LibraryComponent),
     canActivate: [
       permissionRoleGuard([RolesEnum.LECTOR]),
-      permissionPathRouteGuard('/dashboard/libros/biblioteca')
+      permissionPathRouteGuard('/libros/biblioteca')
     ]
   }
 ];

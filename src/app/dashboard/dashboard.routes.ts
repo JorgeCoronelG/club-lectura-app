@@ -5,7 +5,7 @@ import { RolesEnum } from '@shared/enums/roles.enum';
 const routes: VexRoutes = [
   {
     path: '',
-    redirectTo: 'inicio',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -13,7 +13,7 @@ const routes: VexRoutes = [
     loadComponent: () => import('./dashboard.component').then(c => c.DashboardComponent),
     children: [
       {
-        path: 'inicio',
+        path: 'dashboard',
         loadChildren: () => import('./home/home.routes')
       },
       {
