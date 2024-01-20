@@ -1,13 +1,10 @@
 import { Component, Inject } from '@angular/core';
 import { VexConfigService } from '@shared/config/vex-config.service';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { map } from 'rxjs/operators';
-import { MatRadioChange } from '@angular/material/radio';
 import { AsyncPipe, KeyValuePipe, NgClass, NgFor, NgIf, UpperCasePipe } from '@angular/common';
 import { Observable } from 'rxjs';
 import { VexColorScheme, VexConfig, VexConfigName, VexThemeProvider } from '@shared/config/vex-config.interface';
 import { CSSValue } from '@shared/interfaces/css-value.type';
-import { isNil } from '@shared/utils/is-nil';
 import { defaultRoundedButtonBorderRadius } from '@shared/config/constants';
 import { VEX_THEMES } from '@shared/config/config.token';
 import { MaterialModule } from '@shared/material/material.module';
@@ -31,23 +28,11 @@ export class ConfigPanelComponent {
   configs: VexConfig[] = this.configService.configs;
   config$: Observable<VexConfig> = this.configService.config$;
 
-  isRTL$: Observable<boolean> = this.config$.pipe(
-    map((config) => config.direction === 'rtl')
-  );
-
   colorScheme$: Observable<VexColorScheme> = this.config$.pipe(
     map((config) => config.style.colorScheme)
   );
 
-  borderRadius$: Observable<number> = this.config$.pipe(
-    map((config) => config.style.borderRadius.value)
-  );
-
-  ConfigName = VexConfigName;
   ColorSchemeName = VexColorScheme;
-  selectedTheme$: Observable<string> = this.configService.select(
-    (config) => config.style.themeClassName
-  );
   isSelectedTheme$: Observable<(theme: string) => boolean> = this.configService
     .select((config) => config.style.themeClassName)
     .pipe(map((themeClassName) => (theme: string) => themeClassName === theme));
@@ -127,36 +112,6 @@ export class ConfigPanelComponent {
     });
   }
 
-  layoutRTLChange(change: MatSlideToggleChange): void {
-    this.configService.updateConfig({
-      direction: change.checked ? 'rtl' : 'ltr'
-    });
-  }
-
-  toolbarPositionChange(change: MatRadioChange): void {
-    this.configService.updateConfig({
-      toolbar: {
-        fixed: change.value === 'fixed'
-      }
-    });
-  }
-
-  footerVisibleChange(change: MatSlideToggleChange): void {
-    this.configService.updateConfig({
-      footer: {
-        visible: change.checked
-      }
-    });
-  }
-
-  footerPositionChange(change: MatRadioChange): void {
-    this.configService.updateConfig({
-      footer: {
-        fixed: change.value === 'fixed'
-      }
-    });
-  }
-
   isSelectedBorderRadius(borderRadius: CSSValue, config: VexConfig): boolean {
     return (
       borderRadius.value === config.style.borderRadius.value &&
@@ -168,27 +123,6 @@ export class ConfigPanelComponent {
     this.configService.updateConfig({
       style: {
         borderRadius: borderRadius
-      }
-    });
-  }
-
-  isSelectedButtonStyle(
-    buttonStyle: CSSValue | undefined,
-    config: VexConfig
-  ): boolean {
-    if (isNil(config.style.button.borderRadius) && isNil(buttonStyle)) {
-      return true;
-    }
-
-    return buttonStyle?.value === config.style.button.borderRadius?.value;
-  }
-
-  selectButtonStyle(borderRadius: CSSValue | undefined): void {
-    this.configService.updateConfig({
-      style: {
-        button: {
-          borderRadius: borderRadius
-        }
       }
     });
   }

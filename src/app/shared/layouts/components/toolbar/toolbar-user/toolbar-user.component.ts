@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
 import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-user-dropdown.component';
 import { MaterialModule } from '@shared/material/material.module';
+import { UserSessionService } from '@shared/services/user-session.service';
 
 @Component({
   selector: 'vex-toolbar-user',
@@ -15,8 +16,13 @@ export class ToolbarUserComponent implements OnInit {
 
   constructor(
     private popover: VexPopoverService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private userSessionService: UserSessionService
   ) {}
+
+  get username(): string {
+    return this.userSessionService.user.nombreCompleto;
+  }
 
   ngOnInit() {}
 

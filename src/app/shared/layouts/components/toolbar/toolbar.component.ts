@@ -1,14 +1,11 @@
-import { Component, DestroyRef, ElementRef, HostBinding, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, HostBinding, inject, OnInit } from '@angular/core';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { VexConfigService } from '@shared/config/vex-config.service';
-import { filter, map, startWith, switchMap } from 'rxjs/operators';
+import { filter, map, startWith } from 'rxjs/operators';
 import { MenuService } from '@shared/navigation/menu.service';
-import { VexPopoverService } from '@shared/components/vex-popover/vex-popover.service';
-import { MegaMenuComponent } from './mega-menu/mega-menu.component';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { NavigationComponent } from '../navigation/navigation.component';
 import { ToolbarUserComponent } from './toolbar-user/toolbar-user.component';
-import { ToolbarNotificationsComponent } from './toolbar-notifications/toolbar-notifications.component';
 import { NavigationItemComponent } from '../navigation/navigation-item/navigation-item.component';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { AsyncPipe, NgClass, NgFor, NgIf } from '@angular/common';
@@ -29,7 +26,6 @@ import { MaterialModule } from '@shared/material/material.module';
     NgClass,
     NgFor,
     NavigationItemComponent,
-    ToolbarNotificationsComponent,
     ToolbarUserComponent,
     NavigationComponent,
     AsyncPipe
@@ -54,22 +50,14 @@ export class ToolbarComponent implements OnInit {
   isNavbarBelowToolbar$: Observable<boolean> = this.configService.config$.pipe(
     map((config) => config.navbar.position === 'below-toolbar')
   );
-  userVisible$: Observable<boolean> = this.configService.config$.pipe(
-    map((config) => config.toolbar.user.visible)
-  );
-  title$: Observable<string> = this.configService.select(
-    (config) => config.sidenav.title
-  );
 
   isDesktop$: Observable<boolean> = this.layoutService.isDesktop$;
-  megaMenuOpen$: Observable<boolean> = of(false);
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   constructor(
     private readonly layoutService: VexLayoutService,
     private readonly configService: VexConfigService,
     private readonly navigationService: MenuService,
-    private readonly popoverService: VexPopoverService,
     private readonly router: Router
   ) {}
 
@@ -88,42 +76,7 @@ export class ToolbarComponent implements OnInit {
       });
   }
 
-  openQuickpanel(): void {
-    this.layoutService.openQuickpanel();
-  }
-
   openSidenav(): void {
     this.layoutService.openSidenav();
-  }
-
-  openMegaMenu(origin: ElementRef | HTMLElement): void {
-    this.megaMenuOpen$ = of(
-      this.popoverService.open({
-        content: MegaMenuComponent,
-        origin,
-        offsetY: 12,
-        position: [
-          {
-            originX: 'start',
-            originY: 'bottom',
-            overlayX: 'start',
-            overlayY: 'top'
-          },
-          {
-            originX: 'end',
-            originY: 'bottom',
-            overlayX: 'end',
-            overlayY: 'top'
-          }
-        ]
-      })
-    ).pipe(
-      switchMap((popoverRef) => popoverRef.afterClosed$.pipe(map(() => false))),
-      startWith(true)
-    );
-  }
-
-  openSearch(): void {
-    this.layoutService.openSearch();
   }
 }

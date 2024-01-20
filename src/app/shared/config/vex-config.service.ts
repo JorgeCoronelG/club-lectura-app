@@ -5,13 +5,7 @@ import { DeepPartial } from '../interfaces/deep-partial.type';
 import { mergeDeep } from '../utils/merge-deep';
 import { VexLayoutService } from '../services/vex-layout.service';
 import { vexConfigs } from './vex-configs';
-import {
-  VexColorScheme,
-  VexConfig,
-  VexConfigName,
-  VexConfigs,
-  VexThemeProvider
-} from './vex-config.interface';
+import { VexColorScheme, VexConfig, VexConfigName, VexConfigs, VexThemeProvider } from './vex-config.interface';
 import { CSSValue } from '../interfaces/css-value.type';
 import { map } from 'rxjs/operators';
 import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
@@ -61,7 +55,6 @@ export class VexConfigService {
     this._setLayoutClass(config.bodyClass);
     this._setStyle(config.style);
     this._setDensity();
-    this._setDirection(config.direction);
     this._setSidenavState(config.sidenav.state);
     this._emitResize();
   }
@@ -119,10 +112,6 @@ export class VexConfigService {
       window.dispatchEvent(new Event('resize'));
       setTimeout(() => window.dispatchEvent(new Event('resize')), 200);
     }
-  }
-
-  private _setDirection(direction: 'ltr' | 'rtl') {
-    this.document.body.dir = direction;
   }
 
   private _setSidenavState(sidenavState: 'expanded' | 'collapsed'): void {

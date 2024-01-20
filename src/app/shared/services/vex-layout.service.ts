@@ -8,9 +8,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   providedIn: 'root'
 })
 export class VexLayoutService {
-  private _quickpanelOpenSubject = new BehaviorSubject<boolean>(false);
-  quickpanelOpen$ = this._quickpanelOpenSubject.asObservable();
-
   private _sidenavOpenSubject = new BehaviorSubject<boolean>(false);
   sidenavOpen$ = this._sidenavOpenSubject.asObservable();
 
@@ -22,9 +19,6 @@ export class VexLayoutService {
 
   protected destroyRef: DestroyRef = inject(DestroyRef);
   private _configPanelOpenSubject = new BehaviorSubject<boolean>(false);
-
-  private _searchOpen = new BehaviorSubject<boolean>(false);
-  searchOpen$ = this._searchOpen.asObservable();
 
   isDesktop$ = this.breakpointObserver
     .observe(`(min-width: 1280px)`)
@@ -62,14 +56,6 @@ export class VexLayoutService {
       .subscribe(() => this.expandSidenav());
   }
 
-  openQuickpanel() {
-    this._quickpanelOpenSubject.next(true);
-  }
-
-  closeQuickpanel() {
-    this._quickpanelOpenSubject.next(false);
-  }
-
   openSidenav() {
     this._sidenavOpenSubject.next(true);
   }
@@ -100,13 +86,5 @@ export class VexLayoutService {
 
   closeConfigpanel() {
     this._configPanelOpenSubject.next(false);
-  }
-
-  openSearch() {
-    this._searchOpen.next(true);
-  }
-
-  closeSearch() {
-    this._searchOpen.next(false);
   }
 }

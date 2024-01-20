@@ -6,9 +6,7 @@ import {
   ConfigPanelToggleComponent
 } from '@shared/layouts/components/config-panel/config-panel-toggle/config-panel-toggle.component';
 import { FooterComponent } from '@shared/layouts/components/footer/footer.component';
-import { QuickpanelComponent } from '@shared/layouts/components/quickpanel/quickpanel.component';
 import { RouterOutlet } from '@angular/router';
-import { SearchComponent } from '@shared/layouts/components/toolbar/search/search.component';
 import { SidenavComponent } from '@shared/layouts/components/sidenav/sidenav.component';
 import { ToolbarComponent } from '@shared/layouts/components/toolbar/toolbar.component';
 import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex-progress-bar.component';
@@ -32,13 +30,11 @@ import { VexConfigService } from '@shared/config/vex-config.service';
     SidenavComponent,
     ToolbarComponent,
     FooterComponent,
-    QuickpanelComponent,
     ConfigPanelToggleComponent,
     VexSidebarComponent,
     ConfigPanelComponent,
     NgTemplateOutlet,
     RouterOutlet,
-    SearchComponent,
     VexProgressBarComponent
   ],
   templateUrl: './dashboard.component.html',
@@ -60,7 +56,6 @@ export class DashboardComponent {
   );
   sidenavOpen$: Observable<boolean> = this.layoutService.sidenavOpen$;
   configPanelOpen$: Observable<boolean> = this.layoutService.configPanelOpen$;
-  quickpanelOpen$: Observable<boolean> = this.layoutService.quickpanelOpen$;
 
   constructor(
     private readonly layoutService: VexLayoutService,
@@ -69,9 +64,5 @@ export class DashboardComponent {
 
   onSidenavClosed(): void {
     this.layoutService.closeSidenav();
-  }
-
-  onQuickpanelClosed(): void {
-    this.layoutService.closeQuickpanel();
   }
 }

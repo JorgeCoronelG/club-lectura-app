@@ -60,4 +60,20 @@ export class AuthService {
     const url = `${this.url}restore-password`;
     return this.http.patch<void>(url, user);
   }
+
+  logout(): Observable<void> {
+    const url = `${this.url}logout`;
+    return this.http.get<void>(url).pipe(
+      tap(() => {
+        this.userSessionService.removeToken();
+        this.userSessionService.clearUser();
+        this.menuLoaderService.loadDefaultNavigation();
+      })
+    );
+  }
+
+  changePassword(user: Partial<Usuario>): Observable<void> {
+    const url = `${this.url}change-password`;
+    return this.http.patch<void>(url, user);
+  }
 }

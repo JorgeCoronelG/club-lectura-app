@@ -15,4 +15,5 @@ export interface Usuario {
   rolId: number;
   rol: Rol;
   rememberMe?: boolean;
+  contraseniaActual?: string;
 }

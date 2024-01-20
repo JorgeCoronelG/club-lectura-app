@@ -15,7 +15,8 @@
       </h4>
     </div>
 
-    <div [formGroup]="form"
+    <form [formGroup]="form"
+          (ngSubmit)="send()"
          class="p-6 flex flex-col gap-4">
       <div class="flex flex-col gap-0.5">
         <mat-form-field class="flex-1">
@@ -45,8 +46,6 @@
             <mat-icon *ngIf="!visible" svgIcon="mat:visibility_off"></mat-icon>
           </button>
 
-          <mat-hint>Click en el ojo para alternar la visibilidad</mat-hint>
-
           <mat-error *ngIf="form.get('contrasenia')?.hasError('required')">
             La <strong>contraseña</strong> es obligatoria
           </mat-error>
@@ -66,14 +65,17 @@
           Recordarme
         </mat-checkbox>
 
-        <a [routerLink]="['/restablecer']" class="caption">
+        <a [routerLink]="['/restablecer']"
+           class="caption">
           ¿Olvidaste tu contraseña?
         </a>
       </div>
 
-      <button (click)="send()" color="primary" mat-raised-button type="button">
+      <button color="primary"
+              mat-raised-button
+              type="submit">
         INICIAR SESIÓN
       </button>
-    </div>
+    </form>
   </div>
 </div>

@@ -10,7 +10,6 @@ import {
   MatFormFieldDefaultOptions
 } from '@angular/material/form-field';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
-import { VexSplashScreenService } from '@shared/services/vex-splash-screen.service';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
 import { VexDemoService } from '@shared/services/vex-demo.service';
 import { VexPlatformService } from '@shared/services/vex-platform.service';
@@ -45,11 +44,6 @@ export function provideVex(options: {
       useValue: {
         appearance: 'outline'
       } satisfies MatFormFieldDefaultOptions
-    },
-    {
-      provide: ENVIRONMENT_INITIALIZER,
-      useValue: () => inject(VexSplashScreenService),
-      multi: true
     },
     {
       provide: ENVIRONMENT_INITIALIZER,

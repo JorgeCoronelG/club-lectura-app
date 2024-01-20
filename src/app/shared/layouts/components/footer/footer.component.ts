@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MaterialModule } from '@shared/material/material.module';
 
 @Component({
@@ -8,10 +8,8 @@ import { MaterialModule } from '@shared/material/material.module';
   standalone: true,
   imports: [MaterialModule]
 })
-export class FooterComponent implements OnInit, OnDestroy {
+export class FooterComponent {
+  year = new Date().getFullYear();
+
   constructor() {}
-
-  ngOnInit() {}
-
-  ngOnDestroy(): void {}
 }

@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { NavigationEnd, Router } from '@angular/router';
 import { VexConfigService } from '@shared/config/vex-config.service';
 import { filter } from 'rxjs/operators';
 
-import {
-  VexColorScheme,
-  VexConfigName,
-  VexTheme
-} from '@shared/config/vex-config.interface';
+import { VexColorScheme, VexConfigName, VexTheme } from '@shared/config/vex-config.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -29,7 +24,7 @@ export class VexDemoService {
           (event): event is NavigationEnd => event instanceof NavigationEnd
         )
       )
-      .subscribe((event) => {
+      .subscribe(() => {
         const route = this.router.routerState.root.snapshot;
         if (route.queryParamMap.has('layout')) {
           this.configService.setConfig(
@@ -54,14 +49,6 @@ export class VexDemoService {
             style: {
               themeClassName: theme
             }
-          });
-        }
-
-        if (route.queryParamMap.has('rtl')) {
-          this.configService.updateConfig({
-            direction: coerceBooleanProperty(route.queryParamMap.get('rtl'))
-              ? 'rtl'
-              : 'ltr'
           });
         }
       });

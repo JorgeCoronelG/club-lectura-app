@@ -7,9 +7,7 @@ import { combineLatest, Observable } from 'rxjs';
 import { checkRouterChildsData } from '@shared/utils/check-router-childs-data';
 import { AsyncPipe, DOCUMENT, NgIf, NgTemplateOutlet } from '@angular/common';
 import { VexConfigService } from '@shared/config/vex-config.service';
-import { SearchComponent } from '../components/toolbar/search/search.component';
 import { VexProgressBarComponent } from '@shared/components/vex-progress-bar/vex-progress-bar.component';
-import { isNil } from '@shared/utils/is-nil';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { VexConfig } from '@shared/config/vex-config.interface';
 import { MaterialModule } from '@shared/material/material.module';
@@ -21,7 +19,6 @@ import { MaterialModule } from '@shared/material/material.module';
   standalone: true,
   imports: [
     VexProgressBarComponent,
-    SearchComponent,
     MaterialModule,
     NgTemplateOutlet,
     RouterOutlet,
@@ -37,10 +34,6 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
    */
   isFooterVisible$ = combineLatest([
     /**
-     * Check if footer is enabled in the config
-     */
-    this.configService.config$.pipe(map((config) => config.footer.visible)),
-    /**
      * Check if footer is enabled on the current route
      */
     this.router.events.pipe(
@@ -54,12 +47,8 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
       )
     )
   ]).pipe(
-    map(([configEnabled, routeEnabled]) => {
-      if (isNil(routeEnabled)) {
-        return configEnabled;
-      }
-
-      return configEnabled && routeEnabled;
+    map(([routeEnabled]) => {
+      return routeEnabled;
     })
   );
   sidenavCollapsed$ = this.layoutService.sidenavCollapsed$;
@@ -75,8 +64,6 @@ export class BaseLayoutComponent implements OnInit, AfterViewInit {
       )
     )
   );
-
-  searchOpen$ = this.layoutService.searchOpen$;
 
   @ContentChild(MatSidenavContainer, { static: true })
   sidenavContainer!: MatSidenavContainer;

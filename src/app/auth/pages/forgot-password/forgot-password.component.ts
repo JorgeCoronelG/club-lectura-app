@@ -41,11 +41,7 @@ export class ForgotPasswordComponent {
     const user: Partial<Usuario> = this.form.getRawValue();
 
     this.authService.restorePassword(user).subscribe(() => {
-      this.snackbar.open('Revisa tu bandeja de correo para encontrar la contraseña temporal de tu cuenta', 'Cerrar', {
-        horizontalPosition: 'end',
-        verticalPosition: 'top',
-        duration: 5000
-      });
+      this.snackbar.open('Revisa tu bandeja de correo para encontrar la contraseña temporal de tu cuenta', 'Cerrar');
     });
   }
 

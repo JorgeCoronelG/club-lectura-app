@@ -1,11 +1,11 @@
 <div *ngIf="config$ | async as setting" class="config-panel">
   <h2 class="headline mb-4">
     <mat-icon class="mr-3" svgIcon="mat:settings"></mat-icon>
-    <span>Configuration</span>
+    <span>Configuración</span>
   </h2>
 
   <div class="section">
-    <h5 class="subheading">THEME BASE</h5>
+    <h5 class="subheading">TEMA BASE</h5>
 
     <div
       (click)="isDark(colorScheme) ? disableDarkMode() : enableDarkMode()"
@@ -16,12 +16,12 @@
         <mat-icon *ngIf="isDark(colorScheme)" svgIcon="mat:check"></mat-icon>
         <mat-icon *ngIf="!isDark(colorScheme)" svgIcon="mat:close"></mat-icon>
       </div>
-      <p class="ml-1 font-medium text-sm">DARK MODE</p>
+      <p class="ml-1 font-medium text-sm">MODO OSCURO</p>
     </div>
   </div>
 
   <div class="section">
-    <h5 class="subheading">THEME COLORS</h5>
+    <h5 class="subheading">PALETA DE COLORES</h5>
 
     <div
       (click)="selectTheme(theme)"
@@ -47,7 +47,7 @@
   </div>
 
   <div class="section">
-    <h5 class="subheading">PRE-BUILT LAYOUTS</h5>
+    <h5 class="subheading">DISEÑOS PRECONSTRUIDOS</h5>
 
     <div
       *ngFor="let config of configs; let first = first"
@@ -55,7 +55,7 @@
       class="rounded">
       <div
         class="layout-image rounded overflow-hidden relative hover:bg-hover shadow-md">
-        <img [src]="config.imgSrc" class="w-full block" />
+        <img alt="config" [src]="config.imgSrc" class="w-full block" />
         <div
           class="layout-image-overlay flex items-center justify-center gap-1">
           <button
@@ -63,14 +63,14 @@
             class="bg-white text-black flex-none !min-w-[70px]"
             mat-raised-button
             type="button">
-            LIGHT
+            CLARO
           </button>
           <button
             (click)="setConfig(config.id, ColorSchemeName.DARK)"
             class="!bg-black !text-white flex-none !min-w-[70px]"
             mat-raised-button
             type="button">
-            DARK
+            OSCURO
           </button>
         </div>
       </div>
@@ -79,7 +79,7 @@
   </div>
 
   <div class="section">
-    <h5 class="subheading">ROUNDED CORNERS</h5>
+    <h5 class="subheading">ESQUINAS REDONDEADAS</h5>
 
     <div class="grid grid-cols-4 gap-4">
       <div
@@ -106,94 +106,6 @@
           class="h-7 w-7 border-2 transition duration-400 ease-out-swift"
           style="margin-bottom: -2px; margin-right: -2px"></div>
       </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">BUTTON STYLE</h5>
-
-    <div class="flex justify-between gap-4">
-      <button
-        (click)="selectButtonStyle(undefined)"
-        [ngClass]="{
-          '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
-            !isSelectedButtonStyle(undefined, setting),
-          '!border-transparent': isSelectedButtonStyle(undefined, setting)
-        }"
-        class="rounded flex-1 border-2 border-solid"
-        color="primary"
-        mat-flat-button
-        type="button">
-        INHERIT
-      </button>
-      <button
-        (click)="selectButtonStyle(roundedButtonValue)"
-        [ngClass]="{
-          '!bg-transparent !border-solid !border-primary-600 !text-primary-600':
-            !isSelectedButtonStyle(roundedButtonValue, setting),
-          '!border-transparent': isSelectedButtonStyle(
-            roundedButtonValue,
-            setting
-          )
-        }"
-        class="rounded-full flex-1 border-2 border-solid"
-        color="primary"
-        mat-flat-button
-        type="button">
-        ROUNDED
-      </button>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">Layout</h5>
-
-    <div class="section-content">
-      <h5 class="subheading">Orientation</h5>
-
-      <mat-slide-toggle
-        (change)="layoutRTLChange($event)"
-        [checked]="isRTL$ | async"
-      >RTL
-      </mat-slide-toggle>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">Toolbar</h5>
-
-    <div class="section-content">
-      <h5 class="subheading">Position</h5>
-
-      <mat-radio-group
-        (change)="toolbarPositionChange($event)"
-        [value]="setting.toolbar.fixed ? 'fixed' : 'static'"
-        class="flex flex-col gap-3">
-        <mat-radio-button value="fixed">Fixed</mat-radio-button>
-        <mat-radio-button value="static">Static</mat-radio-button>
-      </mat-radio-group>
-    </div>
-  </div>
-
-  <div class="section">
-    <h5 class="subheading">Footer</h5>
-
-    <div class="section-content">
-      <mat-slide-toggle
-        (change)="footerVisibleChange($event)"
-        [checked]="setting.footer.visible"
-      >Visible
-      </mat-slide-toggle>
-
-      <h5 class="subheading">Position</h5>
-
-      <mat-radio-group
-        (change)="footerPositionChange($event)"
-        [value]="setting.footer.fixed ? 'fixed' : 'static'"
-        class="flex flex-col gap-3">
-        <mat-radio-button value="fixed">Fixed</mat-radio-button>
-        <mat-radio-button value="static">Static</mat-radio-button>
-      </mat-radio-group>
     </div>
   </div>
 </div>

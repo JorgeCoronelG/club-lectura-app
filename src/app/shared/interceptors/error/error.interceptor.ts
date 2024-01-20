@@ -65,10 +65,6 @@ export class ErrorInterceptor implements HttpInterceptor {
   }
 
   private createSnackBar(message: string): void {
-    this.snackbar.open(message, 'Cerrar', {
-      horizontalPosition: 'end',
-      verticalPosition: 'top',
-      duration: 5000
-    });
+    this.snackbar.open(message, 'Cerrar');
   }
 }

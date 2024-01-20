@@ -13,8 +13,8 @@ import { provideQuillConfig } from 'ngx-quill';
 import { MaterialModule } from '@shared/material/material.module';
 import { spinnerLoadingProvider } from '@shared/interceptors/spinner-loading/spinner-loading.provider';
 import { apiTokenProvider } from '@shared/interceptors/api-token/api-token.provider';
-import { matDialogProvider } from '@shared/providers/mat-dialog.provider';
 import { errorProvider } from '@shared/interceptors/error/error.provider';
+import { materialProviders } from '@shared/material/material.providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -46,27 +46,27 @@ export const appConfig: ApplicationConfig = {
        */
       availableThemes: [
         {
-          name: 'Default',
+          name: 'Por defecto',
           className: 'vex-theme-default'
         },
         {
-          name: 'Teal',
+          name: 'Verde azulado',
           className: 'vex-theme-teal'
         },
         {
-          name: 'Green',
+          name: 'Verde',
           className: 'vex-theme-green'
         },
         {
-          name: 'Purple',
+          name: 'Púrpura',
           className: 'vex-theme-purple'
         },
         {
-          name: 'Red',
+          name: 'Rojo',
           className: 'vex-theme-red'
         },
         {
-          name: 'Orange',
+          name: 'Naranja',
           className: 'vex-theme-orange'
         }
       ]
@@ -86,7 +86,7 @@ export const appConfig: ApplicationConfig = {
         ]
       }
     }),
-    matDialogProvider(),
+    materialProviders(),
     spinnerLoadingProvider(),
     apiTokenProvider(),
     errorProvider()

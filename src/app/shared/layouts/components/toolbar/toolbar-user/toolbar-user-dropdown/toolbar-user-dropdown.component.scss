@@ -79,17 +79,6 @@
   transition: inherit;
 }
 
-.notification-description {
-  @apply text-secondary text-xs;
-}
-
-.notification-chevron {
-  font-size: 18px;
-  height: 18px;
-  width: 18px;
-  @apply text-gray-400;
-}
-
 .notification + .notification {
   @apply border-t;
 }

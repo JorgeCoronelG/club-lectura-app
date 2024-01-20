@@ -1,17 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MenuItem } from '../interfaces/menu-item.interface';
-import { trackById } from '@shared/utils/track-by';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { VexPopoverRef } from '@shared/components/vex-popover/vex-popover-ref';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgClass, NgFor, NgIf } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
-
-export interface OnlineStatus {
-  id: 'online' | 'away' | 'dnd' | 'offline';
-  label: string;
-  icon: string;
-  colorClass: string;
-}
+import { UserSessionService } from '@shared/services/user-session.service';
+import { AuthService } from '@shared/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import {
+  ChangePasswordComponent
+} from '@shared/layouts/components/toolbar/toolbar-user/toolbar-user-dropdown/components/change-password/change-password.component';
 
 @Component({
   selector: 'vex-toolbar-user-dropdown',
@@ -28,85 +25,35 @@ export interface OnlineStatus {
   ]
 })
 export class ToolbarUserDropdownComponent implements OnInit {
-  items: MenuItem[] = [
-    {
-      id: '1',
-      icon: 'mat:account_circle',
-      label: 'My Profile',
-      description: 'Personal Information',
-      colorClass: 'text-teal-600',
-      route: '/apps/social'
-    },
-    {
-      id: '2',
-      icon: 'mat:move_to_inbox',
-      label: 'My Inbox',
-      description: 'Messages & Latest News',
-      colorClass: 'text-primary-600',
-      route: '/apps/chat'
-    },
-    {
-      id: '3',
-      icon: 'mat:list_alt',
-      label: 'My Projects',
-      description: 'Tasks & Active Projects',
-      colorClass: 'text-amber-600',
-      route: '/apps/scrumboard'
-    },
-    {
-      id: '4',
-      icon: 'mat:table_chart',
-      label: 'Billing Information',
-      description: 'Pricing & Current Plan',
-      colorClass: 'text-purple-600',
-      route: '/pages/pricing'
-    }
-  ];
-
-  statuses: OnlineStatus[] = [
-    {
-      id: 'online',
-      label: 'Online',
-      icon: 'mat:check_circle',
-      colorClass: 'text-green-600'
-    },
-    {
-      id: 'away',
-      label: 'Away',
-      icon: 'mat:access_time',
-      colorClass: 'text-orange-600'
-    },
-    {
-      id: 'dnd',
-      label: 'Do not disturb',
-      icon: 'mat:do_not_disturb',
-      colorClass: 'text-red-600'
-    },
-    {
-      id: 'offline',
-      label: 'Offline',
-      icon: 'mat:offline_bolt',
-      colorClass: 'text-gray-600'
-    }
-  ];
-
-  activeStatus: OnlineStatus = this.statuses[0];
-
-  trackById = trackById;
 
   constructor(
-    private cd: ChangeDetectorRef,
-    private popoverRef: VexPopoverRef<ToolbarUserDropdownComponent>
+    private popoverRef: VexPopoverRef<ToolbarUserDropdownComponent>,
+    private router: Router,
+    private matDialog: MatDialog,
+    private userSessionService: UserSessionService,
+    private authService: AuthService
   ) {}
+
+  get username(): string {
+    return this.userSessionService.user.nombreCompleto;
+  }
 
   ngOnInit() {}
 
-  setStatus(status: OnlineStatus) {
-    this.activeStatus = status;
-    this.cd.markForCheck();
+  close(): void {
+    this.popoverRef.close();
   }
 
-  close() {
-    this.popoverRef.close();
+  logout(): void {
+    this.authService.logout().subscribe(() => {
+      this.popoverRef.close();
+      this.router.navigateByUrl('/login');
+    });
+  }
+
+  openDialogChangePassword(): void {
+    this.popoverRef.close()
+
+    this.matDialog.open(ChangePasswordComponent);
   }
 }
