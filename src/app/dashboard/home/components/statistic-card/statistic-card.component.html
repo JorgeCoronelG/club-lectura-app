@@ -1,0 +1,10 @@
+<div class="card p-6 relative hover:shadow-lg transition duration-200 ease-out-swift flex flex-col items-center">
+  <div
+    [ngClass]="iconClass"
+    class="rounded-full w-12 h-12 flex items-center justify-center">
+    <mat-icon [svgIcon]="icon"></mat-icon>
+  </div>
+
+  <h2 class="display-2 font-bold mt-4 mb-2">{{ value }}</h2>
+  <h3 class="subheading-2 font-medium text-secondary m-0">{{ label }}</h3>
+</div>
