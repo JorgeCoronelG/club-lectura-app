@@ -1,0 +1,26 @@
+<mat-form-field class="flex">
+  <input [type]="type"
+         matInput />
+  <button [matMenuTriggerFor]="operatorsMenu"
+          mat-icon-button
+          matIconSuffix
+          matTooltip="Filtros avanzados"
+          type="button">
+    <mat-icon svgIcon="mat:filter_alt"></mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-menu #operatorsMenu="matMenu"
+          xPosition="before"
+          yPosition="below">
+  <ng-template matMenuContent>
+    <button mat-menu-item
+            *ngFor="let row of menu; index as i"
+            (click)="searchOption(row, i)"
+            [ngClass]="{ 'bg-primary-600/10': i === optionSelectedIndex }">
+      <span [ngClass]="{ 'text-primary-600': i === optionSelectedIndex }">
+        {{ row.label }}
+      </span>
+    </button>
+  </ng-template>
+</mat-menu>
