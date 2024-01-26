@@ -1,1 +1,102 @@
-<p>autors-managment works!</p>
+<vex-page-layout>
+  <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
+    <div class="container w-full flex flex-col sm:flex-row justify-between">
+      <div>
+        <h1 class="title mt-0 mb-1">Gestión de autores</h1>
+
+        <vex-breadcrumbs [crumbs]="breadcrumbs"></vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content class="container -mt-6">
+    <div class="card overflow-auto -mt-16">
+      <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+        <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+          <span>Autores</span>
+        </h2>
+
+        <span class="flex-1"></span>
+
+        <button
+          class="ml-4 flex-none"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Agregar autor"
+          type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
+
+      <table @stagger
+             [dataSource]="dataSource"
+             class="w-full"
+             mat-table
+             matSort>
+        <!-- Columna Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Nombre</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="text"></app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.nombre }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef
+              mat-header-cell>
+          </th>
+          <td *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell>
+            <button
+              [matMenuTriggerData]="{ author: row }"
+              [matMenuTriggerFor]="actionsMenu"
+              mat-icon-button
+              type="button">
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+
+        <tr *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        class="sticky left-0"></mat-paginator>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-author="author" matMenuContent>
+    <button (click)="updateAuthor(author)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button (click)="deleteAuthor(author.id)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
+  </ng-template>
+</mat-menu>
