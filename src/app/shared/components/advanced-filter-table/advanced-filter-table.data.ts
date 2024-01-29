@@ -1,5 +1,6 @@
 import { AdvancedFilterTable } from '@shared/components/advanced-filter-table/advanced-filter-table.model';
 import { OperatorsSqlEnum } from '@shared/enums/operators-sql.enum';
+import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 
 export const typeText: AdvancedFilterTable[] = [
   { label: 'Contiene', value: OperatorsSqlEnum.CONTAIN },
@@ -33,3 +34,11 @@ export const typeDate: AdvancedFilterTable[] = [
   { label: 'No nulo', value: OperatorsSqlEnum.NOT_NULL },
   { label: 'Es nulo', value: OperatorsSqlEnum.IS_NULL },
 ];
+
+export const allFilterEnum: CatalogoOpcion = {
+  id: 0,
+  catalogoId: 0,
+  estatus: true,
+  opcionId: 0,
+  valor: 'Todos'
+};

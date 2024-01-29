@@ -1,7 +1,9 @@
+import { TableColumnType } from '@shared/types/table-column.type';
+
 export interface TableColumn<T> {
   label: string;
   property: string;
-  type: 'text' | 'image' | 'badge' | 'progress' | 'checkbox' | 'button';
+  type?: TableColumnType;
   visible?: boolean;
   cssClasses?: string[];
 }

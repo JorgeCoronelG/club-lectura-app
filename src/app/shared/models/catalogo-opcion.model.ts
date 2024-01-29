@@ -4,7 +4,7 @@ export interface CatalogoOpcion {
   id: number;
   opcionId: number;
   catalogoId: number;
-  catalogo: Catalogo;
+  catalogo?: Catalogo;
   valor: string;
   estatus: boolean;
 }

@@ -49,9 +49,8 @@ export class AutorsManagmentComponent implements OnInit {
       visible: true
     },
     {
-      label: 'Actions',
+      label: 'Acciones',
       property: 'actions',
-      type: 'button',
       visible: true
     }
   ];

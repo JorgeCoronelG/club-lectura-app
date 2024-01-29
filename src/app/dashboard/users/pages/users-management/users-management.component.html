@@ -1,1 +1,234 @@
-<p>users-management works!</p>
+<vex-page-layout>
+  <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
+    <div class="container w-full flex flex-col sm:flex-row justify-between">
+      <div>
+        <h1 class="title mt-0 mb-1">Gestión de usuarios</h1>
+
+        <vex-breadcrumbs [crumbs]="breadcrumbs"></vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content class="container -mt-6">
+    <div class="card overflow-auto -mt-16">
+      <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+        <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+          <span>Usuarios</span>
+        </h2>
+
+        <span class="flex-1"></span>
+
+        <button
+          [matMenuTriggerFor]="columnFilterMenu"
+          class="ml-4 flex-none"
+          mat-icon-button
+          matTooltip="Filter Columns"
+          type="button">
+          <mat-icon svgIcon="mat:filter_list"></mat-icon>
+        </button>
+
+        <button
+          class="ml-4 flex-none"
+          color="primary"
+          mat-mini-fab
+          matTooltip="Agregar usuario"
+          type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
+
+      <table @stagger
+             class="w-full"
+             mat-table
+             matSort
+             [dataSource]="dataSource">
+        <!-- Columna Nombre Completo -->
+        <ng-container matColumnDef="nombreCompleto">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Nombre completo</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="text"></app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.nombreCompleto }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Correo electrónico -->
+        <ng-container matColumnDef="correo">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Correo electrónico</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="text"></app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.correo }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha nacimiento -->
+        <ng-container matColumnDef="fechaNacimiento">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Fecha nacimiento</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="date"></app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.fechaNacimiento | date:'dd-MM-Y' }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Género -->
+        <ng-container matColumnDef="sexoId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Género</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="enum"
+                                         [enumValues]="genreOptions">
+              </app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.sexoId }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Estatus -->
+        <ng-container matColumnDef="estatusId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Estatus</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="enum"
+                                         [enumValues]="statusUserOptions">
+              </app-advanced-filter-table>
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.estatusId }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Rol -->
+        <ng-container matColumnDef="rolId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Rol</b>
+                </span>
+              </div>
+
+              <!--<app-advanced-filter-table type="enum"></app-advanced-filter-table>-->
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.rolId }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef
+              mat-header-cell>
+          </th>
+          <td *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell>
+            <button
+              [matMenuTriggerData]="{ user: row }"
+              [matMenuTriggerFor]="actionsMenu"
+              mat-icon-button
+              type="button">
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+
+        <tr *matRowDef="let row; columns: visibleColumns"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            mat-row></tr>
+      </table>
+
+      <mat-paginator
+        [pageSizeOptions]="pageSizeOptions"
+        [pageSize]="pageSize"
+        class="sticky left-0"></mat-paginator>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-user="user" matMenuContent>
+    <button (click)="updateUser(user)" mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button (click)="deleteUser(user.id)" mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+    (click)="toggleColumnVisibility(column)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block">
+    <mat-checkbox
+      (click)="$event.stopPropagation()"
+      [(ngModel)]="column.visible"
+      color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>
