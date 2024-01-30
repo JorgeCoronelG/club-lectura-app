@@ -14,7 +14,7 @@ import {
   createThemeClassName
 } from '../utils/naming';
 // noinspection ES6PreferShortImport
-import { DeepPartial } from '../../interfaces/deep-partial.type';
+import { DeepPartial } from '../../types/deep-partial.type';
 
 export interface VexThemeColorPalette {
   50: string;

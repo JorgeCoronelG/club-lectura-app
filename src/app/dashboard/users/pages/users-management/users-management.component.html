@@ -9,7 +9,7 @@
     </div>
   </vex-page-layout-header>
 
-  <vex-page-layout-content class="container -mt-6">
+  <!--<vex-page-layout-content class="container -mt-6">
     <div class="card overflow-auto -mt-16">
       <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
         <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
@@ -42,7 +42,7 @@
              mat-table
              matSort
              [dataSource]="dataSource">
-        <!-- Columna Nombre Completo -->
+        &lt;!&ndash; Columna Nombre Completo &ndash;&gt;
         <ng-container matColumnDef="nombreCompleto">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -63,7 +63,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Correo electrónico -->
+        &lt;!&ndash; Columna Correo electrónico &ndash;&gt;
         <ng-container matColumnDef="correo">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -84,7 +84,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Fecha nacimiento -->
+        &lt;!&ndash; Columna Fecha nacimiento &ndash;&gt;
         <ng-container matColumnDef="fechaNacimiento">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -105,7 +105,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Género -->
+        &lt;!&ndash; Columna Género &ndash;&gt;
         <ng-container matColumnDef="sexoId">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -128,7 +128,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Estatus -->
+        &lt;!&ndash; Columna Estatus &ndash;&gt;
         <ng-container matColumnDef="estatusId">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -151,7 +151,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Rol -->
+        &lt;!&ndash; Columna Rol &ndash;&gt;
         <ng-container matColumnDef="rolId">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -163,7 +163,7 @@
                 </span>
               </div>
 
-              <!--<app-advanced-filter-table type="enum"></app-advanced-filter-table>-->
+              &lt;!&ndash;<app-advanced-filter-table type="enum"></app-advanced-filter-table>&ndash;&gt;
             </div>
           </th>
           <td *matCellDef="let row"
@@ -172,7 +172,7 @@
           </td>
         </ng-container>
 
-        <!-- Columna Acciones -->
+        &lt;!&ndash; Columna Acciones &ndash;&gt;
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef
               mat-header-cell>
@@ -203,7 +203,7 @@
         [pageSize]="pageSize"
         class="sticky left-0"></mat-paginator>
     </div>
-  </vex-page-layout-content>
+  </vex-page-layout-content>-->
 </vex-page-layout>
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">

@@ -30,9 +30,11 @@
 
       <table @stagger
              [dataSource]="dataSource"
+             [trackBy]="trackById"
              class="w-full"
              mat-table
-             matSort>
+             matSort
+             (matSortChange)="sortChange($event)">
         <!-- Columna Nombre -->
         <ng-container matColumnDef="nombre">
           <th *matHeaderCellDef
@@ -45,7 +47,11 @@
                 </span>
               </div>
 
-              <app-advanced-filter-table type="text"></app-advanced-filter-table>
+              <app-advanced-filter-table
+                type="text"
+                field="nombre"
+                (onOptionFilterChange)="addFilter($event)"
+              />
             </div>
           </th>
           <td *matCellDef="let row"
@@ -72,18 +78,19 @@
           </td>
         </ng-container>
 
-        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+        <tr *matHeaderRowDef="visibleColumns(columns)" mat-header-row></tr>
 
-        <tr *matRowDef="let row; columns: visibleColumns"
+        <tr *matRowDef="let row; columns: visibleColumns(columns)"
             @fadeInUp
-            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            class="hover:bg-hover transition duration-400 ease-out-swift"
             mat-row></tr>
       </table>
 
-      <mat-paginator
-        [pageSizeOptions]="pageSizeOptions"
-        [pageSize]="pageSize"
-        class="sticky left-0"></mat-paginator>
+      <ng-container *ngIf="authorResponse">
+        <app-paginator
+          [meta]="authorResponse.meta"
+          (onPaginationChange)="paginationChange($event)" />
+      </ng-container>
     </div>
   </vex-page-layout-content>
 </vex-page-layout>

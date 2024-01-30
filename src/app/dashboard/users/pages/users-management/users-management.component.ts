@@ -47,41 +47,35 @@ export class UsersManagementComponent implements OnInit {
     { route: ['usuarios', 'gestion'], label: 'Gestión' }
   ];
   dataSource!: MatTableDataSource<Partial<Usuario>>;
-  columns: TableColumn<Usuario>[] = [
+  columns: TableColumn[] = [
     {
       label: 'Nombre completo',
       property: 'nombreCompleto',
-      type: 'text',
       visible: true
     },
     {
       label: 'Correo electrónico',
       property: 'correo',
-      type: 'text',
       visible: true
     },
     {
       label: 'Fecha nacimiento',
       property: 'fechaNacimiento',
-      type: 'text',
       visible: true
     },
     {
       label: 'Género',
       property: 'sexoId',
-      type: 'enum',
       visible: true
     },
     {
       label: 'Estatus',
       property: 'estatusId',
-      type: 'enum',
       visible: true,
     },
     {
       label: 'Rol',
       property: 'rolId',
-      type: 'enum',
       visible: true
     },
     {
@@ -150,7 +144,7 @@ export class UsersManagementComponent implements OnInit {
     console.log(id);
   }
 
-  toggleColumnVisibility(column: TableColumn<Usuario>) {
+  toggleColumnVisibility(column: TableColumn) {
     column.visible = !column.visible;
   }
 

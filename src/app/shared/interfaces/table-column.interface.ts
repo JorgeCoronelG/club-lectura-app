@@ -1,9 +1,5 @@
-import { TableColumnType } from '@shared/types/table-column.type';
-
-export interface TableColumn<T> {
+export interface TableColumn {
   label: string;
   property: string;
-  type?: TableColumnType;
   visible?: boolean;
-  cssClasses?: string[];
 }

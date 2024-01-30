@@ -1,12 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
-import { DeepPartial } from '../interfaces/deep-partial.type';
+import { DeepPartial } from '../types/deep-partial.type';
 import { mergeDeep } from '../utils/merge-deep';
 import { VexLayoutService } from '../services/vex-layout.service';
 import { vexConfigs } from './vex-configs';
 import { VexColorScheme, VexConfig, VexConfigs, VexThemeProvider } from './vex-config.interface';
-import { CSSValue } from '../interfaces/css-value.type';
+import { CSSValue } from '../types/css-value.type';
 import { map } from 'rxjs/operators';
 import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
 

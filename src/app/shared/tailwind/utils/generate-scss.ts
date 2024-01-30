@@ -6,7 +6,7 @@ import {
 import * as fs from 'fs';
 import * as path from 'path';
 import { createThemeClassName } from '../utils/naming';
-import { DeepPartial } from '../../interfaces/deep-partial.type';
+import { DeepPartial } from '../../types/deep-partial.type';
 import { mergeDeep } from '../../utils/merge-deep';
 import deepClone from '../../utils/deep-clone';
 

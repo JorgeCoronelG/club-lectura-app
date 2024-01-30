@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { VexBreadcrumbsComponent } from '@shared/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutComponent } from '@shared/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutContentDirective } from '@shared/components/vex-page-layout/vex-page-layout-content.directive';
@@ -13,10 +13,20 @@ import { TableColumn } from '@shared/interfaces/table-column.interface';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter-table/advanced-filter-table.component';
+import { Meta, PaginationResponse } from '@shared/interfaces/pagination-response.interface';
+import { authorTableColumns } from './author-table-columns.data';
+import { trackById } from '@shared/utils/track-by';
+import { AuthorService } from '@shared/services/author.service';
+import { FiltersTable } from '@shared/utils/filters-table';
+import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
+import { Filter } from '@shared/interfaces/filters-http.interface';
+import { Sort } from '@angular/material/sort';
+import { visibleColumns } from '@shared/utils/table-utils';
 
 @Component({
   selector: 'app-autors-managment',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MaterialModule,
     VexBreadcrumbsComponent,
@@ -26,7 +36,8 @@ import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter
     FormsModule,
     ReactiveFormsModule,
     NgIf,
-    AdvancedFilterTableComponent
+    AdvancedFilterTableComponent,
+    PaginatorComponent
   ],
   templateUrl: './autors-managment.component.html',
   styles: [],
@@ -40,39 +51,23 @@ export class AutorsManagmentComponent implements OnInit {
     { route: ['autores'], label: 'Autores' },
     { route: ['autores'], label: 'Gestión' }
   ];
+  authorResponse?: PaginationResponse<Autor>;
   dataSource!: MatTableDataSource<Autor>;
-  columns: TableColumn<Autor>[] = [
-    {
-      label: 'Nombre',
-      property: 'nombre',
-      type: 'text',
-      visible: true
-    },
-    {
-      label: 'Acciones',
-      property: 'actions',
-      visible: true
-    }
-  ];
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 25, 50, 100];
+  columns: TableColumn[] = authorTableColumns;
+  filtersTable: FiltersTable = new FiltersTable();
+
+  trackById = trackById<Required<Autor>>;
+  visibleColumns = visibleColumns;
+
+  constructor(
+    private cd: ChangeDetectorRef,
+    private authorService: AuthorService
+  ) {}
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
-    this.dataSource.data = [
-      { id: 1, nombre: 'Dross' },
-      { id: 2, nombre: 'Jordi Wild' },
-      { id: 3, nombre: 'E.L. James' },
-      { id: 4, nombre: 'Sthephen King' },
-      { id: 5, nombre: 'John Green' }
-    ];
-  }
-
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
+    this.getAuthorsData();
   }
 
   updateAuthor(author: Autor): void {
@@ -81,5 +76,31 @@ export class AutorsManagmentComponent implements OnInit {
 
   deleteAuthor(id: number): void {
     console.log(id);
+  }
+
+  getAuthorsData(): void {
+    this.filtersTable.setPaginationOfMeta(this.authorResponse?.meta);
+
+    this.authorService.findAllPaginated(this.filtersTable)
+      .subscribe(response => {
+        this.authorResponse = response;
+        this.dataSource.data = this.authorResponse.data;
+        this.cd.markForCheck();
+      });
+  }
+
+  paginationChange(meta: Meta): void {
+    this.authorResponse!.meta = meta;
+    this.getAuthorsData();
+  }
+
+  sortChange(sortState: Sort): void {
+    this.filtersTable.setOrderBy(sortState);
+    this.getAuthorsData();
+  }
+
+  addFilter(filter: Filter): void {
+    this.filtersTable.addFilter(filter);
+    this.getAuthorsData();
   }
 }

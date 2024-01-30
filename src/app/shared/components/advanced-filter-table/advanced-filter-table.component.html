@@ -1,7 +1,11 @@
 <mat-form-field *ngIf="type === 'text' || type === 'number'"
                 class="flex">
-  <input [type]="type"
-         matInput />
+  <input
+    [type]="type"
+    matInput
+    [formControl]="input"
+    (keydown.enter)="onClickInput()"
+  />
   <button [matMenuTriggerFor]="operatorsMenu"
           mat-icon-button
           matIconSuffix
@@ -17,7 +21,8 @@
          [matDatepicker]="picker"
          (click)="picker.open()"
          placeholder="DD/MM/AAAA"
-         readonly>
+         readonly
+         [formControl]="input">
   <button [matMenuTriggerFor]="operatorsMenu"
           mat-icon-button
           matIconSuffix
@@ -30,7 +35,7 @@
 
 <mat-form-field *ngIf="type === 'enum'"
                 class="flex">
-  <mat-select [(value)]="optionSelectedIndex">
+  <mat-select [value]="optionSelectedIndex">
     <mat-option *ngFor="let row of enumMenu; index as i"
                 [value]="row.id"
                 (click)="searchOptionEnum(row, i)">

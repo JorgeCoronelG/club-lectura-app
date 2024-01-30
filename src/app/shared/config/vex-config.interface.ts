@@ -1,4 +1,4 @@
-import { CSSValue } from '../interfaces/css-value.type';
+import { CSSValue } from '../types/css-value.type';
 
 export enum VexTheme {
   DEFAULT = 'vex-theme-default',
