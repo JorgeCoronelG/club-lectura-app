@@ -10,6 +10,7 @@ import {
 import { Router } from '@angular/router';
 import { UserSessionService } from '@shared/services/user-session.service';
 import { MenuLoaderService } from '@shared/navigation/menu-loader.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -18,7 +19,8 @@ export class ErrorInterceptor implements HttpInterceptor {
     private dialog: MatDialog,
     private router: Router,
     private userSessionService: UserSessionService,
-    private menuLoaderService: MenuLoaderService
+    private menuLoaderService: MenuLoaderService,
+    private vexConfigService: VexConfigService,
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -35,6 +37,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.userSessionService.removeToken();
           this.userSessionService.clearUser();
           this.menuLoaderService.loadDefaultNavigation();
+          this.vexConfigService.removeTemplateConfig();
           this.router.navigateByUrl('/login');
         }
 

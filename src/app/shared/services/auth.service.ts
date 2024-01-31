@@ -9,6 +9,7 @@ import { NavigationService } from '@shared/services/navigation.service';
 import { map } from 'rxjs/operators';
 import { NavigationDropdown, NavigationLink } from '@shared/navigation/navigation-item.interface';
 import { MenuLoaderService } from '@shared/navigation/menu-loader.service';
+import { VexConfigService } from '@shared/config/vex-config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,7 @@ export class AuthService {
   private userSessionService: UserSessionService = inject(UserSessionService);
   private navigationService: NavigationService = inject(NavigationService);
   private menuLoaderService: MenuLoaderService = inject(MenuLoaderService);
+  private vexConfigService: VexConfigService = inject(VexConfigService);
 
   get url(): string {
     return environment.baseUrl + this._baseUrl;
@@ -68,6 +70,7 @@ export class AuthService {
         this.userSessionService.removeToken();
         this.userSessionService.clearUser();
         this.menuLoaderService.loadDefaultNavigation();
+        this.vexConfigService.removeTemplateConfig();
       })
     );
   }

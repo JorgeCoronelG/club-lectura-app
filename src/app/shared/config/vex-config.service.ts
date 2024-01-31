@@ -9,6 +9,7 @@ import { VexColorScheme, VexConfig, VexConfigs, VexThemeProvider } from './vex-c
 import { CSSValue } from '../types/css-value.type';
 import { map } from 'rxjs/operators';
 import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
+import { defaultTheme } from '@shared/config/available-themes.data';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,8 @@ import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
 export class VexConfigService {
   readonly configMap: VexConfigs = vexConfigs;
   readonly configs: VexConfig[] = Object.values(this.configMap);
+  private readonly _isEnableDarkMode: string = 'enable-dark-mode';
+  private readonly _themeColorSelected: string = 'theme-color';
   private _configSubject = new BehaviorSubject<VexConfig>(this.config);
 
   constructor(
@@ -31,6 +34,17 @@ export class VexConfigService {
     return this._configSubject.asObservable();
   }
 
+  get isEnableDarkMode(): boolean {
+    return JSON.parse(localStorage.getItem(this._isEnableDarkMode) || 'false');
+  }
+
+  get themeColorSelected(): VexThemeProvider {
+    const themeColor = localStorage.getItem(this._themeColorSelected);
+    return (themeColor)
+      ? JSON.parse(themeColor)
+      : { name: 'Por Defecto', className: 'vex-theme-default' };
+  }
+
   select<R>(selector: (config: VexConfig) => R): Observable<R> {
     return this.config$.pipe(map(selector));
   }
@@ -39,6 +53,31 @@ export class VexConfigService {
     this._configSubject.next(
       mergeDeep({ ...this._configSubject.getValue() }, config)
     );
+  }
+
+  setDarkModeLS(isEnable: boolean): void {
+    localStorage.setItem(this._isEnableDarkMode, JSON.stringify(isEnable));
+  }
+
+  setThemeColorLS(theme: VexThemeProvider): void {
+    localStorage.setItem(this._themeColorSelected, JSON.stringify(theme));
+  }
+
+  removeTemplateConfig(): void {
+    localStorage.removeItem(this._isEnableDarkMode);
+    localStorage.removeItem(this._themeColorSelected);
+
+    this.updateConfig({
+      style: {
+        colorScheme: VexColorScheme.LIGHT
+      }
+    });
+
+    this.updateConfig({
+      style: {
+        themeClassName: defaultTheme.className
+      }
+    });
   }
 
   private _updateConfig(config: VexConfig): void {

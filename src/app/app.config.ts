@@ -15,6 +15,14 @@ import { spinnerLoadingProvider } from '@shared/interceptors/spinner-loading/spi
 import { apiTokenProvider } from '@shared/interceptors/api-token/api-token.provider';
 import { errorProvider } from '@shared/interceptors/error/error.provider';
 import { materialProviders } from '@shared/material/material.providers';
+import {
+  defaultTheme,
+  greenTheme,
+  orangeTheme,
+  purpleTheme,
+  redTheme,
+  tealTheme
+} from '@shared/config/available-themes.data';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -45,30 +53,12 @@ export const appConfig: ApplicationConfig = {
        * Any theme not listed here will not be available in the config panel.
        */
       availableThemes: [
-        {
-          name: 'Por defecto',
-          className: 'vex-theme-default'
-        },
-        {
-          name: 'Verde azulado',
-          className: 'vex-theme-teal'
-        },
-        {
-          name: 'Verde',
-          className: 'vex-theme-green'
-        },
-        {
-          name: 'Púrpura',
-          className: 'vex-theme-purple'
-        },
-        {
-          name: 'Rojo',
-          className: 'vex-theme-red'
-        },
-        {
-          name: 'Naranja',
-          className: 'vex-theme-orange'
-        }
+        defaultTheme,
+        tealTheme,
+        greenTheme,
+        purpleTheme,
+        redTheme,
+        orangeTheme
       ]
     }),
     provideNavigation(),

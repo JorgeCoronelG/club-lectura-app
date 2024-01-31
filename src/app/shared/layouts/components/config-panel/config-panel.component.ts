@@ -36,7 +36,13 @@ export class ConfigPanelComponent {
   constructor(
     private readonly configService: VexConfigService,
     @Inject(VEX_THEMES) public readonly themes: VexThemeProvider[]
-  ) {}
+  ) {
+    if (configService.isEnableDarkMode) {
+      this.enableDarkMode();
+    }
+
+    this.selectTheme(this.configService.themeColorSelected);
+  }
 
   selectTheme(theme: VexThemeProvider): void {
     this.configService.updateConfig({
@@ -44,6 +50,8 @@ export class ConfigPanelComponent {
         themeClassName: theme.className
       }
     });
+
+    this.configService.setThemeColorLS(theme);
   }
 
   enableDarkMode(): void {
@@ -52,6 +60,8 @@ export class ConfigPanelComponent {
         colorScheme: VexColorScheme.DARK
       }
     });
+
+    this.configService.setDarkModeLS(true);
   }
 
   disableDarkMode(): void {
@@ -60,6 +70,8 @@ export class ConfigPanelComponent {
         colorScheme: VexColorScheme.LIGHT
       }
     });
+
+    this.configService.setDarkModeLS(false);
   }
 
   isDark(colorScheme: VexColorScheme): boolean {
