@@ -23,7 +23,8 @@
           color="primary"
           mat-mini-fab
           matTooltip="Agregar autor"
-          type="button">
+          type="button"
+          (click)="createAuthor()">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
@@ -97,7 +98,7 @@
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-author="author" matMenuContent>
-    <button (click)="updateAuthor(author)" mat-menu-item>
+    <button (click)="updateAuthor(author.id)" mat-menu-item>
       <mat-icon svgIcon="mat:edit"></mat-icon>
       <span>Editar</span>
     </button>

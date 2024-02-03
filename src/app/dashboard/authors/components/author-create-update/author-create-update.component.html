@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      {{ (data) ? 'Actualizar' : 'Nuevo' }} autor
+    </h2>
+
+    <button class="text-secondary"
+            mat-dialog-close
+            mat-icon-button
+            type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="flex flex-col">
+    <mat-form-field class="flex-auto">
+      <mat-label>Nombre</mat-label>
+      <input formControlName="nombre"
+             matInput />
+
+      <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+        El <b>nombre</b> es obligatorio
+      </mat-error>
+      <mat-error *ngIf="form.get('nombre')?.hasError('minlength')">
+        El <b>nombre</b> debe tener más de {{ form.get('nombre')?.getError('minlength').requiredLength }} caracteres
+      </mat-error>
+      <mat-error *ngIf="form.get('nombre')?.hasError('maxlength')">
+        El <b>nombre</b> debe tener menos de {{ form.get('nombre')?.getError('maxlength').requiredLength }} caracteres
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      type="button">
+      Cerrar
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
+      type="submit">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>

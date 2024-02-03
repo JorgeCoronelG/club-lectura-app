@@ -25,7 +25,7 @@ const routes: VexRoutes = [
       },
       {
         path: 'autores',
-        loadChildren: () => import('./autors/autors.routes'),
+        loadChildren: () => import('./authors/authors.routes'),
         canActivateChild: [
           permissionRoleGuard([RolesEnum.ADMINISTRADOR, RolesEnum.CAPTURISTA])
         ]

@@ -22,9 +22,13 @@ import { PaginatorComponent } from '@shared/components/paginator/paginator.compo
 import { Filter } from '@shared/interfaces/filters-http.interface';
 import { Sort } from '@angular/material/sort';
 import { visibleColumns } from '@shared/utils/table-utils';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthorCreateUpdateComponent } from '../../components/author-create-update/author-create-update.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
+import { of, switchMap } from 'rxjs';
 
 @Component({
-  selector: 'app-autors-managment',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
@@ -39,14 +43,14 @@ import { visibleColumns } from '@shared/utils/table-utils';
     AdvancedFilterTableComponent,
     PaginatorComponent
   ],
-  templateUrl: './autors-managment.component.html',
+  templateUrl: './authors-managment.component.html',
   styles: [],
   animations: [
     fadeInUp400ms,
     stagger40ms
   ]
 })
-export class AutorsManagmentComponent implements OnInit {
+export class AuthorsManagmentComponent implements OnInit {
   breadcrumbs: Breadcrumb[] = [
     { route: ['autores'], label: 'Autores' },
     { route: ['autores'], label: 'Gestión' }
@@ -56,11 +60,13 @@ export class AutorsManagmentComponent implements OnInit {
   columns: TableColumn[] = authorTableColumns;
   filtersTable: FiltersTable = new FiltersTable();
 
-  trackById = trackById<Required<Autor>>;
+  trackById = trackById<Autor>;
   visibleColumns = visibleColumns;
 
   constructor(
     private cd: ChangeDetectorRef,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
     private authorService: AuthorService
   ) {}
 
@@ -70,12 +76,42 @@ export class AutorsManagmentComponent implements OnInit {
     this.getAuthorsData();
   }
 
-  updateAuthor(author: Autor): void {
-    console.log(author);
+  createAuthor(): void {
+    this.dialog.open(AuthorCreateUpdateComponent)
+      .afterClosed()
+      .subscribe((updated) => {
+        if (updated) {
+          this.snackbar.open('Registro creado', 'Cerrar');
+          this.getAuthorsData();
+        }
+      });
+  }
+
+  updateAuthor(id: number): void {
+    this.authorService.show(id).subscribe(author => {
+      this.dialog.open(AuthorCreateUpdateComponent, { data: author })
+        .afterClosed()
+        .subscribe((updated) => {
+          if (updated) {
+            this.snackbar.open('Registro actualizado', 'Cerrar');
+            this.getAuthorsData();
+          }
+        });
+    });
   }
 
   deleteAuthor(id: number): void {
-    console.log(id);
+    this.dialog.open(ConfirmDeleteComponent)
+      .afterClosed()
+      .pipe(
+        switchMap(confirm => (confirm) ? this.authorService.delete(id): of(false))
+      )
+      .subscribe(confirm => {
+        if (confirm) {
+          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.getAuthorsData();
+        }
+      });
   }
 
   getAuthorsData(): void {

@@ -6,8 +6,8 @@ import { Meta } from '@shared/interfaces/pagination-response.interface';
 
 export class FiltersTable {
   private _filters: Filter[] = [];
-  private _orderBy: string = '';
-  private _defaultOrderBy: string = 'id';
+  private _defaultOrderBy: string = '-id';
+  private _orderBy: string = this._defaultOrderBy;
   private _currentPage: number = currentPageDefault;
   private _pageSize: number = paginationSizeDefault;
 
@@ -35,8 +35,7 @@ export class FiltersTable {
 
   setOrderBy(sortState: Sort): void {
     const sort = getSort(sortState);
-    this._orderBy = (sort.length === 0) ? `-${this._defaultOrderBy}` : sort;
-
+    this._orderBy = (sort.length === 0) ? this._defaultOrderBy : sort;
   }
 
   addFilter(newFilter: Filter): void {

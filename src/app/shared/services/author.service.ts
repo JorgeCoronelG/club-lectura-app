@@ -6,6 +6,7 @@ import { Autor } from '@shared/models/autor.model';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
 import { getPaginateParams } from '@shared/utils/http-utils';
 import { FiltersTable } from '@shared/utils/filters-table';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class AuthorService {
     return environment.baseUrl + this._baseUrl;
   }
 
-  store(data: Autor): Observable<Autor> {
+  store(data: Partial<Autor>): Observable<Autor> {
     return this.http.post<Autor>(this.url, data);
   }
 
@@ -33,9 +34,11 @@ export class AuthorService {
     return this.http.get<Autor>(url);
   }
 
-  delete(id: number): Observable<void> {
+  delete(id: number): Observable<boolean> {
     const url = this.url + id;
-    return this.http.delete<void>(url);
+    return this.http.delete<void>(url).pipe(
+      map(() => true)
+    );
   }
 
   findAllPaginated(filtersTable: FiltersTable)
