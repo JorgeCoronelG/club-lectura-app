@@ -1,0 +1,19 @@
+.woman-catalogo {
+  @apply text-pink-600;
+  @apply bg-pink-600/10;
+}
+
+.man-catalogo {
+  @apply text-blue-600;
+  @apply bg-blue-600/10;
+}
+
+.active-catalogo {
+  @apply text-green-600;
+  @apply bg-green-600/10;
+}
+
+.inactive-catalogo {
+  @apply text-gray-600;
+  @apply bg-gray-600/10;
+}

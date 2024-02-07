@@ -6,7 +6,7 @@ import { NgClass, NgFor, NgIf } from '@angular/common';
 import { TableColumnType } from '@shared/types/table-column.type';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 import { Filter } from '@shared/interfaces/filters-http.interface';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OperatorsSqlEnum } from '@shared/enums/operators-sql.enum';
 
 @Component({
@@ -19,6 +19,7 @@ import { OperatorsSqlEnum } from '@shared/enums/operators-sql.enum';
     NgIf,
     NgClass,
     ReactiveFormsModule,
+    FormsModule,
   ],
   templateUrl: './advanced-filter-table.component.html',
   styles: []
@@ -61,6 +62,10 @@ export class AdvancedFilterTableComponent {
     this.searchOption(this.menu[this.optionSelectedIndex], this.optionSelectedIndex);
   }
 
+  onDateChange(): void {
+    this.searchOption(this.menu[this.optionSelectedIndex], this.optionSelectedIndex);
+  }
+
   searchOption(data: AdvancedFilterTable, index: number): void {
     const filter: Filter = {
       field: this.field,
@@ -73,14 +78,13 @@ export class AdvancedFilterTableComponent {
     this.onOptionFilterChange.emit(filter);
   }
 
-  searchOptionEnum(data: CatalogoOpcion, index: number): void {
+  searchOptionEnum(data: CatalogoOpcion): void {
     const filter: Filter = {
       field: this.field,
       value: data.id,
       operator: OperatorsSqlEnum.EQUAL
     };
 
-    this.optionSelectedIndex = index;
     this.cd.markForCheck();
     this.onOptionFilterChange.emit(filter);
   }

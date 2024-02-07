@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { VexPageLayoutComponent } from '@shared/components/vex-page-layout/vex-page-layout.component';
 import { VexPageLayoutHeaderDirective } from '@shared/components/vex-page-layout/vex-page-layout-header.directive';
 import { VexBreadcrumbsComponent } from '@shared/components/vex-breadcrumbs/vex-breadcrumbs.component';
@@ -11,7 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Usuario } from '@shared/models/usuario.model';
 import { TableColumn } from '@shared/interfaces/table-column.interface';
 import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter-table/advanced-filter-table.component';
-import { DatePipe, NgFor } from '@angular/common';
+import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CatalogoOpcionService } from '@shared/services/catalogo-opcion.service';
 import { forkJoin } from 'rxjs';
@@ -19,10 +19,23 @@ import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
+import { userTableColumns } from './users-managment-table-columns.data';
+import { Meta, PaginationResponse } from '@shared/interfaces/pagination-response.interface';
+import { FiltersTable } from '@shared/utils/filters-table';
+import { toggleColumnVisibility, visibleColumns } from '@shared/utils/table-utils';
+import { UserService } from '@shared/services/user.service';
+import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
+import { Sort } from '@angular/material/sort';
+import { Filter } from '@shared/interfaces/filters-http.interface';
+import { trackById } from '@shared/utils/track-by';
+import { SexEnum } from '@shared/enums/catalogo-opciones/sex.enum';
+import { StatusUserEnum } from '@shared/enums/catalogo-opciones/status-user.enum';
+import { RolService } from '@shared/services/rol.service';
+import { Rol } from '@shared/models/role.model';
 
 @Component({
-  selector: 'app-users-management',
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MaterialModule,
     VexPageLayoutComponent,
@@ -33,9 +46,12 @@ import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced
     DatePipe,
     FormsModule,
     NgFor,
+    NgIf,
+    PaginatorComponent,
+    NgClass,
   ],
   templateUrl: './users-management.component.html',
-  styles: [],
+  styleUrls: ['./users-management.component.scss'],
   animations: [
     fadeInUp400ms,
     stagger40ms
@@ -46,94 +62,39 @@ export class UsersManagementComponent implements OnInit {
     { route: ['usuarios'], label: 'Usuarios' },
     { route: ['usuarios', 'gestion'], label: 'Gestión' }
   ];
-  dataSource!: MatTableDataSource<Partial<Usuario>>;
-  columns: TableColumn[] = [
-    {
-      label: 'Nombre completo',
-      property: 'nombreCompleto',
-      visible: true
-    },
-    {
-      label: 'Correo electrónico',
-      property: 'correo',
-      visible: true
-    },
-    {
-      label: 'Fecha nacimiento',
-      property: 'fechaNacimiento',
-      visible: true
-    },
-    {
-      label: 'Género',
-      property: 'sexoId',
-      visible: true
-    },
-    {
-      label: 'Estatus',
-      property: 'estatusId',
-      visible: true,
-    },
-    {
-      label: 'Rol',
-      property: 'rolId',
-      visible: true
-    },
-    {
-      label: 'Acciones',
-      property: 'actions',
-      visible: true
-    }
-  ];
-  pageSize = 10;
-  pageSizeOptions: number[] = [10, 25, 50, 100];
+  userResponse?: PaginationResponse<Usuario>;
+  dataSource!: MatTableDataSource<Usuario>;
+  columns: TableColumn[] = userTableColumns;
+  filtersTable: FiltersTable = new FiltersTable();
   genreOptions: CatalogoOpcion[] = [];
   statusUserOptions: CatalogoOpcion[] = [];
+  rolesOptions: CatalogoOpcion[] = [];
+
+  trackById = trackById<Usuario>;
+  visibleColumns = visibleColumns;
+  toggleColumnVisibility = toggleColumnVisibility;
 
   constructor(
-    private catalogoOpcionService: CatalogoOpcionService
+    private cd: ChangeDetectorRef,
+    private catalogoOpcionService: CatalogoOpcionService,
+    private userService: UserService,
+    private rolService: RolService,
   ) {
   }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource<Partial<Usuario>>();
+    this.dataSource = new MatTableDataSource<Usuario>();
 
-    this.dataSource.data = [
-      {
-        id: 1,
-        nombreCompleto: 'Laura Hernández Pérez',
-        correo: 'laura@gmail.com',
-        fechaNacimiento: new Date(2005, 1, 20),
-        sexoId: 2,
-        estatusId: 1,
-        rolId: 2
-      },
-      {
-        id: 2,
-        nombreCompleto: 'Nancy Oviedo López',
-        correo: 'nancy.oviedo@gmail.com',
-        fechaNacimiento: new Date(1985, 4, 13),
-        sexoId: 2,
-        estatusId: 1,
-        rolId: 1
-      },
-      {
-        id: 3,
-        nombreCompleto: 'José Juan Ramírez Montoya',
-        correo: 'juan.ramirez@gmail.com',
-        fechaNacimiento: new Date(2006, 11, 7),
-        sexoId: 1,
-        estatusId: 1,
-        rolId: 3
-      }
-    ];
-
-    this.getEnums();
+    this.getFiltersTable();
+    this.getUsersData();
   }
 
-  get visibleColumns() {
-    return this.columns
-      .filter((column) => column.visible)
-      .map((column) => column.property);
+  get sex(): typeof SexEnum {
+    return SexEnum;
+  }
+
+  get statusUser(): typeof StatusUserEnum {
+    return StatusUserEnum;
   }
 
   updateUser(user: Usuario): void {
@@ -144,24 +105,63 @@ export class UsersManagementComponent implements OnInit {
     console.log(id);
   }
 
-  toggleColumnVisibility(column: TableColumn) {
-    column.visible = !column.visible;
+  paginationChange(meta: Meta): void {
+    this.userResponse!.meta = meta;
+    this.getUsersData();
   }
 
-  getEnums(): void {
+  sortChange(sortState: Sort): void {
+    this.filtersTable.setOrderBy(sortState);
+    this.getUsersData();
+  }
+
+  addFilter(filter: Filter): void {
+    this.filtersTable.addFilter(filter);
+    this.getUsersData();
+  }
+
+  private getUsersData(): void {
+    this.filtersTable.setPaginationOfMeta(this.userResponse?.meta);
+
+    this.userService.findAllPaginated(this.filtersTable)
+      .subscribe(response => {
+        this.userResponse = response;
+        this.dataSource.data = response.data;
+        this.cd.markForCheck();
+      });
+  }
+
+  getFiltersTable(): void {
     forkJoin([
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.SEXO),
-      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_USUARIO)
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_USUARIO),
+      this.rolService.findAll(),
     ]).pipe(
-      map(([genreOptions, statusUserOptions]) => {
+      map(([genreOptions, statusUserOptions, roles]) => {
         return [
           [{ ... allFilterEnum }].concat([... genreOptions]),
-          [{ ... allFilterEnum }].concat([... statusUserOptions])
+          [{ ... allFilterEnum }].concat([... statusUserOptions]),
+          [{ ... allFilterEnum }].concat(this.convertRolesToEnum(roles))
         ];
       })
-    ).subscribe(([genreOptions, statusUserOptions]) => {
+    ).subscribe(([genreOptions, statusUserOptions, roles]) => {
       this.genreOptions = genreOptions;
       this.statusUserOptions = statusUserOptions;
+      this.rolesOptions = roles;
+    });
+  }
+
+  private convertRolesToEnum(roles: Rol[]): CatalogoOpcion[] {
+    return roles.map(rol => {
+      const opcion: CatalogoOpcion = {
+        id: rol.id,
+        opcionId: rol.id,
+        catalogoId: 0,
+        valor: rol.nombre,
+        estatus: true
+      };
+
+      return opcion;
     });
   }
 }
