@@ -1,6 +1,6 @@
 import { Filter, FiltersHttp } from '@shared/interfaces/filters-http.interface';
 import { Sort } from '@angular/material/sort';
-import { getSort } from '@shared/utils/http-utils';
+import { getSort } from '@shared/utils/http.utils';
 import { currentPageDefault, paginationSizeDefault } from '@shared/types/pagination.type';
 import { Meta } from '@shared/interfaces/pagination-response.interface';
 

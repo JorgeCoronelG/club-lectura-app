@@ -17,6 +17,8 @@ export interface Usuario {
   estatus: CatalogoOpcion;
   rolId: number;
   rol: Rol;
+  tipoId: number;
+  tipo: CatalogoOpcion;
   rememberMe?: boolean;
   contraseniaActual?: string;
   externo?: Externo;

@@ -1,13 +1,18 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { SpinnerLoadingService } from '@shared/interceptors/spinner-loading/spinner-loading.service';
 
 @Component({
   selector: 'app-spinner-loading',
   standalone: true,
-  imports: [CommonModule],
+  imports: [
+    NgIf
+  ],
   template: `
-    <div *ngIf="isLoading" class="overlay flex flex-col">
+    <div
+      *ngIf="isLoading"
+      class="overlay flex flex-col"
+    >
       <div class="loader book">
         <figure class="page"></figure>
         <figure class="page"></figure>

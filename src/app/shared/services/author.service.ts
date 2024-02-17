@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Autor } from '@shared/models/autor.model';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { getPaginateParams } from '@shared/utils/http-utils';
-import { FiltersTable } from '@shared/utils/filters-table';
+import { getPaginateParams } from '@shared/utils/http.utils';
+import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { map } from 'rxjs/operators';
 
 @Injectable({

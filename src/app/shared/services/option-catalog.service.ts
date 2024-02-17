@@ -7,7 +7,7 @@ import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 @Injectable({
   providedIn: 'root'
 })
-export class CatalogoOpcionService {
+export class OptionCatalogService {
   private _baseUrl = 'options-catalog/';
 
   private http: HttpClient = inject(HttpClient);

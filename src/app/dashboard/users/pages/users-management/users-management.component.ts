@@ -13,7 +13,7 @@ import { TableColumn } from '@shared/interfaces/table-column.interface';
 import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter-table/advanced-filter-table.component';
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CatalogoOpcionService } from '@shared/services/catalogo-opcion.service';
+import { OptionCatalogService } from '@shared/services/option-catalog.service';
 import { forkJoin } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
@@ -21,8 +21,8 @@ import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
 import { userTableColumns } from './users-managment-table-columns.data';
 import { Meta, PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { FiltersTable } from '@shared/utils/filters-table';
-import { toggleColumnVisibility, visibleColumns } from '@shared/utils/table-utils';
+import { FiltersTable } from '@shared/utils/filters.table.utils';
+import { toggleColumnVisibility, visibleColumns } from '@shared/utils/table.utils';
 import { UserService } from '@shared/services/user.service';
 import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
 import { Sort } from '@angular/material/sort';
@@ -32,6 +32,9 @@ import { SexEnum } from '@shared/enums/catalogo-opciones/sex.enum';
 import { StatusUserEnum } from '@shared/enums/catalogo-opciones/status-user.enum';
 import { RolService } from '@shared/services/rol.service';
 import { Rol } from '@shared/models/role.model';
+import { MatDialog } from '@angular/material/dialog';
+import { UserCreateUpdateComponent } from '../../components/user-create-update/user-create-update.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,
@@ -70,13 +73,15 @@ export class UsersManagementComponent implements OnInit {
   statusUserOptions: CatalogoOpcion[] = [];
   rolesOptions: CatalogoOpcion[] = [];
 
-  trackById = trackById<Usuario>;
+  trackById = trackById;
   visibleColumns = visibleColumns;
   toggleColumnVisibility = toggleColumnVisibility;
 
   constructor(
     private cd: ChangeDetectorRef,
-    private catalogoOpcionService: CatalogoOpcionService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
+    private catalogoOpcionService: OptionCatalogService,
     private userService: UserService,
     private rolService: RolService,
   ) {
@@ -95,6 +100,19 @@ export class UsersManagementComponent implements OnInit {
 
   get statusUser(): typeof StatusUserEnum {
     return StatusUserEnum;
+  }
+
+  createUser(): void {
+    this.dialog.open(UserCreateUpdateComponent, {
+      panelClass: 'w-11/12',
+    })
+      .afterClosed()
+      .subscribe((updated) => {
+        if (updated) {
+          this.snackbar.open('Registro creado', 'Cerrar');
+          this.getUsersData();
+        }
+      });
   }
 
   updateUser(user: Usuario): void {

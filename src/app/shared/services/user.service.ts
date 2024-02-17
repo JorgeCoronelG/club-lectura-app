@@ -4,9 +4,9 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Usuario } from '@shared/models/usuario.model';
 import { map } from 'rxjs/operators';
-import { FiltersTable } from '@shared/utils/filters-table';
+import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { getPaginateParams } from '@shared/utils/http-utils';
+import { getPaginateParams } from '@shared/utils/http.utils';
 
 @Injectable({
   providedIn: 'root'

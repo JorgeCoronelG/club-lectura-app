@@ -12,10 +12,10 @@ import { Usuario } from '@shared/models/usuario.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '@shared/interfaces/table-column.interface';
 import { userPermissionTableColumns } from './users-permission-table-columns.data';
-import { FiltersTable } from '@shared/utils/filters-table';
+import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 import { trackById } from '@shared/utils/track-by';
-import { visibleColumns } from '@shared/utils/table-utils';
+import { visibleColumns } from '@shared/utils/table.utils';
 import { UserService } from '@shared/services/user.service';
 import { RolService } from '@shared/services/rol.service';
 import { map } from 'rxjs/operators';
@@ -58,7 +58,7 @@ export class UsersPermissionComponent implements OnInit {
   filtersTable: FiltersTable = new FiltersTable();
   rolesOptions: CatalogoOpcion[] = [];
 
-  trackById = trackById<Usuario>;
+  trackById = trackById;
   visibleColumns = visibleColumns;
 
 

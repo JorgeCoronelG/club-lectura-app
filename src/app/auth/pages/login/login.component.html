@@ -25,10 +25,10 @@
                  matInput />
 
           <mat-error *ngIf="form.get('correo')?.hasError('required')">
-            El <strong>correo electrónico</strong> es obligatorio
+            Campo obligatorio
           </mat-error>
           <mat-error *ngIf="form.get('correo')?.hasError('email')">
-            El <strong>correo electrónico</strong> no es válido
+            El campo no es una dirección de correo válida
           </mat-error>
         </mat-form-field>
 
@@ -47,13 +47,13 @@
           </button>
 
           <mat-error *ngIf="form.get('contrasenia')?.hasError('required')">
-            La <strong>contraseña</strong> es obligatoria
+            Campo obligatorio
           </mat-error>
           <mat-error *ngIf="form.get('contrasenia')?.hasError('minlength')">
-            La <strong>contraseña</strong> debe tener más de {{ form.get('contrasenia')?.getError('minlength').requiredLength }} caracteres
+            El campo debe tener más de {{ form.get('contrasenia')?.getError('minlength').requiredLength }} caracteres
           </mat-error>
           <mat-error *ngIf="form.get('contrasenia')?.hasError('maxlength')">
-            La <strong>contraseña</strong> debe tener menos de {{ form.get('contrasenia')?.getError('maxlength').requiredLength }} caracteres
+            El campo debe tener menos de {{ form.get('contrasenia')?.getError('maxlength').requiredLength }} caracteres
           </mat-error>
         </mat-form-field>
       </div>

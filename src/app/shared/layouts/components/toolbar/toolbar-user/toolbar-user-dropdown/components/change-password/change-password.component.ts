@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/
 import { MaterialModule } from '@shared/material/material.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { JsonPipe, NgIf } from '@angular/common';
-import { comparePassword } from '@shared/utils/form-validations';
+import { comparePassword } from '@shared/utils/form-validations.utils';
 import { AuthService } from '@shared/services/auth.service';
 import { Usuario } from '@shared/models/usuario.model';
 import { MatSnackBar } from '@angular/material/snack-bar';

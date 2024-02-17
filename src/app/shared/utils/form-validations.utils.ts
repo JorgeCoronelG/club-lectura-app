@@ -15,7 +15,7 @@ export const comparePassword = (password: string, confirmPassword: string) => {
   }
 }
 
-export const removeError = (control: AbstractControl, error: string): void => {
+const removeError = (control: AbstractControl, error: string): void => {
   const err = control.errors;
   if (err) {
     delete err[error];

@@ -3,4 +3,5 @@ export enum CatalogoEnum {
   SEXO = 2,
   TIPO_ESCOLAR = 3,
   TURNO_ALUMNO = 4,
+  TIPO_USUARIO = 5,
 }

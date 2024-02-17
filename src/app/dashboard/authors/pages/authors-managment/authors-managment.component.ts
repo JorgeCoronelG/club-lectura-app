@@ -17,11 +17,11 @@ import { Meta, PaginationResponse } from '@shared/interfaces/pagination-response
 import { authorTableColumns } from './author-table-columns.data';
 import { trackById } from '@shared/utils/track-by';
 import { AuthorService } from '@shared/services/author.service';
-import { FiltersTable } from '@shared/utils/filters-table';
+import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
 import { Filter } from '@shared/interfaces/filters-http.interface';
 import { Sort } from '@angular/material/sort';
-import { visibleColumns } from '@shared/utils/table-utils';
+import { visibleColumns } from '@shared/utils/table.utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthorCreateUpdateComponent } from '../../components/author-create-update/author-create-update.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -60,7 +60,7 @@ export class AuthorsManagmentComponent implements OnInit {
   columns: TableColumn[] = authorTableColumns;
   filtersTable: FiltersTable = new FiltersTable();
 
-  trackById = trackById<Autor>;
+  trackById = trackById;
   visibleColumns = visibleColumns;
 
   constructor(

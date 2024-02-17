@@ -21,13 +21,13 @@
              matInput />
 
       <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-        El <b>nombre</b> es obligatorio
+        Campo obligatorio
       </mat-error>
       <mat-error *ngIf="form.get('nombre')?.hasError('minlength')">
-        El <b>nombre</b> debe tener más de {{ form.get('nombre')?.getError('minlength').requiredLength }} caracteres
+        El campo debe tener más de {{ form.get('nombre')?.getError('minlength').requiredLength }} caracteres
       </mat-error>
       <mat-error *ngIf="form.get('nombre')?.hasError('maxlength')">
-        El <b>nombre</b> debe tener menos de {{ form.get('nombre')?.getError('maxlength').requiredLength }} caracteres
+        El campo debe tener menos de {{ form.get('nombre')?.getError('maxlength').requiredLength }} caracteres
       </mat-error>
     </mat-form-field>
   </mat-dialog-content>

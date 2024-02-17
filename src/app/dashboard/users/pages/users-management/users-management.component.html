@@ -32,7 +32,8 @@
           color="primary"
           mat-mini-fab
           matTooltip="Agregar usuario"
-          type="button">
+          type="button"
+          (click)="createUser()">
           <mat-icon svgIcon="mat:add"></mat-icon>
         </button>
       </div>
@@ -125,8 +126,7 @@
               mat-header-cell>
             <div class="flex flex-col gap-2">
               <div class="flex items-center justify-center mt-2">
-                <span class="uppercase"
-                      mat-sort-header>
+                <span class="uppercase">
                   <b>Género</b>
                 </span>
               </div>
@@ -157,8 +157,7 @@
               mat-header-cell>
             <div class="flex flex-col gap-2">
               <div class="flex items-center justify-center mt-2">
-                <span class="uppercase"
-                      mat-sort-header>
+                <span class="uppercase">
                   <b>Estatus</b>
                 </span>
               </div>
@@ -189,8 +188,7 @@
               mat-header-cell>
             <div class="flex flex-col gap-2">
               <div class="flex items-center justify-center mt-2">
-                <span class="uppercase"
-                      mat-sort-header>
+                <span class="uppercase">
                   <b>Rol</b>
                 </span>
               </div>
