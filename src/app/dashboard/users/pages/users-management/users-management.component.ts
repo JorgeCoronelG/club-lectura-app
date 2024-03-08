@@ -115,12 +115,20 @@ export class UsersManagementComponent implements OnInit {
       });
   }
 
-  updateUser(user: Usuario): void {
-    console.log(user);
-  }
-
-  deleteUser(id: number): void {
-    console.log(id);
+  updateUser(id: number): void {
+    this.userService.show(id).subscribe(user => {
+      this.dialog.open(UserCreateUpdateComponent, {
+        data: user,
+        panelClass: 'w-11/12',
+      })
+        .afterClosed()
+        .subscribe((updated) => {
+          if (updated) {
+            this.snackbar.open('Registro actualizado', 'Cerrar');
+            this.getUsersData();
+          }
+        });
+    });
   }
 
   paginationChange(meta: Meta): void {

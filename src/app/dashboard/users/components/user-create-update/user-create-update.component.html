@@ -57,6 +57,7 @@
           matInput
           formControlName="telefono"
           onlyNumbers
+          maxlength="10"
         />
 
         <mat-error *ngIf="form.get('telefono')?.hasError('required')">
@@ -83,6 +84,24 @@
         <mat-datepicker #picker></mat-datepicker>
 
         <mat-error *ngIf="form.get('fechaNacimiento')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field
+        *ngIf="data"
+        class="flex-auto">
+        <mat-label>Estatus</mat-label>
+        <mat-select formControlName="estatusId">
+          <mat-option
+            *ngFor="let row of statusUserOptions$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.valor }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('estatusId')?.hasError('required')">
           Campo obligatorio
         </mat-error>
       </mat-form-field>
@@ -123,15 +142,15 @@
 
       <mat-form-field class="flex-auto">
         <mat-label>Tipo</mat-label>
-        <mat-select formControlName="tipo">
+        <mat-select formControlName="tipoId">
           <mat-option
             *ngFor="let row of typeUserOptions$ | async; trackBy: trackById"
-            [value]="row">
+            [value]="row.opcionId">
             {{ row.valor }}
           </mat-option>
         </mat-select>
 
-        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+        <mat-error *ngIf="form.get('tipoId')?.hasError('required')">
           Campo obligatorio
         </mat-error>
       </mat-form-field>

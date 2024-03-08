@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Usuario } from '@shared/models/usuario.model';
-import { map } from 'rxjs/operators';
 import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
 import { getPaginateParams } from '@shared/utils/http.utils';
@@ -24,21 +23,14 @@ export class UserService {
     return this.http.post<Usuario>(this.url, data);
   }
 
-  update(data: Usuario, id: number): Observable<Usuario> {
-    const url = `${this.url}/${id}`;
+  update(data: Partial<Usuario>, id: number): Observable<Usuario> {
+    const url = `${this.url}${id}`;
     return this.http.put<Usuario>(url, data);
   }
 
   show(id: number): Observable<Usuario> {
-    const url = `${this.url}/${id}`;
+    const url = `${this.url}${id}`;
     return this.http.get<Usuario>(url);
-  }
-
-  delete(id: number): Observable<boolean> {
-    const url = this.url + id;
-    return this.http.delete<void>(url).pipe(
-      map(() => true)
-    );
   }
 
   findAllPaginated(filtersTable: FiltersTable)

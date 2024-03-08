@@ -233,7 +233,7 @@
 
         <tr *matRowDef="let row; columns: visibleColumns(columns)"
             @fadeInUp
-            class="hover:bg-hover transition duration-400 ease-out-swift cursor-pointer"
+            class="hover:bg-hover transition duration-400 ease-out-swift"
             mat-row></tr>
       </table>
 
@@ -248,13 +248,9 @@
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-user="user" matMenuContent>
-    <button (click)="updateUser(user)" mat-menu-item>
+    <button (click)="updateUser(user.id)" mat-menu-item>
       <mat-icon svgIcon="mat:edit"></mat-icon>
       <span>Editar</span>
-    </button>
-    <button (click)="deleteUser(user.id)" mat-menu-item>
-      <mat-icon svgIcon="mat:delete"></mat-icon>
-      <span>Eliminar</span>
     </button>
   </ng-template>
 </mat-menu>

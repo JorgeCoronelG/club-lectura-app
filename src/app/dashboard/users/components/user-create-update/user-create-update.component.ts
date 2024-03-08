@@ -42,6 +42,7 @@ export class UserCreateUpdateComponent implements OnInit {
   typeEscolarOptions$: Observable<CatalogoOpcion[]>;
   turnAlumnoOptions$: Observable<CatalogoOpcion[]>;
   typeUserOptions$: Observable<CatalogoOpcion[]>;
+  statusUserOptions$: Observable<CatalogoOpcion[]>;
   trackById = trackById;
 
   constructor(
@@ -57,27 +58,46 @@ export class UserCreateUpdateComponent implements OnInit {
     this.typeEscolarOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_ESCOLAR);
     this.turnAlumnoOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TURNO_ALUMNO);
     this.typeUserOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_USUARIO);
+    this.statusUserOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_USUARIO);
   }
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      nombreCompleto: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(191)]],
-      correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10)]],
-      fechaNacimiento: ['', Validators.required],
-      sexoId: [null, Validators.required],
-      rolId: [null, Validators.required],
-      tipo: [null, Validators.required],
-      tipoId: [null]
+      nombreCompleto: [
+        this.data?.nombreCompleto ?? '',
+        [
+          Validators.required,
+          Validators.minLength(5),
+          Validators.maxLength(191)
+        ]
+      ],
+      correo: [this.data?.correo ?? '', [Validators.required, Validators.email]],
+      telefono: [
+        this.data?.telefono ?? '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10)
+        ]
+      ],
+      fechaNacimiento: [this.data?.fechaNacimiento ?? '', Validators.required],
+      sexoId: [this.data?.sexoId ?? null, Validators.required],
+      rolId: [this.data?.rolId ?? null, Validators.required],
+      tipoId: [this.data?.tipo.opcionId ?? null, Validators.required],
     });
 
-    this.form.get('tipo')?.valueChanges
+    if (this.data) {
+      this.form.addControl('estatusId', this.fb.control(this.data.estatusId, Validators.required));
+      this.generateValidatorsTypeUser(this.data.tipo.opcionId);
+    }
+
+    this.form.get('tipoId')?.valueChanges
       .pipe(
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe((tipo: CatalogoOpcion) => {
-        this.form.patchValue({ tipoId: tipo.opcionId });
-        this.generateValidatorsTypeUser(tipo.opcionId);
+      .subscribe((tipoId: number) => {
+        this.form.patchValue({ tipoId });
+        this.generateValidatorsTypeUser(tipoId);
       });
   }
 
@@ -91,13 +111,21 @@ export class UserCreateUpdateComponent implements OnInit {
       return;
     }
 
-    const user: Partial<Usuario> = {
+    let user: Partial<Usuario> = {
       ... this.form.getRawValue(),
       fechaNacimiento: getDateFormat(this.form.get('fechaNacimiento')?.value),
-      tipoId: this.form.get('tipo')?.value['id']
     };
 
-    this.userService.store(user).subscribe(() => {
+    if (!this.data) {
+      this.userService.store(user).subscribe(() => {
+        this.dialogRef.close(true);
+      });
+
+      return;
+    }
+
+    user.id = this.data.id;
+    this.userService.update(user, this.data!.id).subscribe(() => {
       this.dialogRef.close(true);
     });
   }
@@ -122,14 +150,14 @@ export class UserCreateUpdateComponent implements OnInit {
   private generateEscolarControl(): void {
     this.form.addControl('escolar', this.fb.group({
       matricula: [
-        null,
+        this.data?.escolar?.matricula ?? '',
         [
           Validators.required,
           Validators.minLength(5),
           Validators.maxLength(20)
         ]
       ],
-      tipoId: [null, Validators.required]
+      tipoId: [this.data?.escolar?.tipoId ?? null, Validators.required]
     }));
     this.form.updateValueAndValidity();
   }
@@ -137,14 +165,14 @@ export class UserCreateUpdateComponent implements OnInit {
   private generateAlumnoControl(): void {
     this.form.addControl('alumno', this.fb.group({
       grupo: [
-        null,
+        this.data?.alumno?.grupo ?? '',
         [
           Validators.required,
           Validators.minLength(6),
           Validators.maxLength(15)
         ]
       ],
-      turnoId: [null, Validators.required]
+      turnoId: [this.data?.alumno?.turnoId ?? null, Validators.required]
     }))
     this.form.updateValueAndValidity();
   }
