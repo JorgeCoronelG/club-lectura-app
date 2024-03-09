@@ -43,6 +43,7 @@ export class UserCreateUpdateComponent implements OnInit {
   turnAlumnoOptions$: Observable<CatalogoOpcion[]>;
   typeUserOptions$: Observable<CatalogoOpcion[]>;
   statusUserOptions$: Observable<CatalogoOpcion[]>;
+  careersOptions$: Observable<CatalogoOpcion[]>;
   trackById = trackById;
 
   constructor(
@@ -59,6 +60,7 @@ export class UserCreateUpdateComponent implements OnInit {
     this.turnAlumnoOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TURNO_ALUMNO);
     this.typeUserOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_USUARIO);
     this.statusUserOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_USUARIO);
+    this.careersOptions$ = this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.CARRERAS_EDUCATIVAS);
   }
 
   ngOnInit(): void {
@@ -164,15 +166,9 @@ export class UserCreateUpdateComponent implements OnInit {
 
   private generateAlumnoControl(): void {
     this.form.addControl('alumno', this.fb.group({
-      grupo: [
-        this.data?.alumno?.grupo ?? '',
-        [
-          Validators.required,
-          Validators.minLength(6),
-          Validators.maxLength(15)
-        ]
-      ],
-      turnoId: [this.data?.alumno?.turnoId ?? null, Validators.required]
+      semestre: [this.data?.alumno?.semestre ?? null, Validators.required],
+      carreraId: [this.data?.alumno?.carreraId ?? null, Validators.required],
+      turnoId: [this.data?.alumno?.turnoId ?? null, Validators.required],
     }))
     this.form.updateValueAndValidity();
   }
