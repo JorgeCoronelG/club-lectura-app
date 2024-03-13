@@ -5,4 +5,5 @@ export interface Submenu {
   orden: number;
   menuId: number;
   estatus: boolean;
+  isSelected?: boolean;
 }

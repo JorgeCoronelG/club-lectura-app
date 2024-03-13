@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { NavigationDropdown, NavigationLink } from '@shared/navigation/navigation-item.interface';
 import { Menu } from '@shared/models/menu.model';
+import { SyncNavigation } from '../../dashboard/users/interfaces/sync-navigation.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -68,5 +69,15 @@ export class NavigationService {
         return navigationItems;
       })
     );
+  }
+
+  getNavigationByUserId(userId: number): Observable<Menu[]> {
+    const url = `${this.url}user/${userId}`;
+    return this.http.get<Menu[]>(url);
+  }
+
+  syncNavigation(userId: number, data: SyncNavigation): Observable<void> {
+    const url = `${this.url}permission/${userId}`;
+    return this.http.put<void>(url, data);
   }
 }

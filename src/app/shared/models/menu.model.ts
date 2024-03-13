@@ -8,5 +8,6 @@ export interface Menu {
   orden: number;
   estatus: boolean;
   rolid: number;
+  isSelected?: boolean;
   submenu: Submenu[];
 }

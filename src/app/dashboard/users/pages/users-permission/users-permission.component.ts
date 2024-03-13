@@ -18,7 +18,7 @@ import { trackById } from '@shared/utils/track-by';
 import { visibleColumns } from '@shared/utils/table.utils';
 import { UserService } from '@shared/services/user.service';
 import { RolService } from '@shared/services/rol.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
 import { Rol } from '@shared/models/role.model';
 import { Sort } from '@angular/material/sort';
@@ -26,6 +26,11 @@ import { Filter } from '@shared/interfaces/filters-http.interface';
 import { NgIf } from '@angular/common';
 import { fadeInUp400ms } from '@shared/animations/fade-in-up.animation';
 import { stagger40ms } from '@shared/animations/stagger.animation';
+import { NavigationService } from '@shared/services/navigation.service';
+import { NavigationData } from '../../interfaces/navigation-data.interface';
+import { MatDialog } from '@angular/material/dialog';
+import { AssignPermissionComponent } from '../../components/assign-permission/assign-permission.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,
@@ -61,11 +66,13 @@ export class UsersPermissionComponent implements OnInit {
   trackById = trackById;
   visibleColumns = visibleColumns;
 
-
   constructor(
     private cd: ChangeDetectorRef,
     private userService: UserService,
     private rolService: RolService,
+    private navigationService: NavigationService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar
   ) {
   }
 
@@ -76,8 +83,25 @@ export class UsersPermissionComponent implements OnInit {
     this.getUsersData();
   }
 
-  changePermissions(id: number): void {
-    console.log(id);
+  changePermissions(userId: number): void {
+    this.navigationService.getNavigationByUserId(userId)
+      .pipe(
+        switchMap(navigation => {
+          const data: NavigationData = {
+            menus: navigation,
+            usuarioId: userId,
+          };
+
+          return this.dialog
+            .open(AssignPermissionComponent, { data })
+            .afterClosed();
+        })
+      )
+      .subscribe(updated => {
+        if (updated) {
+          this.snackbar.open('Menú actualizado', 'Cerrar');
+        }
+      });
   }
 
   paginationChange(meta: Meta): void {
