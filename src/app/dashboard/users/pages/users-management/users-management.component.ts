@@ -35,6 +35,7 @@ import { Rol } from '@shared/models/role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateUpdateComponent } from '../../components/user-create-update/user-create-update.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
 
 @Component({
   standalone: true,
@@ -60,7 +61,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     stagger40ms
   ]
 })
-export class UsersManagementComponent implements OnInit {
+export class UsersManagementComponent implements OnInit, ManagmentMethods {
   breadcrumbs: Breadcrumb[] = [
     { route: ['usuarios'], label: 'Usuarios' },
     { route: ['usuarios', 'gestion'], label: 'Gestión' }
@@ -91,7 +92,7 @@ export class UsersManagementComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Usuario>();
 
     this.getFiltersTable();
-    this.getUsersData();
+    this.getData();
   }
 
   get sex(): typeof SexEnum {
@@ -110,7 +111,7 @@ export class UsersManagementComponent implements OnInit {
       .subscribe((updated) => {
         if (updated) {
           this.snackbar.open('Registro creado', 'Cerrar');
-          this.getUsersData();
+          this.getData();
         }
       });
   }
@@ -125,7 +126,7 @@ export class UsersManagementComponent implements OnInit {
         .subscribe((updated) => {
           if (updated) {
             this.snackbar.open('Registro actualizado', 'Cerrar');
-            this.getUsersData();
+            this.getData();
           }
         });
     });
@@ -133,20 +134,20 @@ export class UsersManagementComponent implements OnInit {
 
   paginationChange(meta: Meta): void {
     this.userResponse!.meta = meta;
-    this.getUsersData();
+    this.getData();
   }
 
   sortChange(sortState: Sort): void {
     this.filtersTable.setOrderBy(sortState);
-    this.getUsersData();
+    this.getData();
   }
 
   addFilter(filter: Filter): void {
     this.filtersTable.addFilter(filter);
-    this.getUsersData();
+    this.getData();
   }
 
-  private getUsersData(): void {
+  getData(): void {
     this.filtersTable.setPaginationOfMeta(this.userResponse?.meta);
 
     this.userService.findAllPaginated(this.filtersTable)

@@ -27,6 +27,7 @@ import { AuthorCreateUpdateComponent } from '../../components/author-create-upda
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 import { of, switchMap } from 'rxjs';
+import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
 
 @Component({
   standalone: true,
@@ -50,7 +51,7 @@ import { of, switchMap } from 'rxjs';
     stagger40ms
   ]
 })
-export class AuthorsManagmentComponent implements OnInit {
+export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
   breadcrumbs: Breadcrumb[] = [
     { route: ['autores'], label: 'Autores' },
     { route: ['autores'], label: 'Gestión' }
@@ -73,7 +74,7 @@ export class AuthorsManagmentComponent implements OnInit {
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource();
 
-    this.getAuthorsData();
+    this.getData();
   }
 
   createAuthor(): void {
@@ -82,7 +83,7 @@ export class AuthorsManagmentComponent implements OnInit {
       .subscribe((updated) => {
         if (updated) {
           this.snackbar.open('Registro creado', 'Cerrar');
-          this.getAuthorsData();
+          this.getData();
         }
       });
   }
@@ -94,7 +95,7 @@ export class AuthorsManagmentComponent implements OnInit {
         .subscribe((updated) => {
           if (updated) {
             this.snackbar.open('Registro actualizado', 'Cerrar');
-            this.getAuthorsData();
+            this.getData();
           }
         });
     });
@@ -109,12 +110,17 @@ export class AuthorsManagmentComponent implements OnInit {
       .subscribe(confirm => {
         if (confirm) {
           this.snackbar.open('Registro eliminado', 'Cerrar');
-          this.getAuthorsData();
+          this.getData();
         }
       });
   }
 
-  getAuthorsData(): void {
+  addFilter(filter: Filter): void {
+    this.filtersTable.addFilter(filter);
+    this.getData();
+  }
+
+  getData(): void {
     this.filtersTable.setPaginationOfMeta(this.authorResponse?.meta);
 
     this.authorService.findAllPaginated(this.filtersTable)
@@ -127,16 +133,11 @@ export class AuthorsManagmentComponent implements OnInit {
 
   paginationChange(meta: Meta): void {
     this.authorResponse!.meta = meta;
-    this.getAuthorsData();
+    this.getData();
   }
 
   sortChange(sortState: Sort): void {
     this.filtersTable.setOrderBy(sortState);
-    this.getAuthorsData();
-  }
-
-  addFilter(filter: Filter): void {
-    this.filtersTable.addFilter(filter);
-    this.getAuthorsData();
+    this.getData();
   }
 }

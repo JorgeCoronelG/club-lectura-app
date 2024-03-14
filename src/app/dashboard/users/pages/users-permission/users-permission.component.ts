@@ -31,6 +31,7 @@ import { NavigationData } from '../../interfaces/navigation-data.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignPermissionComponent } from '../../components/assign-permission/assign-permission.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
 
 @Component({
   standalone: true,
@@ -52,7 +53,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     stagger40ms
   ]
 })
-export class UsersPermissionComponent implements OnInit {
+export class UsersPermissionComponent implements OnInit, ManagmentMethods {
   breadcrumbs: Breadcrumb[] = [
     { route: ['usuarios'], label: 'Usuarios' },
     { route: ['usuarios', 'permisos'], label: 'Permisos' }
@@ -80,7 +81,7 @@ export class UsersPermissionComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Usuario>();
 
     this.getFiltersTable();
-    this.getUsersData();
+    this.getData();
   }
 
   changePermissions(userId: number): void {
@@ -106,20 +107,20 @@ export class UsersPermissionComponent implements OnInit {
 
   paginationChange(meta: Meta): void {
     this.userResponse!.meta = meta;
-    this.getUsersData();
+    this.getData();
   }
 
   sortChange(sortState: Sort): void {
     this.filtersTable.setOrderBy(sortState);
-    this.getUsersData();
+    this.getData();
   }
 
   addFilter(filter: Filter): void {
     this.filtersTable.addFilter(filter);
-    this.getUsersData();
+    this.getData();
   }
 
-  private getUsersData(): void {
+  getData(): void {
     this.filtersTable.setPaginationOfMeta(this.userResponse?.meta);
 
     this.userService.findAllPaginated(this.filtersTable)
