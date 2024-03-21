@@ -6,6 +6,7 @@ import { Usuario } from '@shared/models/usuario.model';
 import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
 import { getPaginateParams } from '@shared/utils/http.utils';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,13 @@ export class UserService {
   update(data: Partial<Usuario>, id: number): Observable<Usuario> {
     const url = `${this.url}${id}`;
     return this.http.put<Usuario>(url, data);
+  }
+
+  delete(id: number): Observable<boolean> {
+    const url = `${this.url}${id}`;
+    return this.http.delete<void>(url).pipe(
+      map(() => true)
+    );
   }
 
   show(id: number): Observable<Usuario> {

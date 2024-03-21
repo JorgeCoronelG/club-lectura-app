@@ -6,5 +6,6 @@ export interface CatalogoOpcion {
   catalogoId: number;
   catalogo?: Catalogo;
   valor: string;
+  claseCss: string | null;
   estatus: boolean;
 }

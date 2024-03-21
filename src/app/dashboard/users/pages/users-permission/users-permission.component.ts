@@ -144,7 +144,8 @@ export class UsersPermissionComponent implements OnInit, ManagmentMethods {
         opcionId: rol.id,
         catalogoId: 0,
         valor: rol.nombre,
-        estatus: true
+        estatus: true,
+        claseCss: null
       };
 
       return opcion;

@@ -14,7 +14,7 @@ import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter
 import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { OptionCatalogService } from '@shared/services/option-catalog.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of, switchMap } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 import { map } from 'rxjs/operators';
@@ -28,14 +28,13 @@ import { PaginatorComponent } from '@shared/components/paginator/paginator.compo
 import { Sort } from '@angular/material/sort';
 import { Filter } from '@shared/interfaces/filters-http.interface';
 import { trackById } from '@shared/utils/track-by';
-import { SexEnum } from '@shared/enums/catalogo-opciones/sex.enum';
-import { StatusUserEnum } from '@shared/enums/catalogo-opciones/status-user.enum';
 import { RolService } from '@shared/services/rol.service';
 import { Rol } from '@shared/models/role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateUpdateComponent } from '../../components/user-create-update/user-create-update.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
+import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 
 @Component({
   standalone: true,
@@ -95,14 +94,6 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
     this.getData();
   }
 
-  get sex(): typeof SexEnum {
-    return SexEnum;
-  }
-
-  get statusUser(): typeof StatusUserEnum {
-    return StatusUserEnum;
-  }
-
   createUser(): void {
     this.dialog.open(UserCreateUpdateComponent, {
       panelClass: 'w-11/12',
@@ -130,6 +121,20 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
           }
         });
     });
+  }
+
+  deleteUser(id: number): void {
+    this.dialog.open(ConfirmDeleteComponent)
+      .afterClosed()
+      .pipe(
+        switchMap(confirm => (confirm) ? this.userService.delete(id): of(false))
+      )
+      .subscribe(confirm => {
+        if (confirm) {
+          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.getData();
+        }
+      });
   }
 
   paginationChange(meta: Meta): void {
@@ -185,7 +190,8 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
         opcionId: rol.id,
         catalogoId: 0,
         valor: rol.nombre,
-        estatus: true
+        estatus: true,
+        claseCss: null,
       };
 
       return opcion;
