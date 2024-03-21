@@ -5,4 +5,7 @@ export enum CatalogoEnum {
   TURNO_ALUMNO = 4,
   TIPO_USUARIO = 5,
   CARRERAS_EDUCATIVAS = 6,
+  ESTADO_FISICO_LIBRO = 7,
+  IDIOMA = 8,
+  ESTATUS_LIBRO = 9,
 }

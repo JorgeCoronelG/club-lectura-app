@@ -40,5 +40,6 @@ export const allFilterEnum: CatalogoOpcion = {
   catalogoId: 0,
   estatus: true,
   opcionId: 0,
-  valor: 'Todos'
+  valor: 'Todos',
+  claseCss: null,
 };

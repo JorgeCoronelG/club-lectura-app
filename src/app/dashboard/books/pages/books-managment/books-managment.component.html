@@ -1,1 +1,284 @@
-<p>books-managment works!</p>
+<vex-page-layout>
+  <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
+    <div class="container w-full flex flex-col sm:flex-row justify-between">
+      <div>
+        <h1 class="title mt-0 mb-1">Gestión de libros</h1>
+
+        <vex-breadcrumbs [crumbs]="breadcrumbs"></vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content class="container -mt-6">
+    <div class="card overflow-auto -mt-16">
+      <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+        <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+          <span>Libros</span>
+        </h2>
+
+        <span class="flex-1"></span>
+
+        <button [matMenuTriggerFor]="columnFilterMenu"
+                class="ml-4 flex-none"
+                mat-icon-button
+                matTooltip="Filtrar columnas"
+                type="button">
+          <mat-icon svgIcon="mat:filter_list"></mat-icon>
+        </button>
+
+        <button class="ml-4 flex-none"
+                color="primary"
+                mat-mini-fab
+                matTooltip="Agregar libro"
+                type="button">
+          <mat-icon svgIcon="mat:add"></mat-icon>
+        </button>
+      </div>
+
+      <table @stagger
+             class="w-full"
+             mat-table
+             matSort
+             [dataSource]="dataSource"
+             (matSortChange)="sortChange($event)"
+             [trackBy]="trackById">
+        <!-- Columna Clave -->
+        <ng-container matColumnDef="clave">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Clave</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="text"
+                                         field="clave"
+                                         (onOptionFilterChange)="addFilter($event)" />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.clave }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Título -->
+        <ng-container matColumnDef="titulo">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Título</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="text"
+                                         field="titulo"
+                                         (onOptionFilterChange)="addFilter($event)" />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.titulo }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Número de páginas -->
+        <ng-container matColumnDef="numPaginas">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>N° páginas</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="number"
+                                         field="num_paginas"
+                                         (onOptionFilterChange)="addFilter($event)" />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.numPaginas }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Precio -->
+        <ng-container matColumnDef="precio">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Precio</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table type="number"
+                                         field="precio"
+                                         (onOptionFilterChange)="addFilter($event)" />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.precio | currency }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Estado físico -->
+        <ng-container matColumnDef="estadoFisicoId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Estado físico</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="estado_fisico_id"
+                [enumValues]="conditionOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex items-center gap-1">
+              <div [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.estadoFisico.claseCss">
+                {{ row.estadoFisico.valor }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Idioma -->
+        <ng-container matColumnDef="idiomaId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Idioma</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="idioma_id"
+                [enumValues]="languageOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex items-center gap-1">
+              <div class="rounded px-2 py-1 font-medium text-xs flex-none text-gray-600 bg-gray-600/10 dark:text-gray-400 dark:bg-gray-400/10">
+                {{ row.idioma.valor }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Estatus -->
+        <ng-container matColumnDef="estatusId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Estatus</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="estatus_id"
+                [enumValues]="statusOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex items-center gap-1">
+              <div [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.estatus.claseCss">
+                {{ row.estatus.valor }}
+              </div>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef
+              mat-header-cell>
+          </th>
+          <td *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell>
+            <button
+              [matMenuTriggerData]="{ book: row }"
+              [matMenuTriggerFor]="actionsMenu"
+              mat-icon-button
+              type="button">
+              <mat-icon svgIcon="mat:more_horiz"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns(columns)" mat-header-row></tr>
+
+        <tr *matRowDef="let row; columns: visibleColumns(columns)"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift"
+            mat-row></tr>
+      </table>
+
+      <ng-container *ngIf="bookResponse">
+        <app-paginator
+          [meta]="bookResponse.meta"
+          (onPaginationChange)="paginationChange($event)" />
+      </ng-container>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>
+
+<mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
+  <ng-template let-book="book" matMenuContent>
+    <button mat-menu-item>
+      <mat-icon svgIcon="mat:edit"></mat-icon>
+      <span>Editar</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon svgIcon="mat:delete"></mat-icon>
+      <span>Eliminar</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<mat-menu #columnFilterMenu="matMenu" xPosition="before" yPosition="below">
+  <button
+    (click)="toggleColumnVisibility(column)"
+    *ngFor="let column of columns"
+    class="mat-menu-item block">
+    <mat-checkbox
+      (click)="$event.stopPropagation()"
+      [(ngModel)]="column.visible"
+      color="primary">
+      {{ column.label }}
+    </mat-checkbox>
+  </button>
+</mat-menu>

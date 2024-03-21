@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, DEFAULT_CURRENCY_CODE, importProvidersFrom } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -79,6 +79,9 @@ export const appConfig: ApplicationConfig = {
     materialProviders(),
     spinnerLoadingProvider(),
     apiTokenProvider(),
-    errorProvider()
+    errorProvider(),
+    [
+      { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' }
+    ]
   ]
 };

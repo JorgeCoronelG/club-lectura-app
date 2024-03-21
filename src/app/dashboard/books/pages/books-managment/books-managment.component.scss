@@ -1,0 +1,14 @@
+.good-condition, .available-book {
+  @apply text-green-600;
+  @apply bg-green-600/10;
+}
+
+.bad-condition, .lost-book {
+  @apply text-red-600;
+  @apply bg-red-600/10;
+}
+
+.regular-condition, .loan-book {
+  @apply text-orange-600;
+  @apply bg-orange-600/10;
+}
