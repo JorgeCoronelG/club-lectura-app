@@ -29,6 +29,7 @@ import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
 import { FormsModule } from '@angular/forms';
+import { UrlPipe } from '@shared/pipes/url/url.pipe';
 
 @Component({
   selector: 'app-books-managment',
@@ -45,7 +46,8 @@ import { FormsModule } from '@angular/forms';
     NgIf,
     PaginatorComponent,
     FormsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    UrlPipe,
   ],
   templateUrl: './books-managment.component.html',
   styleUrls: ['books-managment.component.scss'],
