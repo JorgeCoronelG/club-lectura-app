@@ -63,9 +63,11 @@
           <td *matCellDef="let row"
               mat-cell>
             <div class="flex flex-row">
-              <img [alt]="row.clave"
-                   [src]="row.imagen | url"
-                   class="avatar h-10 w-10 align-middle" />
+              <a [href]="row.imagen | url" target="_blank">
+                <img [alt]="row.clave"
+                     [src]="row.imagen | url"
+                     class="avatar h-10 w-10 align-middle" />
+              </a>
 
               <span class="flex justify-center items-center ml-2">
                 {{ row.clave }}
