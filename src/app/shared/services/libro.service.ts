@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
 import { getPaginateParams } from '@shared/utils/http.utils';
 import { Libro } from '@shared/models/libro.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -29,5 +30,12 @@ export class LibroService {
     );
 
     return this.http.get<PaginationResponse<Libro>>(this.url, { params });
+  }
+
+  delete(id: number): Observable<boolean> {
+    const url = `${this.url}${id}`;
+    return this.http.delete<void>(url).pipe(
+      map(() => true)
+    );
   }
 }

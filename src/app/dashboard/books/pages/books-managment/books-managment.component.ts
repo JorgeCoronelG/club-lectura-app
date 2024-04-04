@@ -24,12 +24,15 @@ import { trackById } from '@shared/utils/track-by';
 import { toggleColumnVisibility, visibleColumns } from '@shared/utils/table.utils';
 import { OptionCatalogService } from '@shared/services/option-catalog.service';
 import { LibroService } from '@shared/services/libro.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of, switchMap } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
 import { FormsModule } from '@angular/forms';
 import { UrlPipe } from '@shared/pipes/url/url.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 
 @Component({
   selector: 'app-books-managment',
@@ -77,6 +80,8 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
     private cd: ChangeDetectorRef,
     private catalogoOpcionService: OptionCatalogService,
     private libroService: LibroService,
+    private dialog: MatDialog,
+    private snackbar: MatSnackBar,
   ) {
   }
 
@@ -85,6 +90,20 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
 
     this.getFiltersTable();
     this.getData();
+  }
+
+  delete(id: number): void {
+    this.dialog.open(ConfirmDeleteComponent)
+      .afterClosed()
+      .pipe(
+        switchMap(confirm => (confirm) ? this.libroService.delete(id): of(false))
+      )
+      .subscribe(confirm => {
+        if (confirm) {
+          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.getData();
+        }
+      })
   }
 
   addFilter(filter: Filter): void {
