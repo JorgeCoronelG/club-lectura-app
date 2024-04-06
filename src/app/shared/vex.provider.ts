@@ -1,4 +1,4 @@
-import { ENVIRONMENT_INITIALIZER, EnvironmentProviders, inject, LOCALE_ID, Provider } from '@angular/core';
+import { ENVIRONMENT_INITIALIZER, EnvironmentProviders, inject, Provider } from '@angular/core';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 import { MATERIAL_SANITY_CHECKS } from '@angular/material/core';
 import { VexLayoutService } from '@shared/services/vex-layout.service';
@@ -6,10 +6,6 @@ import { VexDemoService } from '@shared/services/vex-demo.service';
 import { VexPlatformService } from '@shared/services/vex-platform.service';
 import { VexConfig, VexThemeProvider } from '@shared/config/vex-config.interface';
 import { VEX_CONFIG, VEX_THEMES } from '@shared/config/config.token';
-import localeMX from '@angular/common/locales/es-MX';
-import { registerLocaleData } from '@angular/common';
-
-registerLocaleData(localeMX);
 
 export function provideVex(options: {
   config: VexConfig;
@@ -53,9 +49,5 @@ export function provideVex(options: {
       useValue: () => inject(VexDemoService),
       multi: true
     },
-    {
-      provide: LOCALE_ID,
-      useValue: 'es-MX'
-    }
   ];
 }

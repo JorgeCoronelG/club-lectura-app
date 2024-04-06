@@ -1,4 +1,4 @@
-import { ApplicationConfig, DEFAULT_CURRENCY_CODE, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, DEFAULT_CURRENCY_CODE, importProvidersFrom, LOCALE_ID } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { appRoutes } from './app.routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
@@ -23,6 +23,10 @@ import {
   redTheme,
   tealTheme
 } from '@shared/config/available-themes.data';
+import localeMX from '@angular/common/locales/es-MX';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeMX);
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -81,7 +85,8 @@ export const appConfig: ApplicationConfig = {
     apiTokenProvider(),
     errorProvider(),
     [
-      { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' }
+      { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' },
+      { provide: LOCALE_ID, useValue: 'es-MX' }
     ]
   ]
 };
