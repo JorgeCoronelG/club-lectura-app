@@ -1,0 +1,35 @@
+:root {
+  .mat-mdc-snack-bar-container {
+    &.success {
+      --mdc-snackbar-container-color: theme(colors.green.600);
+      --mdc-snackbar-supporting-text-color: white;
+      &.success button {
+        color: white;
+      }
+    }
+
+    &.danger {
+      --mdc-snackbar-container-color: theme(colors.red.600);
+      --mdc-snackbar-supporting-text-color: white;
+      &.danger button {
+        color: white;
+      }
+    }
+
+    &.warning {
+      --mdc-snackbar-container-color: theme(colors.orange.400);
+      --mdc-snackbar-supporting-text-color: white;
+      &.warning button {
+        color: white;
+      }
+    }
+
+    &.info {
+      --mdc-snackbar-container-color: theme(colors.sky.600);
+      --mdc-snackbar-supporting-text-color: white;
+      &.info button {
+        color: white;
+      }
+    }
+  }
+}

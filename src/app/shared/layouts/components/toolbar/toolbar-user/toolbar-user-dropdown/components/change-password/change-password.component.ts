@@ -5,8 +5,8 @@ import { JsonPipe, NgIf } from '@angular/common';
 import { comparePassword } from '@shared/utils/form-validations.utils';
 import { AuthService } from '@shared/services/auth.service';
 import { Usuario } from '@shared/models/usuario.model';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialogRef } from '@angular/material/dialog';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   selector: 'app-change-password',
@@ -36,7 +36,7 @@ export class ChangePasswordComponent {
   constructor(
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private snackbar: MatSnackBar,
+    private alertNotificationService: AlertNotificationService,
     private dialogRef: MatDialogRef<ChangePasswordComponent>,
     private authService: AuthService
   ) {
@@ -91,7 +91,7 @@ export class ChangePasswordComponent {
 
     const user: Partial<Usuario> = this.form.getRawValue();
     this.authService.changePassword(user).subscribe(() => {
-      this.snackbar.open('Contraseña modificada', 'Cerrar');
+      this.alertNotificationService.success('Contraseña modificada');
       this.dialogRef.close();
     });
   }

@@ -24,10 +24,10 @@ import { Sort } from '@angular/material/sort';
 import { visibleColumns } from '@shared/utils/table.utils';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthorCreateUpdateComponent } from '../../components/author-create-update/author-create-update.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 import { of, switchMap } from 'rxjs';
 import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   standalone: true,
@@ -67,7 +67,7 @@ export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
   constructor(
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar,
+    private alertNotificationService: AlertNotificationService,
     private authorService: AuthorService
   ) {}
 
@@ -82,7 +82,7 @@ export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
       .afterClosed()
       .subscribe((updated) => {
         if (updated) {
-          this.snackbar.open('Registro creado', 'Cerrar');
+          this.alertNotificationService.success('Registro creado');
           this.getData();
         }
       });
@@ -94,7 +94,7 @@ export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
         .afterClosed()
         .subscribe((updated) => {
           if (updated) {
-            this.snackbar.open('Registro actualizado', 'Cerrar');
+            this.alertNotificationService.success('Registro actualizado');
             this.getData();
           }
         });
@@ -109,7 +109,7 @@ export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
       )
       .subscribe(confirm => {
         if (confirm) {
-          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.alertNotificationService.success('Registro eliminado');
           this.getData();
         }
       });

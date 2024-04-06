@@ -31,8 +31,8 @@ import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced
 import { FormsModule } from '@angular/forms';
 import { UrlPipe } from '@shared/pipes/url/url.pipe';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   selector: 'app-books-managment',
@@ -81,7 +81,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
     private catalogoOpcionService: OptionCatalogService,
     private libroService: LibroService,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar,
+    private alertNotificationService: AlertNotificationService,
   ) {
   }
 
@@ -100,7 +100,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
       )
       .subscribe(confirm => {
         if (confirm) {
-          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.alertNotificationService.success('Registro eliminado');
           this.getData();
         }
       })

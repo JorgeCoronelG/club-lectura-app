@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorResponse } from '@shared/interceptors/error/error-response.interface';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -11,11 +10,12 @@ import { Router } from '@angular/router';
 import { UserSessionService } from '@shared/services/user-session.service';
 import { MenuLoaderService } from '@shared/navigation/menu-loader.service';
 import { VexConfigService } from '@shared/config/vex-config.service';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
-    private snackbar: MatSnackBar,
+    private alertNotificacionService: AlertNotificationService,
     private dialog: MatDialog,
     private router: Router,
     private userSessionService: UserSessionService,
@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(({ error, status }: HttpErrorResponse) => {
         if (status === 0) {
-          this.createSnackBar('Favor de comunicarse con el administrador');
+          this.alertNotificacionService.warning('Favor de comunicarse con el administrador');
           return throwError(() => error);
         }
 
@@ -52,7 +52,12 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   private validationErrors({ code, error }: ErrorResponse): void {
     if (typeof error === 'string') {
-      this.createSnackBar(error);
+      if (code === 500) {
+        this.alertNotificacionService.danger(error);
+        return;
+      }
+
+      this.alertNotificacionService.warning(error);
       return;
     }
 
@@ -65,9 +70,5 @@ export class ErrorInterceptor implements HttpInterceptor {
 
       this.dialog.open(ValidationErrorsDialogComponent, { data: validationErrors });
     }
-  }
-
-  private createSnackBar(message: string): void {
-    this.snackbar.open(message, 'Cerrar');
   }
 }

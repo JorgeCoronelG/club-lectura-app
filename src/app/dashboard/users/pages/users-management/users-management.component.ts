@@ -32,9 +32,9 @@ import { RolService } from '@shared/services/rol.service';
 import { Rol } from '@shared/models/role.model';
 import { MatDialog } from '@angular/material/dialog';
 import { UserCreateUpdateComponent } from '../../components/user-create-update/user-create-update.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   standalone: true,
@@ -80,7 +80,7 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
   constructor(
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar,
+    private alertNotificationService: AlertNotificationService,
     private catalogoOpcionService: OptionCatalogService,
     private userService: UserService,
     private rolService: RolService,
@@ -101,7 +101,7 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
       .afterClosed()
       .subscribe((updated) => {
         if (updated) {
-          this.snackbar.open('Registro creado', 'Cerrar');
+          this.alertNotificationService.success('Registro creado');
           this.getData();
         }
       });
@@ -116,7 +116,7 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
         .afterClosed()
         .subscribe((updated) => {
           if (updated) {
-            this.snackbar.open('Registro actualizado', 'Cerrar');
+            this.alertNotificationService.success('Registro actualizado');
             this.getData();
           }
         });
@@ -131,7 +131,7 @@ export class UsersManagementComponent implements OnInit, ManagmentMethods {
       )
       .subscribe(confirm => {
         if (confirm) {
-          this.snackbar.open('Registro eliminado', 'Cerrar');
+          this.alertNotificationService.success('Registro eliminado');
           this.getData();
         }
       });

@@ -30,8 +30,8 @@ import { NavigationService } from '@shared/services/navigation.service';
 import { NavigationData } from '../../interfaces/navigation-data.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignPermissionComponent } from '../../components/assign-permission/assign-permission.component';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   standalone: true,
@@ -73,7 +73,7 @@ export class UsersPermissionComponent implements OnInit, ManagmentMethods {
     private rolService: RolService,
     private navigationService: NavigationService,
     private dialog: MatDialog,
-    private snackbar: MatSnackBar
+    private alertNotificationService: AlertNotificationService,
   ) {
   }
 
@@ -100,7 +100,7 @@ export class UsersPermissionComponent implements OnInit, ManagmentMethods {
       )
       .subscribe(updated => {
         if (updated) {
-          this.snackbar.open('Menú actualizado', 'Cerrar');
+          this.alertNotificationService.success('Menú actualizado');
         }
       });
   }
