@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 export const comparePassword = (password: string, confirmPassword: string) => {
   return (formGroup: AbstractControl): ValidationErrors | null => {
@@ -11,6 +11,20 @@ export const comparePassword = (password: string, confirmPassword: string) => {
       return error;
     }
     removeError(formGroup.get(confirmPassword)!, 'differentPassword');
+    return null;
+  }
+}
+
+export const sizeFile = (sizeMb: number): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (control.value) {
+      const file: File = control.value;
+
+      if (file.size > (sizeMb * 1000)) {
+        return { sizeFile: true };
+      }
+    }
+
     return null;
   }
 }

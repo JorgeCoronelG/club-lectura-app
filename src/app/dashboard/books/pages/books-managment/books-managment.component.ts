@@ -33,6 +33,7 @@ import { UrlPipe } from '@shared/pipes/url/url.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 import { AlertNotificationService } from '@shared/services/alert-notification.service';
+import { UpdateBookImageComponent } from '../../components/update-book-image/update-book-image.component';
 
 @Component({
   selector: 'app-books-managment',
@@ -104,6 +105,17 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
           this.getData();
         }
       })
+  }
+
+  changeImage(id: number): void {
+    this.libroService.findById(id).pipe(
+      switchMap(book => this.dialog.open(UpdateBookImageComponent, { data: book }).afterClosed())
+    ).subscribe(updated => {
+      if (updated) {
+        this.alertNotificationService.success('Imagen actualizada');
+        this.getData();
+      }
+    });
   }
 
   addFilter(filter: Filter): void {

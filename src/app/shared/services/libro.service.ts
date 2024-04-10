@@ -32,10 +32,24 @@ export class LibroService {
     return this.http.get<PaginationResponse<Libro>>(this.url, { params });
   }
 
+  findById(id: number): Observable<Libro> {
+    const url = `${this.url}${id}`;
+    return this.http.get<Libro>(url);
+  }
+
   delete(id: number): Observable<boolean> {
     const url = `${this.url}${id}`;
     return this.http.delete<void>(url).pipe(
       map(() => true)
     );
+  }
+
+  updateImage(id: number, image: File): Observable<void> {
+    const data = new FormData();
+    data.append('imagenFile', image);
+    data.append('_method', 'PATCH');
+
+    const url = `${this.url}image/${id}`;
+    return this.http.post<void>(url, data);
   }
 }

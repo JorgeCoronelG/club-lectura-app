@@ -278,6 +278,11 @@
       <mat-icon svgIcon="mat:delete"></mat-icon>
       <span>Eliminar</span>
     </button>
+    <button mat-menu-item
+            (click)="changeImage(book.id)">
+      <mat-icon svgIcon="mat:image"></mat-icon>
+      <span>Cambiar imagen</span>
+    </button>
   </ng-template>
 </mat-menu>
 
