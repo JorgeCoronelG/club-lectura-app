@@ -9,7 +9,5 @@ import { MaterialModule } from '@shared/material/material.module';
   imports: [MaterialModule]
 })
 export class FooterComponent {
-  year = new Date().getFullYear();
-
   constructor() {}
 }
