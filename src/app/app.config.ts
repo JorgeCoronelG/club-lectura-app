@@ -24,7 +24,7 @@ import {
   tealTheme
 } from '@shared/config/available-themes.data';
 import localeMX from '@angular/common/locales/es-MX';
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 
 registerLocaleData(localeMX);
 
@@ -85,6 +85,7 @@ export const appConfig: ApplicationConfig = {
     apiTokenProvider(),
     errorProvider(),
     [
+      { provide: LocationStrategy, useClass: HashLocationStrategy },
       { provide: DEFAULT_CURRENCY_CODE, useValue: 'MXN' },
       { provide: LOCALE_ID, useValue: 'es-MX' }
     ]
