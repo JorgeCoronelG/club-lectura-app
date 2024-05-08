@@ -1,0 +1,299 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      {{ (data) ? 'Actualizar' : 'Nuevo' }} libro
+    </h2>
+
+    <button class="text-secondary"
+            mat-dialog-close
+            mat-icon-button
+            type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Título</mat-label>
+        <input
+          matInput
+          formControlName="titulo" />
+
+        <mat-error *ngIf="form.get('titulo')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('titulo')?.hasError('minlength')">
+          El campo debe tener más de {{ form.get('titulo')?.getError('minlength').requiredLength }} caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('titulo')?.hasError('maxlength')">
+          El campo debe tener menos de {{ form.get('titulo')?.getError('maxlength').requiredLength }} caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>ISBN</mat-label>
+        <input
+          matInput
+          formControlName="isbn" />
+
+        <mat-error *ngIf="form.get('isbn')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('isbn')?.hasError('minlength')">
+          El campo debe tener más de {{ form.get('isbn')?.getError('minlength').requiredLength }} caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('isbn')?.hasError('maxlength')">
+          El campo debe tener menos de {{ form.get('isbn')?.getError('maxlength').requiredLength }} caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label># Páginas</mat-label>
+        <input
+          matInput
+          formControlName="numPaginas"
+          onlyNumbers
+        />
+
+        <mat-error *ngIf="form.get('numPaginas')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('numPaginas')?.hasError('min')">
+          El campo debe ser mayor o igual a {{ form.get('numPaginas')?.getError('min').min }}
+        </mat-error>
+        <mat-error *ngIf="form.get('numPaginas')?.hasError('max')">
+          El campo debe ser menor o igual a {{ form.get('numPaginas')?.getError('max').max }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Precio</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="precio"
+          onlyNumbers
+          [decimal]="2"
+        />
+
+        <mat-error *ngIf="form.get('precio')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('precio')?.hasError('min')">
+          El campo debe ser mayor o igual a {{ form.get('precio')?.getError('min').min }}
+        </mat-error>
+        <mat-error *ngIf="form.get('precio')?.hasError('max')">
+          El campo debe ser menor o igual a {{ form.get('precio')?.getError('max').max }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Edición</mat-label>
+        <input
+          matInput
+          formControlName="edicion"
+          onlyNumbers
+        />
+
+        <mat-error *ngIf="form.get('edicion')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('edicion')?.hasError('min')">
+          El campo debe ser mayor o igual a {{ form.get('edicion')?.getError('min').min }}
+        </mat-error>
+        <mat-error *ngIf="form.get('edicion')?.hasError('max')">
+          El campo debe ser menor o igual a {{ form.get('edicion')?.getError('max').max }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label># Copia</mat-label>
+        <input
+          matInput
+          formControlName="numCopia"
+          onlyNumbers
+        />
+
+        <mat-error *ngIf="form.get('numCopia')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('numCopia')?.hasError('min')">
+          El campo debe ser mayor o igual a {{ form.get('numCopia')?.getError('min').min }}
+        </mat-error>
+        <mat-error *ngIf="form.get('numCopia')?.hasError('max')">
+          El campo debe ser menor o igual a {{ form.get('numCopia')?.getError('max').max }}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Estado físico</mat-label>
+        <mat-select formControlName="estadoFisicoId">
+          <mat-option
+            *ngFor="let row of conditionOptions$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.valor }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('estadoFisicoId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Idioma</mat-label>
+        <mat-select formControlName="idiomaId">
+          <mat-option
+            *ngFor="let row of languageOptions$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.valor }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('idiomaId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Estatus</mat-label>
+        <mat-select formControlName="estatusId">
+          <mat-option
+            *ngFor="let row of statusOptions$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.valor }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('estatusId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Género Literario</mat-label>
+        <mat-select formControlName="generoId">
+          <mat-option
+            *ngFor="let row of genreOptions$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.nombre }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('generoId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col">
+      <mat-form-field class="flex-auto">
+        <mat-label>Reseña</mat-label>
+        <textarea matInput
+                  formControlName="resenia"
+                  rows="3"></textarea>
+
+        <mat-error *ngIf="form.get('resenia')?.hasError('maxlength')">
+          El campo debe tener menos de {{ form.get('resenia')?.getError('maxlength').requiredLength }} caracteres
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col">
+      <div class="flex-auto">
+        <mat-label>Imagen del libro</mat-label>
+        <input class="flex-auto w-full px-2 py-1 text-sm font-normal bg-clip-padding border border-solid
+            border-gray-300 rounded transition ease-in-out m-0 focus:border-blue-600 focus:outline-none cursor-pointer"
+               id="imagen"
+               type="file"
+               accept="image/*"
+               formControlName="imagen"
+               (change)="changeImage($event)">
+
+        <mat-error *ngIf="form.get('imagen')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('imageFile')?.hasError('sizeFile')">
+          El tamaño de la imagen debe ser menor a 5mb
+        </mat-error>
+      </div>
+    </div>
+
+    <div class="flex flex-col items-center">
+      <div class="flex w-full md:w-[75%] lg:w-[50%]"
+           formArrayName="autores">
+        <mat-selection-list
+          #authors
+          class="card w-full overflow-hidden">
+          <div class="flex items-center mb-4">
+            <h3 mat-subheader>Autores</h3>
+
+            <span class="flex-1"></span>
+
+            <div class="flex flex-row gap-2 mr-4">
+              <button class="flex-none"
+                      color="primary"
+                      mat-mini-fab
+                      matTooltip="Agregar"
+                      matTooltipPosition="above"
+                      type="button"
+                      (click)="openDialogAuthors()">
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+
+              <button class="flex-none"
+                      color="warn"
+                      mat-mini-fab
+                      matTooltip="Eliminar"
+                      matTooltipPosition="above"
+                      type="button"
+                      [disabled]="authors.selectedOptions.selected.length === 0"
+                      (click)="deleteAuthors()">
+                <mat-icon svgIcon="mat:delete"></mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <h3 mat-subheader *ngIf="authorsFormArray.length === 0">
+            No hay autores
+          </h3>
+
+          <ng-container *ngIf="authorsFormArray.length > 0">
+            <mat-list-option *ngFor="let author of authorsFormArray.controls; let i = index"
+                             [value]="author.get('id')?.value">
+              {{ authorsFormArray.at(i).get('nombre')?.value }}
+            </mat-list-option>
+          </ng-container>
+        </mat-selection-list>
+      </div>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      type="button">
+      Cerrar
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
+      type="submit">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>

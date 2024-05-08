@@ -1,0 +1,94 @@
+<div class="flex items-center" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Agregar autor
+  </h2>
+
+  <button class="text-secondary"
+          mat-dialog-close
+          mat-icon-button
+          type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content class="flex flex-col">
+  <vex-page-layout-content class="container">
+    <div class="card overflow-auto">
+      <table @stagger
+             [dataSource]="dataSource"
+             [trackBy]="trackById"
+             class="w-full"
+             mat-table
+             matSort
+             (matSortChange)="sortChange($event)">
+        <!-- Columna Nombre -->
+        <ng-container matColumnDef="nombre">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Nombre</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="text"
+                field="nombre"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            {{ row.nombre }}
+          </td>
+        </ng-container>
+
+        <!-- Columna Acciones -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef
+              mat-header-cell>
+          </th>
+          <td *matCellDef="let row"
+              class="w-10 text-secondary"
+              mat-cell>
+            <button color="primary"
+                    mat-icon-button
+                    type="button"
+                    matTooltip="Seleccionar"
+                    matTooltipPosition="before"
+                    (click)="authorSelected(row)">
+              <mat-icon svgIcon="mat:done"></mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns(columns)" mat-header-row></tr>
+
+        <tr *matRowDef="let row; columns: visibleColumns(columns)"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift"
+            mat-row></tr>
+      </table>
+
+      <ng-container *ngIf="authorResponse">
+        <app-paginator
+          [meta]="authorResponse.meta"
+          (onPaginationChange)="paginationChange($event)" />
+      </ng-container>
+    </div>
+  </vex-page-layout-content>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    type="button">
+    Cerrar
+  </button>
+</mat-dialog-actions>

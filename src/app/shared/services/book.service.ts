@@ -11,7 +11,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LibroService {
+export class BookService {
   private _baseUrl = 'books/';
 
   private http: HttpClient = inject(HttpClient);
@@ -51,5 +51,29 @@ export class LibroService {
 
     const url = `${this.url}image/${id}`;
     return this.http.post<void>(url, data);
+  }
+
+  store(data: Partial<Libro>): Observable<Libro> {
+    const formData = new FormData();
+    formData.append('titulo', data.titulo!);
+    formData.append('isbn', data.isbn!);
+    formData.append('numPaginas', data.numPaginas!.toString());
+    formData.append('precio', data.precio!.toString());
+    formData.append('edicion', data.edicion!.toString());
+    formData.append('imagenFile', data.imagenFile!);
+    formData.append('numCopia', data.numCopia!.toString());
+    formData.append('estadoFisicoId', data.estadoFisicoId!.toString());
+    formData.append('idiomaId', data.idiomaId!.toString());
+    formData.append('estatusId', data.estatusId!.toString());
+    formData.append('generoId', data.generoId!.toString());
+    data.autores!.forEach(author => {
+      formData.append('autores[][id]', author.id!.toString());
+    });
+
+    if (data.resenia) {
+      formData.append('resenia', data.resenia);
+    }
+
+    return this.http.post<Libro>(this.url, formData);
   }
 }

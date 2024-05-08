@@ -23,7 +23,7 @@ import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
 import { trackById } from '@shared/utils/track-by';
 import { toggleColumnVisibility, visibleColumns } from '@shared/utils/table.utils';
 import { OptionCatalogService } from '@shared/services/option-catalog.service';
-import { LibroService } from '@shared/services/libro.service';
+import { BookService } from '@shared/services/book.service';
 import { forkJoin, of, switchMap } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { map } from 'rxjs/operators';
@@ -34,6 +34,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDeleteComponent } from '@shared/components/confirm-delete/confirm-delete.component';
 import { AlertNotificationService } from '@shared/services/alert-notification.service';
 import { UpdateBookImageComponent } from '../../components/update-book-image/update-book-image.component';
+import { BookCreateUpdateComponent } from '../../components/book-create-update/book-create-update.component';
 
 @Component({
   selector: 'app-books-managment',
@@ -80,7 +81,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
   constructor(
     private cd: ChangeDetectorRef,
     private catalogoOpcionService: OptionCatalogService,
-    private libroService: LibroService,
+    private libroService: BookService,
     private dialog: MatDialog,
     private alertNotificationService: AlertNotificationService,
   ) {
@@ -91,6 +92,19 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
 
     this.getFiltersTable();
     this.getData();
+  }
+
+  createBook(): void {
+    this.dialog.open(BookCreateUpdateComponent, {
+      panelClass: 'w-11/12',
+    })
+      .afterClosed()
+      .subscribe((created) => {
+        if (created) {
+          this.alertNotificationService.success('Registro creado');
+          this.getData();
+        }
+      });
   }
 
   delete(id: number): void {

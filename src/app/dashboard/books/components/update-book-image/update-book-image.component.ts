@@ -6,7 +6,7 @@ import { sizeFile } from '@shared/utils/form-validations.utils';
 import { MaterialModule } from '@shared/material/material.module';
 import { NgIf } from '@angular/common';
 import { UrlPipe } from '@shared/pipes/url/url.pipe';
-import { LibroService } from '@shared/services/libro.service';
+import { BookService } from '@shared/services/book.service';
 
 @Component({
   selector: 'app-update-book-image',
@@ -29,7 +29,7 @@ export class UpdateBookImageComponent implements OnInit {
     private dialogRef: MatDialogRef<UpdateBookImageComponent>,
     private fb: FormBuilder,
     private cd: ChangeDetectorRef,
-    private libroService: LibroService,
+    private bookService: BookService,
     @Inject(MAT_DIALOG_DATA) public data: Libro,
   ) {
     //
@@ -73,7 +73,7 @@ export class UpdateBookImageComponent implements OnInit {
     }
 
     const { imageSrc } = this.fileForm.getRawValue();
-    this.libroService.updateImage(this.data.id, imageSrc).subscribe(() => {
+    this.bookService.updateImage(this.data.id, imageSrc).subscribe(() => {
       this.dialogRef.close(true);
     });
   }
