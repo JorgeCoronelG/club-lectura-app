@@ -14,7 +14,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
 import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter-table/advanced-filter-table.component';
 import { Meta, PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { authorTableColumns } from './author-table-columns.data';
+import { authorsTableColumns } from './authors-table-columns.data';
 import { trackById } from '@shared/utils/track-by';
 import { AuthorService } from '@shared/services/author.service';
 import { FiltersTable } from '@shared/utils/filters.table.utils';
@@ -58,7 +58,7 @@ export class AuthorsManagmentComponent implements OnInit, ManagmentMethods {
   ];
   authorResponse?: PaginationResponse<Autor>;
   dataSource!: MatTableDataSource<Autor>;
-  columns: TableColumn[] = authorTableColumns;
+  columns: TableColumn[] = authorsTableColumns;
   filtersTable: FiltersTable = new FiltersTable();
 
   trackById = trackById;
