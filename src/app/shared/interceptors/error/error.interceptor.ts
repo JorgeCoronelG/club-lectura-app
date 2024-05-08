@@ -15,7 +15,7 @@ import { AlertNotificationService } from '@shared/services/alert-notification.se
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
-    private alertNotificacionService: AlertNotificationService,
+    private alertNotificationService: AlertNotificationService,
     private dialog: MatDialog,
     private router: Router,
     private userSessionService: UserSessionService,
@@ -27,7 +27,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError(({ error, status }: HttpErrorResponse) => {
         if (status === 0) {
-          this.alertNotificacionService.warning('Favor de comunicarse con el administrador');
+          this.alertNotificationService.warning('Favor de comunicarse con el administrador');
           return throwError(() => error);
         }
 
@@ -53,11 +53,11 @@ export class ErrorInterceptor implements HttpInterceptor {
   private validationErrors({ code, error }: ErrorResponse): void {
     if (typeof error === 'string') {
       if (code === 500) {
-        this.alertNotificacionService.danger(error);
+        this.alertNotificationService.danger(error);
         return;
       }
 
-      this.alertNotificacionService.warning(error);
+      this.alertNotificationService.warning(error);
       return;
     }
 
