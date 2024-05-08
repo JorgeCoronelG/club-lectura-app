@@ -11,7 +11,8 @@ export function materialProviders(): Array<Provider | EnvironmentProviders> {
       useValue: {
         enterAnimationDuration: '250ms',
         exitAnimationDuration: '250ms',
-        autoFocus: false
+        autoFocus: false,
+        disableClose: true,
       }
     },
     {
