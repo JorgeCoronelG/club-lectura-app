@@ -81,7 +81,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
   constructor(
     private cd: ChangeDetectorRef,
     private catalogoOpcionService: OptionCatalogService,
-    private libroService: BookService,
+    private bookService: BookService,
     private dialog: MatDialog,
     private alertNotificationService: AlertNotificationService,
   ) {
@@ -95,9 +95,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
   }
 
   createBook(): void {
-    this.dialog.open(BookCreateUpdateComponent, {
-      panelClass: 'w-11/12',
-    })
+    this.dialog.open(BookCreateUpdateComponent)
       .afterClosed()
       .subscribe((created) => {
         if (created) {
@@ -107,11 +105,22 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
       });
   }
 
+  update(id: number): void {
+    this.bookService.findById(id).pipe(
+      switchMap(book => this.dialog.open(BookCreateUpdateComponent, { data: book }).afterClosed())
+    ).subscribe(updated => {
+      if (updated) {
+        this.alertNotificationService.success('Registro actualizado');
+        this.getData();
+      }
+    });
+  }
+
   delete(id: number): void {
     this.dialog.open(ConfirmDeleteComponent)
       .afterClosed()
       .pipe(
-        switchMap(confirm => (confirm) ? this.libroService.delete(id): of(false))
+        switchMap(confirm => (confirm) ? this.bookService.delete(id): of(false))
       )
       .subscribe(confirm => {
         if (confirm) {
@@ -122,7 +131,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
   }
 
   changeImage(id: number): void {
-    this.libroService.findById(id).pipe(
+    this.bookService.findById(id).pipe(
       switchMap(book => this.dialog.open(UpdateBookImageComponent, { data: book }).afterClosed())
     ).subscribe(updated => {
       if (updated) {
@@ -150,7 +159,7 @@ export class BooksManagmentComponent implements OnInit, ManagmentMethods {
   getData(): void {
     this.filtersTable.setPaginationOfMeta(this.bookResponse?.meta);
 
-    this.libroService.findAllPaginated(this.filtersTable)
+    this.bookService.findAllPaginated(this.filtersTable)
       .subscribe(response => {
         this.bookResponse = response;
         this.dataSource.data = response.data;

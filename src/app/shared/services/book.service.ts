@@ -76,4 +76,9 @@ export class BookService {
 
     return this.http.post<Libro>(this.url, formData);
   }
+
+  update(data: Partial<Libro>, id: number): Observable<Libro> {
+    const url = `${this.url}${id}`;
+    return this.http.put<Libro>(url, data);
+  }
 }

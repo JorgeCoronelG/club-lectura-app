@@ -69,23 +69,25 @@ export class BookCreateUpdateComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      isbn: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
-      titulo: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
-      numPaginas: [null, [Validators.required, Validators.min(1), Validators.max(5000)]],
-      precio: [null, [Validators.required, Validators.min(1), Validators.max(5000)]],
-      edicion: [null, [Validators.required, Validators.min(1), Validators.max(127)]],
-      numCopia: [null, [Validators.required, Validators.min(1), Validators.max(127)]],
-      estadoFisicoId: [null, Validators.required],
-      idiomaId: [null, Validators.required],
-      estatusId: [null, Validators.required],
-      generoId: [null, Validators.required],
-      resenia: [null, Validators.maxLength(65000)],
+      isbn: [this.data?.isbn || null, [Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
+      titulo: [this.data?.titulo || null, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      numPaginas: [this.data?.numPaginas || null, [Validators.required, Validators.min(1), Validators.max(5000)]],
+      precio: [this.data?.precio || null, [Validators.required, Validators.min(1), Validators.max(5000)]],
+      edicion: [this.data?.edicion || null, [Validators.required, Validators.min(1), Validators.max(127)]],
+      numCopia: [this.data?.numCopia || null, [Validators.required, Validators.min(1), Validators.max(127)]],
+      estadoFisicoId: [this.data?.estadoFisicoId || null, Validators.required],
+      idiomaId: [this.data?.idiomaId || null, Validators.required],
+      estatusId: [this.data?.estatusId || null, Validators.required],
+      generoId: [this.data?.generoId || null, Validators.required],
+      resenia: [this.data?.resenia || null, Validators.maxLength(65000)],
       autores: this.fb.array([]),
     });
 
     if (!this.data) {
       this.form.addControl('imagen', this.fb.control(null, Validators.required));
       this.form.addControl('imagenFile', this.fb.control(null, sizeFile(5000)));
+    } else {
+      this.data.autores.forEach(author => this.addAuthor(author));
     }
   }
 
@@ -141,18 +143,28 @@ export class BookCreateUpdateComponent implements OnInit {
       return;
     }
 
-    const book: Partial<Libro> = this.form.getRawValue();
+    let book: Partial<Libro> = this.form.getRawValue();
     book.autores = this.authorsFormArray.controls
       .map(control => {
         return { id: control.get('id')?.value } as Partial<Autor>;
       });
 
-    this.bookService.store(book).subscribe(() => {
+    if (!this.data) {
+      this.bookService.store(book).subscribe(() => {
+        this.dialogRef.close(true);
+      });
+
+      return;
+    }
+
+    book.id = this.data.id;
+
+    this.bookService.update(book, this.data.id).subscribe(() => {
       this.dialogRef.close(true);
     });
   }
 
-  private addAuthor(author: Autor): void {
+  private addAuthor(author: Partial<Autor>): void {
     this.authorsFormArray.push(this.fb.group({
       id: [author.id, Validators.required],
       nombre: [author.nombre]

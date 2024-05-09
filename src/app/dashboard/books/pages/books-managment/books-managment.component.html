@@ -270,7 +270,8 @@
 
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-book="book" matMenuContent>
-    <button mat-menu-item>
+    <button mat-menu-item
+            (click)="update(book.id)">
       <mat-icon svgIcon="mat:edit"></mat-icon>
       <span>Editar</span>
     </button>
