@@ -52,4 +52,9 @@ export class UserService {
 
     return this.http.get<PaginationResponse<Usuario>>(this.url, { params });
   }
+
+  findAll(): Observable<Usuario[]> {
+    const url = `${this.url}find-all`;
+    return this.http.get<Usuario[]>(url);
+  }
 }

@@ -1,1 +1,104 @@
-<p>donations-managment works!</p>
+<vex-page-layout>
+  <div @stagger class="p-6 container">
+    <h2 class="title mb-4 flex items-center">
+    <span
+      @scaleIn
+      class="w-10 h-10 rounded-full text-primary-600 mr-3 flex items-center justify-center bg-primary-600/10">
+      <mat-icon class="icon-sm" svgIcon="mat:volunteer_activism"></mat-icon>
+    </span>
+      <span @fadeInRight class="block">Crear donación</span>
+    </h2>
+
+    <div @fadeInUp class="card overflow-hidden">
+      <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+        <ng-template matStepperIcon="edit">
+          <mat-icon svgIcon="mat:done_all"></mat-icon>
+        </ng-template>
+
+        <ng-template matStepperIcon="done">
+          <mat-icon svgIcon="mat:done_all"></mat-icon>
+        </ng-template>
+
+        <mat-step [stepControl]="usersForm">
+          <form [formGroup]="usersForm">
+            <ng-template matStepLabel>Agregar usuarios</ng-template>
+
+            <div class="mt-4 flex flex-row gap-3">
+              <mat-form-field class="flex-none">
+                <mat-label>Tipo de usuario</mat-label>
+                <mat-select formControlName="typeUserAdd">
+                  <mat-option [value]="USER_BD">
+                    Registrado
+                  </mat-option>
+                  <mat-option [value]="NEW_USER">
+                    Nuevo
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <button class="flex-none"
+                      color="primary"
+                      mat-mini-fab
+                      matTooltip="Agregar"
+                      type="button"
+                      (click)="addNewUser()">
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+            </div>
+
+            <div class="flex flex-col mt-2">
+              <mat-accordion [multi]="true">
+                <ng-container *ngIf="usersBDFormArray.length > 0"
+                              formArrayName="usersBD">
+                  <ng-container *ngFor="let userControl of usersBDFormArray.controls; let i = index">
+                    <mat-expansion-panel [formGroupName]="i"
+                                         [expanded]="true">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title class="flex items-center">
+                          Usuario registrado #{{ i + 1}}
+                          <mat-icon class="text-warn-400 ml-2"
+                                    svgIcon="mat:delete"
+                                    matTooltip="Remover usuario"
+                                    (click)="removeUserBD(i)">
+                          </mat-icon>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <div class="mt-4 flex flex-row gap-3">
+                        <mat-form-field class="flex-auto">
+                          <mat-label>Usuario</mat-label>
+                          <mat-select formControlName="id">
+                            <mat-option *ngFor="let user of users; trackBy: trackById"
+                                        [value]="user.id">
+                              {{ user.nombreCompleto }}
+                            </mat-option>
+                          </mat-select>
+
+                          <mat-error *ngIf="userControl.get('id')?.hasError('required')">
+                            Campo obligatorio
+                          </mat-error>
+                          <mat-error *ngIf="userControl.get('id')?.hasError('duplicateUser')">
+                            El usuario ya está agregado. Favor de elegir otro
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                    </mat-expansion-panel>
+                  </ng-container>
+                </ng-container>
+              </mat-accordion>
+            </div>
+
+            <div class="actions flex items-center justify-end mt-4">
+              <button color="primary"
+                      mat-raised-button
+                      matStepperNext
+                      [disabled]="invalidFormUser">
+                Continuar
+              </button>
+            </div>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</vex-page-layout>
