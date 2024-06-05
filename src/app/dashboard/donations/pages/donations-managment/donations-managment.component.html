@@ -48,6 +48,7 @@
 
             <div class="flex flex-col mt-2">
               <mat-accordion [multi]="true">
+                <!-- Usuarios registrados -->
                 <ng-container *ngIf="usersBDFormArray.length > 0"
                               formArrayName="usersBD">
                   <ng-container *ngFor="let userControl of usersBDFormArray.controls; let i = index">
@@ -55,7 +56,7 @@
                                          [expanded]="true">
                       <mat-expansion-panel-header>
                         <mat-panel-title class="flex items-center">
-                          Usuario registrado #{{ i + 1}}
+                          Usuario registrado #{{ i + 1 }}
                           <mat-icon class="text-warn-400 ml-2"
                                     svgIcon="mat:delete"
                                     matTooltip="Remover usuario"
@@ -81,6 +82,258 @@
                             El usuario ya está agregado. Favor de elegir otro
                           </mat-error>
                         </mat-form-field>
+                      </div>
+                    </mat-expansion-panel>
+                  </ng-container>
+                </ng-container>
+
+                <!-- Usuarios nuevos -->
+                <ng-container *ngIf="newUsersFormArray.length > 0"
+                              formArrayName="newUsers">
+                  <ng-container *ngFor="let userControl of newUsersFormArray.controls; let i = index">
+                    <mat-expansion-panel [formGroupName]="i"
+                                         [expanded]="true">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title class="flex items-center">
+                          Usuario nuevo #{{ i + 1 }}
+                          <mat-icon class="text-warn-400 ml-2"
+                                    svgIcon="mat:delete"
+                                    matTooltip="Remover usuario"
+                                    (click)="removeNewUser(i)">
+                          </mat-icon>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Nombre completo</mat-label>
+                            <input
+                              matInput
+                              formControlName="nombreCompleto"
+                            />
+
+                            <mat-error *ngIf="userControl.get('nombreCompleto')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('nombreCompleto')?.hasError('minlength')">
+                              El campo debe tener más de {{ userControl.get('nombreCompleto')?.getError('minlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('nombreCompleto')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ userControl.get('nombreCompleto')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input
+                              matInput
+                              formControlName="correo"
+                            />
+
+                            <mat-error *ngIf="userControl.get('correo')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('correo')?.hasError('email')">
+                              El campo no es una dirección de correo válida
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Teléfono</mat-label>
+                            <input
+                              matInput
+                              formControlName="telefono"
+                              onlyNumbers
+                              maxlength="10"
+                            />
+
+                            <mat-error *ngIf="userControl.get('telefono')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('telefono')?.hasError('minlength')">
+                              El campo debe tener {{ userControl.get('telefono')?.getError('minlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('telefono')?.hasError('maxlength')">
+                              El campo debe tener {{ userControl.get('telefono')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Fecha nacimiento</mat-label>
+                            <input
+                              matInput
+                              formControlName="fechaNacimiento"
+                              [matDatepicker]="picker"
+                              (click)="picker.open()"
+                              [max]="now"
+                              readonly
+                            />
+                            <mat-datepicker #picker></mat-datepicker>
+
+                            <mat-error *ngIf="userControl.get('fechaNacimiento')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Género</mat-label>
+                            <mat-select formControlName="sexoId">
+                              <mat-option
+                                *ngFor="let row of sexOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.valor }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="userControl.get('sexoId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Rol</mat-label>
+                            <mat-select formControlName="rolId">
+                              <mat-option
+                                *ngFor="let row of rolesOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.nombre }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="userControl.get('rolId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Tipo</mat-label>
+                            <mat-select formControlName="tipoId">
+                              <mat-option
+                                *ngFor="let row of typeUserOptions; trackBy: trackById"
+                                [value]="row.opcionId">
+                                {{ row.valor }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="userControl.get('tipoId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <ng-container
+                          *ngIf="userControl.get('tipoId')?.value === typeUser.ESCOLAR"
+                          formGroupName="escolar">
+                          <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                            <mat-form-field class="flex-auto">
+                              <mat-label>Matricula</mat-label>
+                              <input
+                                matInput
+                                formControlName="matricula"
+                              />
+
+                              <mat-error *ngIf="userControl.get('escolar.matricula')?.hasError('required')">
+                                Campo obligatorio
+                              </mat-error>
+                              <mat-error *ngIf="userControl.get('escolar.matricula')?.hasError('minlength')">
+                                El campo debe tener más de {{ userControl.get('escolar.matricula')?.getError('minlength').requiredLength }} caracteres
+                              </mat-error>
+                              <mat-error *ngIf="userControl.get('escolar.matricula')?.hasError('maxlength')">
+                                El campo debe tener menos de {{ userControl.get('escolar.matricula')?.getError('maxlength').requiredLength }} caracteres
+                              </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="flex-auto">
+                              <mat-label>Tipo escolar</mat-label>
+                              <mat-select formControlName="tipoId">
+                                <mat-option
+                                  *ngFor="let row of typeEscolarOptions; trackBy: trackById"
+                                  [value]="row.id"
+                                >
+                                  {{ row.valor }}
+                                </mat-option>
+                              </mat-select>
+
+                              <mat-error *ngIf="userControl.get('escolar.tipoId')?.hasError('required')">
+                                Campo obligatorio
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+
+                        <ng-container
+                          *ngIf="userControl.get('tipoId')?.value === typeUser.ALUMNO"
+                          formGroupName="alumno">
+                          <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                            <mat-form-field class="flex-auto">
+                              <mat-label>Semestre</mat-label>
+                              <mat-select formControlName="semestre">
+                                <mat-option [value]="1">1</mat-option>
+                                <mat-option [value]="2">2</mat-option>
+                                <mat-option [value]="3">3</mat-option>
+                                <mat-option [value]="4">4</mat-option>
+                                <mat-option [value]="5">5</mat-option>
+                                <mat-option [value]="6">6</mat-option>
+                              </mat-select>
+
+                              <mat-error *ngIf="userControl.get('alumno.semestre')?.hasError('required')">
+                                Campo obligatorio
+                              </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="flex-auto">
+                              <mat-label>Carrera</mat-label>
+                              <mat-select formControlName="carreraId">
+                                <mat-option
+                                  *ngFor="let row of careersOptions; trackBy: trackById"
+                                  [value]="row.id"
+                                >
+                                  {{ row.valor }}
+                                </mat-option>
+                              </mat-select>
+
+                              <mat-error *ngIf="userControl.get('alumno.carreraId')?.hasError('required')">
+                                Campo obligatorio
+                              </mat-error>
+                            </mat-form-field>
+
+                            <mat-form-field class="flex-auto">
+                              <mat-label>Turno</mat-label>
+                              <mat-select formControlName="turnoId">
+                                <mat-option
+                                  *ngFor="let row of turnAlumnoOptions; trackBy: trackById"
+                                  [value]="row.id"
+                                >
+                                  {{ row.valor }}
+                                </mat-option>
+                              </mat-select>
+
+                              <mat-error *ngIf="userControl.get('alumno.turnoId')?.hasError('required')">
+                                Campo obligatorio
+                              </mat-error>
+                            </mat-form-field>
+                          </div>
+                        </ng-container>
+
+                        <div class="flex flex-col" formGroupName="donacion">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>¿Cómo se enteró del club?</mat-label>
+                            <textarea matInput
+                                      formControlName="referencia"
+                                      rows="3"></textarea>
+
+                            <mat-error *ngIf="userControl.get('referencia')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ userControl.get('referencia')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
                       </div>
                     </mat-expansion-panel>
                   </ng-container>
