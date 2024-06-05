@@ -98,7 +98,6 @@ export class UserCreateUpdateComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe((tipoId: number) => {
-        this.form.patchValue({ tipoId });
         this.generateValidatorsTypeUser(tipoId);
       });
   }
