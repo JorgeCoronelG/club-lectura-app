@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from '@shared/models/usuario.model';
 import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { getPaginateParams } from '@shared/utils/http.utils';
+import { getPaginateParams, sortHttpParam } from '@shared/utils/http.utils';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -53,8 +53,10 @@ export class UserService {
     return this.http.get<PaginationResponse<Usuario>>(this.url, { params });
   }
 
-  findAll(): Observable<Usuario[]> {
+  findAll(sort?: string): Observable<Usuario[]> {
     const url = `${this.url}find-all`;
-    return this.http.get<Usuario[]>(url);
+    const options = (sort)
+      ? { params: sortHttpParam(sort) } : {};
+    return this.http.get<Usuario[]>(url, options);
   }
 }

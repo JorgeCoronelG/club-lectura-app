@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { VexPageLayoutComponent } from '@shared/components/vex-page-layout/vex-page-layout.component';
 import { MaterialModule } from '@shared/material/material.module';
 import { VexPageLayoutHeaderDirective } from '@shared/components/vex-page-layout/vex-page-layout-header.directive';
@@ -21,6 +31,16 @@ import { OptionCatalogService } from '@shared/services/option-catalog.service';
 import { RolService } from '@shared/services/rol.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TypeUserEnum } from '@shared/enums/catalogo-opciones/type-user.enum';
+import { Genero } from '@shared/models/genero.model';
+import { GenreService } from '@shared/services/genre.service';
+import { AddAuthorTableComponent } from '@shared/components/add-author-table/add-author-table.component';
+import { Autor } from '@shared/models/autor.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
+import { MatSelectionList } from '@angular/material/list';
+import { StoreDonation } from '../../interfaces/store-donation';
+import { DonationService } from '@shared/services/donation.service';
+import { MatStepper } from '@angular/material/stepper';
 
 @Component({
   selector: 'app-donations-managment',
@@ -33,7 +53,7 @@ import { TypeUserEnum } from '@shared/enums/catalogo-opciones/type-user.enum';
     ReactiveFormsModule,
     NgIf,
     NgFor,
-    OnlyNumbersDirective,
+    OnlyNumbersDirective
   ],
   templateUrl: './donations-managment.component.html',
   styles: [],
@@ -45,6 +65,9 @@ import { TypeUserEnum } from '@shared/enums/catalogo-opciones/type-user.enum';
   ],
 })
 export class DonationsManagmentComponent implements OnInit {
+  @ViewChildren('authors') authorsList!: QueryList<MatSelectionList>;
+  @ViewChild('stepper') stepper!: MatStepper;
+
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   readonly trackById = trackById;
@@ -52,6 +75,7 @@ export class DonationsManagmentComponent implements OnInit {
   readonly NEW_USER = 2;
 
   usersForm!: UntypedFormGroup;
+  booksForm!: UntypedFormGroup;
   users: Usuario[] = [];
   now: Date = new Date();
   sexOptions: CatalogoOpcion[] = [];
@@ -61,6 +85,10 @@ export class DonationsManagmentComponent implements OnInit {
   typeUserOptions: CatalogoOpcion[] = [];
   statusUserOptions: CatalogoOpcion[] = [];
   careersOptions: CatalogoOpcion[] = [];
+  conditionOptions: CatalogoOpcion[] = [];
+  languageOptions: CatalogoOpcion[] = [];
+  statusBookOptions: CatalogoOpcion[] = [];
+  genreOptions: Genero[] = [];
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -68,28 +96,35 @@ export class DonationsManagmentComponent implements OnInit {
     private usersService: UserService,
     private catalogoOpcionService: OptionCatalogService,
     private rolService: RolService,
+    private genreService: GenreService,
+    private dialog: MatDialog,
+    private alertNotificationService: AlertNotificationService,
+    private donationService: DonationService,
   ) {}
 
   ngOnInit(): void {
-    this.usersForm = this.fb.group({
-      typeUserAdd: [1, Validators.required],
-      usersBD: this.fb.array([]),
-      newUsers: this.fb.array([])
-    });
-
+    this.initForms();
     this.getDataForm();
   }
 
   get usersBDFormArray(): FormArray {
-    return this.usersForm.get('usersBD') as FormArray;
+    return this.usersForm.get('usuariosExistentes') as FormArray;
   }
 
   get newUsersFormArray(): FormArray {
-    return this.usersForm.get('newUsers') as FormArray;
+    return this.usersForm.get('usuariosNuevos') as FormArray;
+  }
+
+  get booksFormArray(): FormArray {
+    return this.booksForm.get('libros') as FormArray;
   }
 
   get invalidFormUser(): boolean {
     return this.usersForm.invalid || (this.usersBDFormArray.length === 0 && this.newUsersFormArray.length === 0);
+  }
+
+  get invalidFormBooks(): boolean {
+    return this.booksForm.invalid;
   }
 
   get typeUser(): typeof TypeUserEnum {
@@ -106,6 +141,23 @@ export class DonationsManagmentComponent implements OnInit {
     }
   }
 
+  addNewBook(): void {
+    this.booksFormArray.push(this.fb.group({
+      isbn: [null, [Validators.required, Validators.minLength(10), Validators.maxLength(15)]],
+      titulo: [null, [Validators.required, Validators.minLength(2), Validators.maxLength(150)]],
+      numPaginas: [null, [Validators.required, Validators.min(1), Validators.max(5000)]],
+      precio: [null, [Validators.required, Validators.min(1), Validators.max(5000)]],
+      edicion: [null, [Validators.required, Validators.min(1), Validators.max(127)]],
+      numCopia: [null, [Validators.required, Validators.min(1), Validators.max(127)]],
+      estadoFisicoId: [null, Validators.required],
+      idiomaId: [null, Validators.required],
+      estatusId: [null, Validators.required],
+      generoId: [null, Validators.required],
+      resenia: [null, Validators.maxLength(65000)],
+      autores: this.fb.array([], Validators.required),
+    }));
+  }
+
   removeUserBD(index: number): void {
     this.usersBDFormArray.removeAt(index);
     this.usersBDFormArray.controls.forEach(control => {
@@ -115,6 +167,47 @@ export class DonationsManagmentComponent implements OnInit {
 
   removeNewUser(index: number): void {
     this.newUsersFormArray.removeAt(index);
+  }
+
+  openDialogAuthors(index: number): void {
+    this.dialog.open(AddAuthorTableComponent).afterClosed()
+      .subscribe((author: Autor) => {
+        if (!author) {
+          return;
+        }
+
+        if (this.existAuthor(author.id, index)) {
+          this.alertNotificationService.info(`El autor ${author.nombre} ya está agregado`);
+          return;
+        }
+
+        this.addAuthor(author, index);
+        this.cd.markForCheck();
+      });
+  }
+
+  deleteAuthors(index: number): void {
+    const authorsId: number[] = this.authorsList.toArray()[index].selectedOptions.selected.map(selected => selected.value);
+    authorsId.forEach(id => {
+      const i = this.getAuthorsFormArray(index).controls
+        .findIndex(control =>  control.get('id')?.value === id);
+
+      this.getAuthorsFormArray(index).removeAt(i);
+    });
+  }
+
+  getAuthorsFormArray(index: number): FormArray {
+    return this.booksFormArray.at(index).get('autores') as FormArray;
+  }
+
+  save(): void {
+    const { usuariosExistentes, usuariosNuevos } = this.usersForm.getRawValue();
+    const { libros } = this.booksForm.getRawValue();
+    const data: StoreDonation = { usuariosExistentes, usuariosNuevos, libros };
+    this.donationService.store(data).subscribe(() => {
+      this.alertNotificationService.success('Registro creado');
+      this.clearFormsAndStepper();
+    });
   }
 
   private addExistUserForm(): void {
@@ -166,7 +259,7 @@ export class DonationsManagmentComponent implements OnInit {
 
   private getDataForm(): void {
     forkJoin([
-      this.usersService.findAll(),
+      this.usersService.findAll('nombre_completo'),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.SEXO),
       this.rolService.findAll(),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_ESCOLAR),
@@ -174,6 +267,10 @@ export class DonationsManagmentComponent implements OnInit {
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_USUARIO),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_USUARIO),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.CARRERAS_EDUCATIVAS),
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTADO_FISICO_LIBRO),
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.IDIOMA),
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_LIBRO),
+      this.genreService.findAll()
     ]).subscribe(response => {
       this.users = response[0];
       this.sexOptions = response[1];
@@ -183,6 +280,39 @@ export class DonationsManagmentComponent implements OnInit {
       this.typeUserOptions = response[5];
       this.statusUserOptions = response[6];
       this.careersOptions = response[7];
+      this.conditionOptions = response[8];
+      this.languageOptions = response[9];
+      this.statusBookOptions = response[10];
+      this.genreOptions = response[11];
     });
+  }
+
+  private existAuthor(id: number, index: number): boolean {
+    return this.getAuthorsFormArray(index).controls
+      .some(control => control.get('id')?.value === id);
+  }
+
+  private addAuthor(author: Partial<Autor>, index: number): void {
+    this.getAuthorsFormArray(index).push(this.fb.group({
+      id: [author.id, Validators.required],
+      nombre: [author.nombre]
+    }));
+  }
+
+  private clearFormsAndStepper(): void {
+    this.initForms();
+    this.stepper.reset();
+  }
+
+  private initForms(): void {
+    this.usersForm = this.fb.group({
+      typeUserAdd: [1, Validators.required],
+      usuariosExistentes: this.fb.array([]),
+      usuariosNuevos: this.fb.array([])
+    });
+    this.booksForm = this.fb.group({
+      libros: this.fb.array([])
+    });
+    this.addNewBook();
   }
 }

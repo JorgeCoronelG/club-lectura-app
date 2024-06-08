@@ -21,7 +21,7 @@
 
         <mat-step [stepControl]="usersForm">
           <form [formGroup]="usersForm">
-            <ng-template matStepLabel>Agregar usuarios</ng-template>
+            <ng-template matStepLabel>Agregar usuario(s)</ng-template>
 
             <div class="mt-4 flex flex-row gap-3">
               <mat-form-field class="flex-none">
@@ -50,7 +50,7 @@
               <mat-accordion [multi]="true">
                 <!-- Usuarios registrados -->
                 <ng-container *ngIf="usersBDFormArray.length > 0"
-                              formArrayName="usersBD">
+                              formArrayName="usuariosExistentes">
                   <ng-container *ngFor="let userControl of usersBDFormArray.controls; let i = index">
                     <mat-expansion-panel [formGroupName]="i"
                                          [expanded]="true">
@@ -89,7 +89,7 @@
 
                 <!-- Usuarios nuevos -->
                 <ng-container *ngIf="newUsersFormArray.length > 0"
-                              formArrayName="newUsers">
+                              formArrayName="usuariosNuevos">
                   <ng-container *ngFor="let userControl of newUsersFormArray.controls; let i = index">
                     <mat-expansion-panel [formGroupName]="i"
                                          [expanded]="true">
@@ -347,6 +347,301 @@
                       matStepperNext
                       [disabled]="invalidFormUser">
                 Continuar
+              </button>
+            </div>
+          </form>
+        </mat-step>
+
+        <mat-step [stepControl]="booksForm">
+          <form [formGroup]="booksForm">
+            <ng-template matStepLabel>Agregar libro(s)</ng-template>
+
+            <div class="mt-4 flex flex-row">
+              <button class="flex flex-none"
+                      color="primary"
+                      mat-mini-fab
+                      matTooltip="Agregar libro"
+                      type="button"
+                      (click)="addNewBook()">
+                <mat-icon svgIcon="mat:add"></mat-icon>
+              </button>
+            </div>
+
+            <div class="flex flex-col mt-2">
+              <mat-accordion [multi]="true">
+                <ng-container *ngIf="booksFormArray.length > 0"
+                              formArrayName="libros">
+                  <ng-container *ngFor="let bookControl of booksFormArray.controls; let i = index">
+                    <mat-expansion-panel [formGroupName]="i"
+                                         [expanded]="true">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title class="flex items-center">
+                          Libro nuevo #{{ i + 1 }}
+                          <mat-icon *ngIf="i > 0"
+                                    class="text-warn-400 ml-2"
+                                    svgIcon="mat:delete"
+                                    matTooltip="Remover libro">
+                          </mat-icon>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+
+                      <div class="flex flex-col gap-3">
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Título</mat-label>
+                            <input
+                              matInput
+                              formControlName="titulo" />
+
+                            <mat-error *ngIf="bookControl.get('titulo')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('titulo')?.hasError('minlength')">
+                              El campo debe tener más de {{ bookControl.get('titulo')?.getError('minlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('titulo')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ bookControl.get('titulo')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>ISBN</mat-label>
+                            <input
+                              matInput
+                              formControlName="isbn" />
+
+                            <mat-error *ngIf="bookControl.get('isbn')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('isbn')?.hasError('minlength')">
+                              El campo debe tener más de {{ bookControl.get('isbn')?.getError('minlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('isbn')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ bookControl.get('isbn')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label># Páginas</mat-label>
+                            <input
+                              matInput
+                              formControlName="numPaginas"
+                              onlyNumbers
+                            />
+
+                            <mat-error *ngIf="bookControl.get('numPaginas')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('numPaginas')?.hasError('min')">
+                              El campo debe ser mayor o igual a {{ bookControl.get('numPaginas')?.getError('min').min }}
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('numPaginas')?.hasError('max')">
+                              El campo debe ser menor o igual a {{ bookControl.get('numPaginas')?.getError('max').max }}
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Precio</mat-label>
+                            <input
+                              matInput
+                              type="number"
+                              formControlName="precio"
+                              onlyNumbers
+                              [decimal]="2"
+                            />
+
+                            <mat-error *ngIf="bookControl.get('precio')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('precio')?.hasError('min')">
+                              El campo debe ser mayor o igual a {{ bookControl.get('precio')?.getError('min').min }}
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('precio')?.hasError('max')">
+                              El campo debe ser menor o igual a {{ bookControl.get('precio')?.getError('max').max }}
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Edición</mat-label>
+                            <input
+                              matInput
+                              formControlName="edicion"
+                              onlyNumbers
+                            />
+
+                            <mat-error *ngIf="bookControl.get('edicion')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('edicion')?.hasError('min')">
+                              El campo debe ser mayor o igual a {{ bookControl.get('edicion')?.getError('min').min }}
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('edicion')?.hasError('max')">
+                              El campo debe ser menor o igual a {{ bookControl.get('edicion')?.getError('max').max }}
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label># Copia</mat-label>
+                            <input
+                              matInput
+                              formControlName="numCopia"
+                              onlyNumbers
+                            />
+
+                            <mat-error *ngIf="bookControl.get('numCopia')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('numCopia')?.hasError('min')">
+                              El campo debe ser mayor o igual a {{ bookControl.get('numCopia')?.getError('min').min }}
+                            </mat-error>
+                            <mat-error *ngIf="bookControl.get('numCopia')?.hasError('max')">
+                              El campo debe ser menor o igual a {{ bookControl.get('numCopia')?.getError('max').max }}
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Estado físico</mat-label>
+                            <mat-select formControlName="estadoFisicoId">
+                              <mat-option
+                                *ngFor="let row of conditionOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.valor }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="bookControl.get('estadoFisicoId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Idioma</mat-label>
+                            <mat-select formControlName="idiomaId">
+                              <mat-option
+                                *ngFor="let row of languageOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.valor }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="bookControl.get('idiomaId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+                        <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Estatus</mat-label>
+                            <mat-select formControlName="estatusId">
+                              <mat-option
+                                *ngFor="let row of statusBookOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.valor }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="bookControl.get('estatusId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Género Literario</mat-label>
+                            <mat-select formControlName="generoId">
+                              <mat-option
+                                *ngFor="let row of genreOptions; trackBy: trackById"
+                                [value]="row.id"
+                              >
+                                {{ row.nombre }}
+                              </mat-option>
+                            </mat-select>
+
+                            <mat-error *ngIf="bookControl.get('generoId')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col">
+                          <mat-form-field class="flex-auto">
+                            <mat-label>Reseña</mat-label>
+                            <textarea matInput
+                                      formControlName="resenia"
+                                      rows="3"></textarea>
+
+                            <mat-error *ngIf="bookControl.get('resenia')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ bookControl.get('resenia')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                          </mat-form-field>
+                        </div>
+
+                        <div class="flex flex-col items-center">
+                          <div class="flex w-full"
+                               formArrayName="autores">
+                            <mat-selection-list
+                              #authors
+                              class="card w-full overflow-hidden">
+                              <div class="flex items-center mb-4">
+                                <h3 mat-subheader>Autores</h3>
+
+                                <span class="flex-1"></span>
+
+                                <div class="flex flex-row gap-2 mr-4">
+                                  <button class="flex-none"
+                                          color="primary"
+                                          mat-mini-fab
+                                          matTooltip="Agregar"
+                                          matTooltipPosition="above"
+                                          type="button"
+                                          (click)="openDialogAuthors(i)">
+                                    <mat-icon svgIcon="mat:add"></mat-icon>
+                                  </button>
+
+                                  <button class="flex-none"
+                                          color="warn"
+                                          mat-mini-fab
+                                          matTooltip="Eliminar"
+                                          matTooltipPosition="above"
+                                          type="button"
+                                          [disabled]="authors.selectedOptions.selected.length === 0"
+                                          (click)="deleteAuthors(i)">
+                                    <mat-icon svgIcon="mat:delete"></mat-icon>
+                                  </button>
+                                </div>
+                              </div>
+                              <h3 mat-subheader *ngIf="getAuthorsFormArray(i).length === 0">
+                                No hay autores
+                              </h3>
+                              <ng-container *ngIf="getAuthorsFormArray(i).length > 0">
+                                <mat-list-option *ngFor="let author of getAuthorsFormArray(i).controls; let indexAuthor = index"
+                                                 [value]="author.get('id')?.value">
+                                  {{ getAuthorsFormArray(i).at(indexAuthor).get('nombre')?.value }}
+                                </mat-list-option>
+                              </ng-container>
+                            </mat-selection-list>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-expansion-panel>
+                  </ng-container>
+                </ng-container>
+              </mat-accordion>
+            </div>
+
+            <div class="actions flex items-center justify-end mt-4">
+              <button color="primary"
+                      mat-raised-button
+                      matStepperNext
+                      [disabled]="invalidFormBooks"
+                      (click)="save()">
+                Guardar
               </button>
             </div>
           </form>
