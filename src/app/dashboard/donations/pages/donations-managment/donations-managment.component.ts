@@ -87,7 +87,6 @@ export class DonationsManagmentComponent implements OnInit {
   careersOptions: CatalogoOpcion[] = [];
   conditionOptions: CatalogoOpcion[] = [];
   languageOptions: CatalogoOpcion[] = [];
-  statusBookOptions: CatalogoOpcion[] = [];
   genreOptions: Genero[] = [];
 
   constructor(
@@ -151,7 +150,6 @@ export class DonationsManagmentComponent implements OnInit {
       numCopia: [null, [Validators.required, Validators.min(1), Validators.max(127)]],
       estadoFisicoId: [null, Validators.required],
       idiomaId: [null, Validators.required],
-      estatusId: [null, Validators.required],
       generoId: [null, Validators.required],
       resenia: [null, Validators.maxLength(65000)],
       autores: this.fb.array([], Validators.required),
@@ -269,7 +267,6 @@ export class DonationsManagmentComponent implements OnInit {
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.CARRERAS_EDUCATIVAS),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTADO_FISICO_LIBRO),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.IDIOMA),
-      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_LIBRO),
       this.genreService.findAll()
     ]).subscribe(response => {
       this.users = response[0];
@@ -282,8 +279,7 @@ export class DonationsManagmentComponent implements OnInit {
       this.careersOptions = response[7];
       this.conditionOptions = response[8];
       this.languageOptions = response[9];
-      this.statusBookOptions = response[10];
-      this.genreOptions = response[11];
+      this.genreOptions = response[10];
     });
   }
 
