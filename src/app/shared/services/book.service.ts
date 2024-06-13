@@ -81,4 +81,17 @@ export class BookService {
     const url = `${this.url}${id}`;
     return this.http.put<Libro>(url, data);
   }
+
+  findAllLibraryPaginated(filtersTable: FiltersTable)
+    : Observable<PaginationResponse<Libro>> {
+    const url = `${this.url}library`;
+    const params = getPaginateParams(
+      filtersTable.orderBy,
+      filtersTable.pageSize,
+      filtersTable.currentPage,
+      filtersTable.searchQuery
+    );
+
+    return this.http.get<PaginationResponse<Libro>>(url, { params });
+  }
 }

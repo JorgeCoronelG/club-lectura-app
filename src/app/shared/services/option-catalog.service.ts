@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
@@ -16,8 +16,14 @@ export class OptionCatalogService {
     return environment.baseUrl + this._baseUrl;
   }
 
-  findByCatalogoId(catalogoId: number): Observable<CatalogoOpcion[]> {
+  findByCatalogoId(catalogoId: number, omitOptions: number[] = []): Observable<CatalogoOpcion[]> {
     const url = `${this.url}catalog-id/${catalogoId}`;
+
+    if (omitOptions.length > 0) {
+      const params = new HttpParams().append('omit_options', omitOptions.join(','));
+      return this.http.get<CatalogoOpcion[]>(url, { params });
+    }
+
     return this.http.get<CatalogoOpcion[]>(url);
   }
 }
