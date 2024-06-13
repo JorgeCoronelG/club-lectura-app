@@ -128,14 +128,23 @@
                             <mat-label>Correo electrónico</mat-label>
                             <input
                               matInput
-                              formControlName="correo"
-                            />
+                              formControlName="correo" />
+                            <mat-hint *ngIf="userControl.get('correo')?.pending">
+                              Validando...
+                            </mat-hint>
+                            <mat-hint *ngIf="userControl.get('correo')?.valid && !userControl.get('correo')?.pending"
+                                      class="text-green-600">
+                              Correo válido
+                            </mat-hint>
 
                             <mat-error *ngIf="userControl.get('correo')?.hasError('required')">
                               Campo obligatorio
                             </mat-error>
                             <mat-error *ngIf="userControl.get('correo')?.hasError('email')">
                               El campo no es una dirección de correo válida
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('correo')?.hasError('emailExist')">
+                              El correo ya existe. Favor de escribir otro
                             </mat-error>
                           </mat-form-field>
                         </div>
@@ -149,6 +158,13 @@
                               onlyNumbers
                               maxlength="10"
                             />
+                            <mat-hint *ngIf="userControl.get('telefono')?.pending">
+                              Validando...
+                            </mat-hint>
+                            <mat-hint *ngIf="userControl.get('telefono')?.valid && !userControl.get('telefono')?.pending"
+                                      class="text-green-600">
+                              Teléfono válido
+                            </mat-hint>
 
                             <mat-error *ngIf="userControl.get('telefono')?.hasError('required')">
                               Campo obligatorio
@@ -158,6 +174,9 @@
                             </mat-error>
                             <mat-error *ngIf="userControl.get('telefono')?.hasError('maxlength')">
                               El campo debe tener {{ userControl.get('telefono')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('telefono')?.hasError('phoneExist')">
+                              El teléfono ya existe. Favor de escribir otro
                             </mat-error>
                           </mat-form-field>
 
@@ -329,8 +348,11 @@
                                       formControlName="referencia"
                                       rows="3"></textarea>
 
-                            <mat-error *ngIf="userControl.get('referencia')?.hasError('maxlength')">
-                              El campo debe tener menos de {{ userControl.get('referencia')?.getError('maxlength').requiredLength }} caracteres
+                            <mat-error *ngIf="userControl.get('donacion.referencia')?.hasError('required')">
+                              Campo obligatorio
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('donacion.referencia')?.hasError('maxlength')">
+                              El campo debe tener menos de {{ userControl.get('donacion.referencia')?.getError('maxlength').requiredLength }} caracteres
                             </mat-error>
                           </mat-form-field>
                         </div>

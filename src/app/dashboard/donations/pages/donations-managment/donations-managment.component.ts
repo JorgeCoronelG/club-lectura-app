@@ -21,7 +21,12 @@ import { NgFor, NgIf } from '@angular/common';
 import { UserService } from '@shared/services/user.service';
 import { Usuario } from '@shared/models/usuario.model';
 import { trackById } from '@shared/utils/track-by';
-import { generateValidatorsTypeUser, uniqueUserValidator } from './validators-donation-form';
+import {
+  emailExistValidator,
+  generateValidatorsTypeUser,
+  phoneExistValidator,
+  uniqueUserValidator
+} from './validators-donation-form';
 import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
 import { forkJoin } from 'rxjs';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
@@ -41,6 +46,7 @@ import { MatSelectionList } from '@angular/material/list';
 import { StoreDonation } from '../../interfaces/store-donation';
 import { DonationService } from '@shared/services/donation.service';
 import { MatStepper } from '@angular/material/stepper';
+import { getDateFormat } from '@shared/utils/date.utils';
 
 @Component({
   selector: 'app-donations-managment',
@@ -92,7 +98,7 @@ export class DonationsManagmentComponent implements OnInit {
   constructor(
     private cd: ChangeDetectorRef,
     private fb: FormBuilder,
-    private usersService: UserService,
+    private userService: UserService,
     private catalogoOpcionService: OptionCatalogService,
     private rolService: RolService,
     private genreService: GenreService,
@@ -119,7 +125,9 @@ export class DonationsManagmentComponent implements OnInit {
   }
 
   get invalidFormUser(): boolean {
-    return this.usersForm.invalid || (this.usersBDFormArray.length === 0 && this.newUsersFormArray.length === 0);
+    return this.usersForm.invalid ||
+      (this.usersBDFormArray.length === 0 && this.newUsersFormArray.length === 0) ||
+      this.newUsersFormArray.status === 'PENDING';
   }
 
   get invalidFormBooks(): boolean {
@@ -199,8 +207,16 @@ export class DonationsManagmentComponent implements OnInit {
   }
 
   save(): void {
-    const { usuariosExistentes, usuariosNuevos } = this.usersForm.getRawValue();
+    let { usuariosExistentes, usuariosNuevos } = this.usersForm.getRawValue();
     const { libros } = this.booksForm.getRawValue();
+
+    if (usuariosNuevos.length > 0) {
+      usuariosNuevos.map((usuario: Usuario) => {
+        usuario.fechaNacimiento = getDateFormat(usuario.fechaNacimiento);
+        return usuario;
+      });
+    }
+
     const data: StoreDonation = { usuariosExistentes, usuariosNuevos, libros };
     this.donationService.store(data).subscribe(() => {
       this.alertNotificationService.success('Registro creado');
@@ -227,21 +243,29 @@ export class DonationsManagmentComponent implements OnInit {
           Validators.maxLength(191)
         ]
       ],
-      correo: ['', [Validators.required, Validators.email]],
+      correo: ['', {
+        validators: [Validators.required, Validators.email],
+        asyncValidators: [emailExistValidator(this.userService, this.cd)],
+        updateOn: 'blur'
+      }],
       telefono: [
         '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(10)
-        ]
+        {
+          validators: [
+            Validators.required,
+            Validators.minLength(10),
+            Validators.maxLength(10)
+          ],
+          asyncValidators: [phoneExistValidator(this.userService, this.cd)],
+          updateOn: 'blur'
+        }
       ],
       fechaNacimiento: ['', Validators.required],
       sexoId: [null, Validators.required],
       rolId: [null, Validators.required],
       tipoId: [null, Validators.required],
       donacion: this.fb.group({
-        referencia: [null, Validators.maxLength(500)]
+        referencia: [null, [Validators.required, Validators.maxLength(500)]]
       })
     });
 
@@ -257,7 +281,7 @@ export class DonationsManagmentComponent implements OnInit {
 
   private getDataForm(): void {
     forkJoin([
-      this.usersService.findAll('nombre_completo'),
+      this.userService.findAll('nombre_completo'),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.SEXO),
       this.rolService.findAll(),
       this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.TIPO_ESCOLAR),

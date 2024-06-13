@@ -24,6 +24,10 @@ export const sortHttpParam = (sort: string): HttpParams => {
   return new HttpParams().append('sort', sort);
 }
 
+export const disableSpinner = (): HttpParams => {
+  return new HttpParams().append('disableSpinner', true);
+}
+
 const convertCamelCaseToSnakeCase = (str: string): string => {
   return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }

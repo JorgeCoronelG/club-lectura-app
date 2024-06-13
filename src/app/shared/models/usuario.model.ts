@@ -10,7 +10,7 @@ export interface Usuario {
   correo: string;
   contrasenia: string;
   telefono: string;
-  fechaNacimiento: Date;
+  fechaNacimiento: Date|string;
   sexoId: number;
   sexo: CatalogoOpcion;
   estatusId: number;

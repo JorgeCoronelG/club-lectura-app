@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Usuario } from '@shared/models/usuario.model';
 import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { PaginationResponse } from '@shared/interfaces/pagination-response.interface';
-import { getPaginateParams, sortHttpParam } from '@shared/utils/http.utils';
+import { disableSpinner, getPaginateParams, sortHttpParam } from '@shared/utils/http.utils';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -58,5 +58,11 @@ export class UserService {
     const options = (sort)
       ? { params: sortHttpParam(sort) } : {};
     return this.http.get<Usuario[]>(url, options);
+  }
+
+  validateField(field: string, value: string): Observable<{ exists: boolean }> {
+    const url = `${this.url}validate-data`;
+    const params = disableSpinner().append(field, value);
+    return this.http.get<{ exists: boolean }>(url, { params });
   }
 }

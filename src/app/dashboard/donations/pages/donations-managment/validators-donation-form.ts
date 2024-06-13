@@ -1,5 +1,6 @@
 import {
   AbstractControl,
+  AsyncValidatorFn,
   FormArray,
   FormBuilder,
   FormGroup,
@@ -8,6 +9,10 @@ import {
   Validators
 } from '@angular/forms';
 import { TypeUserEnum } from '@shared/enums/catalogo-opciones/type-user.enum';
+import { UserService } from '@shared/services/user.service';
+import { catchError, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ChangeDetectorRef } from '@angular/core';
 
 export const uniqueUserValidator = (usersArray: () => FormArray): ValidatorFn => {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -65,4 +70,34 @@ export const generateValidatorsTypeUser = (form: FormGroup, tipoId: any, fb: For
   }
 
   form.updateValueAndValidity();
+}
+
+export const emailExistValidator = (userService: UserService, cd: ChangeDetectorRef): AsyncValidatorFn => {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    return userService.validateField('correo', control.value).pipe(
+      map(({ exists }) => {
+        cd.markForCheck();
+        return (exists) ? { emailExist: true } : null;
+      }),
+      catchError(() => {
+        cd.markForCheck();
+        return of(null);
+      })
+    );
+  }
+}
+
+export const phoneExistValidator = (userService: UserService, cd: ChangeDetectorRef): AsyncValidatorFn => {
+  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+    return userService.validateField('telefono', control.value).pipe(
+      map(({ exists }) => {
+        cd.markForCheck();
+        return (exists) ? { phoneExist: true } : null;
+      }),
+      catchError(() => {
+        cd.markForCheck();
+        return of(null);
+      })
+    );
+  }
 }
