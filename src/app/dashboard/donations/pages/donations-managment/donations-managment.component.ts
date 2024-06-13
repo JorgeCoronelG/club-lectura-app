@@ -24,7 +24,7 @@ import { trackById } from '@shared/utils/track-by';
 import {
   emailExistValidator,
   generateValidatorsTypeUser,
-  phoneExistValidator,
+  phoneExistValidator, uniqueEmailInFormValidator, uniquePhoneInFormValidator,
   uniqueUserValidator
 } from './validators-donation-form';
 import { OnlyNumbersDirective } from '@shared/directives/only-numbers.directive';
@@ -244,7 +244,11 @@ export class DonationsManagmentComponent implements OnInit {
         ]
       ],
       correo: ['', {
-        validators: [Validators.required, Validators.email],
+        validators: [
+          Validators.required,
+          Validators.email,
+          uniqueEmailInFormValidator(() => this.newUsersFormArray)
+        ],
         asyncValidators: [emailExistValidator(this.userService, this.cd)],
         updateOn: 'blur'
       }],
@@ -254,7 +258,8 @@ export class DonationsManagmentComponent implements OnInit {
           validators: [
             Validators.required,
             Validators.minLength(10),
-            Validators.maxLength(10)
+            Validators.maxLength(10),
+            uniquePhoneInFormValidator(() => this.newUsersFormArray)
           ],
           asyncValidators: [phoneExistValidator(this.userService, this.cd)],
           updateOn: 'blur'

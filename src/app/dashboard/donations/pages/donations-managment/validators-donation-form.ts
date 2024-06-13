@@ -35,6 +35,48 @@ export const uniqueUserValidator = (usersArray: () => FormArray): ValidatorFn =>
   }
 }
 
+export const uniqueEmailInFormValidator = (usersArray: () => FormArray): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const email = control.value;
+
+    if (!email) {
+      return null;
+    }
+
+    const emails: string[] = usersArray().controls
+      .filter(ctrl => ctrl.get('correo') !== control)
+      .map(ctrl => ctrl.get('correo')?.value);
+
+    if (emails.some(row => row === email)) {
+      control.setValue(null);
+      return { duplicateEmail: true };
+    }
+
+    return null;
+  }
+}
+
+export const uniquePhoneInFormValidator = (usersArray: () => FormArray): ValidatorFn => {
+  return (control: AbstractControl): ValidationErrors | null => {
+    const phone = control.value;
+
+    if (!phone) {
+      return null;
+    }
+
+    const phones: string[] = usersArray().controls
+      .filter(ctrl => ctrl.get('telefono') !== control)
+      .map(ctrl => ctrl.get('telefono')?.value);
+
+    if (phones.some(row => row === phone)) {
+      control.setValue(null);
+      return { duplicatePhone: true };
+    }
+
+    return null;
+  }
+}
+
 export const generateValidatorsTypeUser = (form: FormGroup, tipoId: any, fb: FormBuilder): void => {
   form.removeControl('escolar');
   form.removeControl('alumno');

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { finalize, Observable } from 'rxjs';
 import { SpinnerLoadingService } from '@shared/interceptors/spinner-loading/spinner-loading.service';
 
@@ -9,7 +9,6 @@ export class SpinnerLoadingInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const disableSpinner: string | null = request.params.get('disableSpinner');
-    console.log(request.params);
 
     if (!disableSpinner) {
       this.spinnerLoadingService.setLoading(true, request.url);

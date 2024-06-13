@@ -143,6 +143,9 @@
                             <mat-error *ngIf="userControl.get('correo')?.hasError('email')">
                               El campo no es una dirección de correo válida
                             </mat-error>
+                            <mat-error *ngIf="userControl.get('correo')?.hasError('duplicateEmail')">
+                              El correo ya está agregado. Favor de escribir otro
+                            </mat-error>
                             <mat-error *ngIf="userControl.get('correo')?.hasError('emailExist')">
                               El correo ya existe. Favor de escribir otro
                             </mat-error>
@@ -174,6 +177,9 @@
                             </mat-error>
                             <mat-error *ngIf="userControl.get('telefono')?.hasError('maxlength')">
                               El campo debe tener {{ userControl.get('telefono')?.getError('maxlength').requiredLength }} caracteres
+                            </mat-error>
+                            <mat-error *ngIf="userControl.get('telefono')?.hasError('duplicatePhone')">
+                              El teléfono ya está agregado. Favor de escribir otro
                             </mat-error>
                             <mat-error *ngIf="userControl.get('telefono')?.hasError('phoneExist')">
                               El teléfono ya existe. Favor de escribir otro
