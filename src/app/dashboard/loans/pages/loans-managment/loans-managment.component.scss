@@ -1,0 +1,14 @@
+.on-loan {
+  @apply text-indigo-600;
+  @apply bg-indigo-600/10;
+}
+
+.off-loan {
+  @apply text-green-600;
+  @apply bg-green-600/10;
+}
+
+.on-lost {
+  @apply text-red-600;
+  @apply bg-red-600/10;
+}
