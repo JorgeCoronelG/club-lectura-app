@@ -65,4 +65,9 @@ export class UserService {
     const params = disableSpinner().append(field, value);
     return this.http.get<{ exists: boolean }>(url, { params });
   }
+
+  findAllForLoan(): Observable<Usuario[]> {
+    const url = `${this.url}find-for-loan`;
+    return this.http.get<Usuario[]>(url);
+  }
 }

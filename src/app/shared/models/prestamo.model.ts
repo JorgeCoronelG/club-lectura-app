@@ -9,7 +9,7 @@ export interface Prestamo {
   fechaEntregaReal: Date | string;
   usuarioId: number;
   usuario: Usuario;
-  libros: Libro[];
+  libros: Libro[] | Partial<Libro>[];
   estatusId: number;
   estatus: CatalogoOpcion;
 }

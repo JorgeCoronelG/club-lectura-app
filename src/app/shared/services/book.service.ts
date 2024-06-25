@@ -94,4 +94,9 @@ export class BookService {
 
     return this.http.get<PaginationResponse<Libro>>(url, { params });
   }
+
+  findAllForLoan(): Observable<Libro[]> {
+    const url = `${this.url}find-for-loan`;
+    return this.http.get<Libro[]>(url);
+  }
 }

@@ -7,3 +7,9 @@ export const getDateFormat = (date: Date | string): string => {
   const month = ((date.getMonth() + 1) < 10) ? `0${date.getMonth() + 1}` : date.getMonth() + 1;
   return `${date.getFullYear()}-${month}-${day}`;
 };
+
+export const weekendDateFilter = (d: Date | null): boolean => {
+  const day = (d || new Date()).getDay();
+
+  return day !== 0 && day !== 6;
+}

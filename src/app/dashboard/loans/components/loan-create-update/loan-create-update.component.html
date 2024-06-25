@@ -1,0 +1,105 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      {{ (data) ? 'Actualizar' : 'Nuevo' }} préstamo
+    </h2>
+
+    <button class="text-secondary"
+            mat-dialog-close
+            mat-icon-button
+            type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="usuarioId">
+          <mat-option
+            *ngFor="let row of users$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            {{ row.nombreCompleto }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('usuarioId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Libro</mat-label>
+        <mat-select formControlName="libroId">
+          <mat-option
+            *ngFor="let row of books$ | async; trackBy: trackById"
+            [value]="row.id"
+          >
+            ({{ row.clave }}) {{ row.titulo }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('libroId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Fecha préstamo</mat-label>
+        <input
+          matInput
+          formControlName="fechaPrestamo"
+          [matDatepickerFilter]="weekendDateFilter"
+          [matDatepicker]="pickerPrestamo"
+          (click)="pickerPrestamo.open()"
+          [max]="now"
+          readonly
+        />
+        <mat-datepicker #pickerPrestamo></mat-datepicker>
+
+        <mat-error *ngIf="form.get('fechaPrestamo')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Fecha entrega</mat-label>
+        <input
+          matInput
+          formControlName="fechaEntrega"
+          [matDatepickerFilter]="weekendDateFilter"
+          [matDatepicker]="pickerEntrega"
+          (click)="pickerEntrega.open()"
+          [min]="now"
+          readonly
+        />
+        <mat-datepicker #pickerEntrega></mat-datepicker>
+
+        <mat-error *ngIf="form.get('fechaEntrega')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      type="button">
+      Cerrar
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
+      type="submit">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>

@@ -30,6 +30,9 @@ import { forkJoin } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
+import { MatDialog } from '@angular/material/dialog';
+import { LoanCreateUpdateComponent } from '../../components/loan-create-update/loan-create-update.component';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   selector: 'app-loans-managment',
@@ -73,8 +76,10 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
 
   constructor(
     private cd: ChangeDetectorRef,
+    private dialog: MatDialog,
     private catalogoOpcionService: OptionCatalogService,
-    private prestamoService: PrestamoService
+    private prestamoService: PrestamoService,
+    private alertNotificationService: AlertNotificationService,
   ) {
   }
 
@@ -83,6 +88,19 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
 
     this.getFiltersTable();
     this.getData();
+  }
+
+  addLoan(): void {
+    this.dialog.open(LoanCreateUpdateComponent, {
+      panelClass: 'md:w-1/2'
+    })
+      .afterClosed()
+      .subscribe((updated) => {
+        if (updated) {
+          this.alertNotificationService.success('Registro creado');
+          this.getData();
+        }
+      });
   }
 
   addFilter(filter: Filter): void {
