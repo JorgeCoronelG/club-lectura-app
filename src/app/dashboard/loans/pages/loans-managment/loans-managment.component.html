@@ -194,9 +194,39 @@
           <td *matCellDef="let row"
               mat-cell>
             <div class="flex justify-center">
-              <div [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.estatus.claseCss">
+              <span [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.estatus.claseCss">
                 {{ row.estatus.valor }}
+              </span>
+              <span class=" ml-1 rounded px-2 py-1 font-medium text-xs flex-none text-orange-600 bg-orange-600/10"
+                    *ngIf="row.multa">
+                Multa
+              </span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Multa -->
+        <ng-container matColumnDef="multa">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Multa</b>
+                </span>
               </div>
+
+              <app-advanced-filter-table
+                type="number"
+                field="multa"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              {{ (row.multa) ? (row.multa.costo | currency) : '' }}
             </div>
           </td>
         </ng-container>

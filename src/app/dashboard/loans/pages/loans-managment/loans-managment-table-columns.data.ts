@@ -32,6 +32,11 @@ export const loansManagmentTableColumns: TableColumn[] = [
     visible: true
   },
   {
+    label: 'Multa',
+    property: 'multa',
+    visible: true,
+  },
+  {
     label: 'Acciones',
     property: 'actions',
     visible: true

@@ -9,7 +9,7 @@ import { VexPageLayoutHeaderDirective } from '@shared/components/vex-page-layout
 import { VexBreadcrumbsComponent } from '@shared/components/vex-breadcrumbs/vex-breadcrumbs.component';
 import { VexPageLayoutContentDirective } from '@shared/components/vex-page-layout/vex-page-layout-content.directive';
 import { AdvancedFilterTableComponent } from '@shared/components/advanced-filter-table/advanced-filter-table.component';
-import { DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgClass, NgFor, NgIf } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PaginatorComponent } from '@shared/components/paginator/paginator.component';
 import { fadeInUp400ms } from '@shared/animations/fade-in-up.animation';
@@ -51,7 +51,8 @@ import { AlertNotificationService } from '@shared/services/alert-notification.se
     NgIf,
     PaginatorComponent,
     NgClass,
-    UrlPipe
+    UrlPipe,
+    CurrencyPipe,
   ],
   templateUrl: './loans-managment.component.html',
   styleUrls: ['./loans-managment.component.scss'],

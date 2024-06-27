@@ -3,6 +3,7 @@ import { Sort } from '@angular/material/sort';
 import { getSort } from '@shared/utils/http.utils';
 import { currentPageDefault, paginationSizeDefault } from '@shared/types/pagination.type';
 import { Meta } from '@shared/interfaces/pagination-response.interface';
+import { OperatorsSqlEnum } from '@shared/enums/operators-sql.enum';
 
 export class FiltersTable {
   private _filters: Filter[] = [];
@@ -44,7 +45,11 @@ export class FiltersTable {
     this.clearFilters();
 
     this._filters = filters;
-    if (newFilter.value) {
+    if (
+      newFilter.value ||
+      newFilter.operator === OperatorsSqlEnum.IS_NULL ||
+      newFilter.operator === OperatorsSqlEnum.NOT_NULL
+    ) {
       this._filters = this._filters.concat({ ...newFilter });
     }
   }
