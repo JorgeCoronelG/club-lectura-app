@@ -23,16 +23,17 @@ import { FiltersTable } from '@shared/utils/filters.table.utils';
 import { trackById } from '@shared/utils/track-by';
 import { visibleColumns } from '@shared/utils/table.utils';
 import { OptionCatalogService } from '@shared/services/option-catalog.service';
-import { PrestamoService } from '@shared/services/prestamo.service';
 import { UrlPipe } from '@shared/pipes/url/url.pipe';
 import { CatalogoOpcion } from '@shared/models/catalogo-opcion.model';
-import { forkJoin } from 'rxjs';
+import { forkJoin, switchMap } from 'rxjs';
 import { CatalogoEnum } from '@shared/enums/catalogo.enum';
 import { map } from 'rxjs/operators';
 import { allFilterEnum } from '@shared/components/advanced-filter-table/advanced-filter-table.data';
 import { MatDialog } from '@angular/material/dialog';
 import { LoanCreateUpdateComponent } from '../../components/loan-create-update/loan-create-update.component';
 import { AlertNotificationService } from '@shared/services/alert-notification.service';
+import { LoanService } from '@shared/services/loan.service';
+import { LoanDeliveredComponent } from '../../components/loan-delivered/loan-delivered.component';
 
 @Component({
   selector: 'app-loans-managment',
@@ -80,7 +81,7 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
     private cd: ChangeDetectorRef,
     private dialog: MatDialog,
     private catalogoOpcionService: OptionCatalogService,
-    private prestamoService: PrestamoService,
+    private loanService: LoanService,
     private alertNotificationService: AlertNotificationService,
   ) {
   }
@@ -105,6 +106,17 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
       });
   }
 
+  loanDelivered(id: number): void {
+    this.loanService.show(id).pipe(
+      switchMap(loan => this.dialog.open(LoanDeliveredComponent, { data: loan }).afterClosed())
+    ).subscribe((updated) => {
+      if (updated) {
+        this.alertNotificationService.success('Registro actualizado');
+        this.getData();
+      }
+    })
+  }
+
   addFilter(filter: Filter): void {
     this.filtersTable.addFilter(filter);
     this.getData();
@@ -123,7 +135,7 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
   getData(): void {
     this.filtersTable.setPaginationOfMeta(this.loanResponse?.meta);
 
-    this.prestamoService.findAllPaginated(this.filtersTable)
+    this.loanService.findAllPaginated(this.filtersTable)
       .subscribe(response => {
         this.loanResponse = response;
         this.dataSource.data = response.data;

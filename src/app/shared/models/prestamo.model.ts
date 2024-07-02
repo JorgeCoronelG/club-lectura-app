@@ -7,7 +7,7 @@ export interface Prestamo {
   id: number;
   fechaPrestamo: Date | string;
   fechaEntrega: Date | string;
-  fechaEntregaReal: Date | string;
+  fechaRealEntrega: Date | string;
   usuarioId: number;
   usuario: Usuario;
   libros: Libro[] | Partial<Libro>[];

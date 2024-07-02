@@ -1,0 +1,74 @@
+<form [formGroup]="form" (ngSubmit)="save()">
+  <div class="flex items-center" mat-dialog-title>
+    <h2 class="headline m-0 flex-auto">
+      Entrega del libro
+    </h2>
+
+    <button class="text-secondary"
+            mat-dialog-close
+            mat-icon-button
+            type="button">
+      <mat-icon svgIcon="mat:close"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="text-border"></mat-divider>
+
+  <mat-dialog-content class="flex flex-col gap-3">
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Usuario</mat-label>
+        <input matInput
+               readonly
+               [value]="data.usuario.nombreCompleto" />
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Estatus préstamo</mat-label>
+        <mat-select formControlName="estatusId">
+          <mat-option
+            *ngFor="let row of statusLoan; trackBy: trackById"
+            [value]="row"
+          >
+            {{ row.valor }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error *ngIf="form.get('estatusId')?.hasError('required')">
+          Campo obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field class="flex-auto"
+                    *ngIf="form.get('fechaRealEntrega')">
+      <mat-label>Fecha de entrega</mat-label>
+      <input
+        matInput
+        formControlName="fechaRealEntrega"
+        [matDatepicker]="picker"
+        readonly
+      />
+      <mat-datepicker #picker></mat-datepicker>
+
+      <mat-error *ngIf="form.get('fechaRealEntrega')?.hasError('required')">
+        Campo obligatorio
+      </mat-error>
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      type="button">
+      Cerrar
+    </button>
+    <button
+      color="primary"
+      mat-flat-button
+      type="submit">
+      Guardar
+    </button>
+  </mat-dialog-actions>
+</form>

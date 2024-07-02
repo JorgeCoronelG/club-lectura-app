@@ -23,7 +23,7 @@ export const loansManagmentTableColumns: TableColumn[] = [
   },
   {
     label: 'Fecha entrega real',
-    property: 'fechaEntregaReal',
+    property: 'fechaRealEntrega',
     visible: true
   },
   {
