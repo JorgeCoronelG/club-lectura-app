@@ -9,4 +9,6 @@ export enum CatalogoEnum {
   IDIOMA = 8,
   ESTATUS_LIBRO = 9,
   ESTATUS_PRESTAMOS = 10,
+  ESTATUS_MULTA = 11,
+  COSTO_MULTA_POR_DIA = 12,
 }

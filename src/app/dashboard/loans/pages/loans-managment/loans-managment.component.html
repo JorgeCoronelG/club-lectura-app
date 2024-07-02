@@ -231,6 +231,36 @@
           </td>
         </ng-container>
 
+        <!-- Columna Estatus multa -->
+        <ng-container matColumnDef="estatus_multa">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Estatus multa</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="estatus_multa"
+                [enumValues]="statusFineOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center"
+                 *ngIf="row.multa">
+              <span [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.multa.estatus.claseCss">
+                {{ row.multa.estatus.valor }}
+              </span>
+            </div>
+          </td>
+        </ng-container>
+
         <!-- Columna Acciones -->
         <ng-container matColumnDef="actions">
           <th *matHeaderCellDef

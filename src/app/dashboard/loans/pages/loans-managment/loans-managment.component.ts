@@ -71,6 +71,7 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
   columns: TableColumn[] = loansManagmentTableColumns;
   filtersTable: FiltersTable = new FiltersTable();
   statusLoansOptions: CatalogoOpcion[] = [];
+  statusFineOptions: CatalogoOpcion[] = [];
 
   trackById = trackById;
   visibleColumns = visibleColumns;
@@ -132,15 +133,18 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
 
   private getFiltersTable(): void {
     forkJoin([
-      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_PRESTAMOS)
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_PRESTAMOS),
+      this.catalogoOpcionService.findByCatalogoId(CatalogoEnum.ESTATUS_MULTA)
     ]).pipe(
-      map(([statusLoans]) => {
+      map(([statusLoans, statusFines]) => {
         return [
-          [{ ...allFilterEnum }].concat([... statusLoans])
+          [{ ...allFilterEnum }].concat([... statusLoans]),
+          [{ ...allFilterEnum }].concat([... statusFines]),
         ];
       })
-    ).subscribe(([statusLoans]) => {
+    ).subscribe(([statusLoans, statusFines]) => {
       this.statusLoansOptions = statusLoans;
+      this.statusFineOptions = statusFines;
     });
   }
 }
