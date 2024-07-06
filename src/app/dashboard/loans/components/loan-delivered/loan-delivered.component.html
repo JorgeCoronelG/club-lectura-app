@@ -43,7 +43,7 @@
         <mat-label>Estatus préstamo</mat-label>
         <mat-select formControlName="estatusId">
           <mat-option
-            *ngFor="let row of statusLoan; trackBy: trackById"
+            *ngFor="let row of statusLoanOptions; trackBy: trackById"
             [value]="row"
           >
             {{ row.valor }}
@@ -72,32 +72,43 @@
       </mat-error>
     </mat-form-field>
 
-    <div class="flex flex-col gap-3 md:flex-row md:gap-5"
-         *ngIf="form.get('multa')"
-         formGroupName="multa">
-      <mat-form-field class="flex-auto">
-        <mat-label>Estatus multa</mat-label>
-        <mat-select formControlName="estatusId">
-          <mat-option
-            *ngFor="let row of statusFine; trackBy: trackById"
-            [value]="row.id"
-          >
-            {{ row.valor }}
-          </mat-option>
-        </mat-select>
+    <ng-container *ngIf="form.get('multa')">
+      <div class="flex flex-col gap-3 md:flex-row md:gap-5"
+           formGroupName="multa">
+        <mat-form-field class="flex-auto">
+          <mat-label>Estatus multa</mat-label>
+          <mat-select formControlName="estatusId">
+            <mat-option
+              *ngFor="let row of statusFineOptions; trackBy: trackById"
+              [value]="row.id"
+            >
+              {{ row.valor }}
+            </mat-option>
+          </mat-select>
 
-        <mat-error *ngIf="form.get('multa.estatusId')?.hasError('required')">
-          Campo obligatorio
-        </mat-error>
-      </mat-form-field>
+          <mat-error *ngIf="form.get('multa.estatusId')?.hasError('required')">
+            Campo obligatorio
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field class="flex-auto">
-        <mat-label>Total multa</mat-label>
-        <input matInput
-               readonly
-               [value]="fineAmount | currency" />
-      </mat-form-field>
-    </div>
+        <mat-form-field class="flex-auto">
+          <mat-label>Total multa</mat-label>
+          <input matInput
+                 readonly
+                 [value]="fineAmount | currency" />
+        </mat-form-field>
+      </div>
+
+      <div class="flex flex-col text-gray-600 dark:text-gray-400">
+        <p>Detalle de la multa:</p>
+        <p *ngIf="data.multa">
+          - Multa por entrega a destiempo: {{ data.multa.costo | currency }}
+        </p>
+        <p *ngIf="statusLoanId === statusLoan.PERDIDO">
+          - Multa por pérdida (costo del libro): {{ data.libros[0].precio | currency }}
+        </p>
+      </div>
+    </ng-container>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">

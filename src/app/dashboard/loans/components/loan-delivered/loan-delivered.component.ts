@@ -32,8 +32,8 @@ export class LoanDeliveredComponent implements OnInit {
   private readonly destroyRef: DestroyRef = inject(DestroyRef);
 
   form!: FormGroup;
-  statusLoan: CatalogoOpcion[] = [];
-  statusFine: CatalogoOpcion[] = [];
+  statusLoanOptions: CatalogoOpcion[] = [];
+  statusFineOptions: CatalogoOpcion[] = [];
   now = new Date();
   trackById = trackById;
 
@@ -52,6 +52,12 @@ export class LoanDeliveredComponent implements OnInit {
       estatusId: [null, Validators.required]
     });
 
+    if (this.data.multa) {
+      this.form.addControl('multa', this.fb.group({
+        estatusId: [null, Validators.required],
+      }));
+    }
+
     this.form.get('estatusId')?.valueChanges.pipe(
       takeUntilDestroyed(this.destroyRef)
     ).subscribe((estatus: CatalogoOpcion) => {
@@ -66,11 +72,19 @@ export class LoanDeliveredComponent implements OnInit {
       fineAmount += this.data.multa.costo!;
     }
 
-    if (this.form.get('estatusId')?.value.opcionId === StatusLoan.PERDIDO) {
+    if (this.form.get('estatusId')?.value?.opcionId === StatusLoan.PERDIDO) {
       fineAmount += this.data.libros[0].precio!;
     }
 
     return fineAmount;
+  }
+
+  get statusLoan(): typeof StatusLoan {
+    return StatusLoan;
+  }
+
+  get statusLoanId(): number|undefined {
+    return this.form.get('estatusId')?.value?.opcionId;
   }
 
   save(): void {
@@ -87,6 +101,15 @@ export class LoanDeliveredComponent implements OnInit {
         fechaRealEntrega: getDateFormat(fechaRealEntrega),
         estatusId: estatusId.id,
       };
+
+      if (multa) {
+        data = {
+          ... data,
+          multa: {
+            estatusId: multa.estatusId,
+          }
+        };
+      }
     } else if (estatusId.opcionId === StatusLoan.PERDIDO) {
       data = {
         estatusId: estatusId.id,
@@ -103,11 +126,14 @@ export class LoanDeliveredComponent implements OnInit {
 
   private onChangeEstatusId(estatus: CatalogoOpcion): void {
     this.form.removeControl('fechaRealEntrega');
-    this.form.removeControl('multa');
+
+    if (!this.data.multa) {
+      this.form.removeControl('multa');
+    }
 
     if (estatus.opcionId === StatusLoan.ENTREGADO) {
       this.form.addControl('fechaRealEntrega', this.fb.control(this.now, [Validators.required]));
-    } else if (estatus.opcionId === StatusLoan.PERDIDO) {
+    } else if (estatus.opcionId === StatusLoan.PERDIDO && !this.data.multa) {
       this.form.addControl('multa', this.fb.group({
         estatusId: [null, Validators.required],
       }));
@@ -120,9 +146,9 @@ export class LoanDeliveredComponent implements OnInit {
     forkJoin([
       this.optionCatalogService.findByCatalogoId(CatalogoEnum.ESTATUS_PRESTAMOS, [StatusLoan.PRESTAMO]),
       this.optionCatalogService.findByCatalogoId(CatalogoEnum.ESTATUS_MULTA)
-    ]).subscribe(([statusLoan, statusFine]) => {
-      this.statusLoan = statusLoan;
-      this.statusFine = statusFine;
+    ]).subscribe(([statusLoanOptions, statusFineOptions]) => {
+      this.statusLoanOptions = statusLoanOptions;
+      this.statusFineOptions = statusFineOptions;
     });
   }
 }
