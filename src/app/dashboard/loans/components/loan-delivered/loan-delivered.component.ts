@@ -1,5 +1,5 @@
 import { Component, DestroyRef, inject, Inject, OnInit } from '@angular/core';
-import { CurrencyPipe, NgForOf, NgIf } from '@angular/common';
+import { CurrencyPipe, DatePipe, NgForOf, NgIf } from '@angular/common';
 import { MaterialModule } from '@shared/material/material.module';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { trackById } from '@shared/utils/track-by';
@@ -22,7 +22,8 @@ import { forkJoin } from 'rxjs';
     ReactiveFormsModule,
     NgForOf,
     NgIf,
-    CurrencyPipe
+    CurrencyPipe,
+    DatePipe
   ],
   templateUrl: './loan-delivered.component.html',
   styles: []
