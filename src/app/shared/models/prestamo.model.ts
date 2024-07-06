@@ -13,5 +13,5 @@ export interface Prestamo {
   libros: Libro[] | Partial<Libro>[];
   estatusId: number;
   estatus: CatalogoOpcion;
-  multa?: Multa;
+  multa?: Multa | Partial<Multa>;
 }
