@@ -1,0 +1,60 @@
+<div class="flex items-center" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Detalle del pago
+  </h2>
+
+  <button class="text-secondary"
+          mat-dialog-close
+          mat-icon-button
+          type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content class="flex flex-col gap-3">
+  <div class="flex flex-col text-gray-600 dark:text-gray-400">
+    <p *ngIf="data.estatus.opcionId === statusLoan.ENTREGADO">
+      - Multa por entrega a destiempo: {{ data.multa!.costo! | currency }}
+    </p>
+
+    <div *ngIf="data.estatus.opcionId === statusLoan.PERDIDO">
+      <p *ngIf="data.multa!.costo! === data.libros[0].precio">
+        - Multa por pérdida (costo del libro): {{ data.libros[0].precio | currency }}
+      </p>
+
+      <div *ngIf="data.multa!.costo! !== data.libros[0].precio">
+        <p>
+          - Multa por entrega a destiempo: {{ data.multa!.costo! - data.libros[0].precio! | currency }}
+        </p>
+        <p>
+          - Multa por pérdida (costo del libro): {{ data.libros[0].precio | currency }}
+        </p>
+      </div>
+    </div>
+
+    <div class="h-[1px] bg-gray-400 mt-2"></div>
+
+    <div class="mt-2">
+      <p class="flex justify-end">
+        <b>Total a pagar: {{ data.multa!.costo! | currency }}</b>
+      </p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    type="button">
+    Cerrar
+  </button>
+  <button
+    color="primary"
+    mat-flat-button
+    (click)="finePaid()">
+    Confirmar
+  </button>
+</mat-dialog-actions>

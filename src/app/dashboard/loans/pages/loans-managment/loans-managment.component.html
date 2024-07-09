@@ -270,6 +270,7 @@
               class="w-10 text-secondary"
               mat-cell>
             <button
+              *ngIf="(row.estatus.opcionId !== statusLoan.ENTREGADO && !row.multa) || (row.multa && row.multa?.estatus?.opcionId === statusFine.PENDIENTE)"
               [matMenuTriggerData]="{ loan: row }"
               [matMenuTriggerFor]="actionsMenu"
               mat-icon-button
@@ -299,9 +300,16 @@
 <mat-menu #actionsMenu="matMenu" xPosition="before" yPosition="below">
   <ng-template let-loan="loan" matMenuContent>
     <button mat-menu-item
+            *ngIf="loan.estatus.opcionId === statusLoan.PRESTAMO"
             (click)="loanDelivered(loan.id)">
       <mat-icon svgIcon="mat:check"></mat-icon>
       <span>Entrega</span>
+    </button>
+    <button mat-menu-item
+            *ngIf="loan.estatus.opcionId !== statusLoan.PRESTAMO && loan.multa?.estatus?.opcionId === statusFine.PENDIENTE"
+            (click)="finePaid(loan.id)">
+      <mat-icon svgIcon="mat:payments"></mat-icon>
+      <span>Pago</span>
     </button>
   </ng-template>
 </mat-menu>

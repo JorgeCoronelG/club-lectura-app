@@ -34,6 +34,9 @@ import { LoanCreateUpdateComponent } from '../../components/loan-create-update/l
 import { AlertNotificationService } from '@shared/services/alert-notification.service';
 import { LoanService } from '@shared/services/loan.service';
 import { LoanDeliveredComponent } from '../../components/loan-delivered/loan-delivered.component';
+import { StatusLoan } from '@shared/enums/catalogo-opciones/status-loan.enum';
+import { StatusFine } from '@shared/enums/catalogo-opciones/status-fine.enum';
+import { FinePaidComponent } from '../../components/fine-paid/fine-paid.component';
 
 @Component({
   selector: 'app-loans-managment',
@@ -93,6 +96,14 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
     this.getData();
   }
 
+  get statusLoan(): typeof StatusLoan {
+    return StatusLoan;
+  }
+
+  get statusFine(): typeof StatusFine {
+    return StatusFine;
+  }
+
   addLoan(): void {
     this.dialog.open(LoanCreateUpdateComponent, {
       panelClass: 'md:w-1/2'
@@ -115,6 +126,17 @@ export class LoansManagmentComponent implements OnInit, ManagmentMethods {
         this.getData();
       }
     })
+  }
+
+  finePaid(id: number): void {
+    this.loanService.show(id).pipe(
+      switchMap(loan => this.dialog.open(FinePaidComponent, { data: loan }).afterClosed())
+    ).subscribe((paid) => {
+      if (paid) {
+        this.alertNotificationService.success('Multa pagada');
+        this.getData();
+      }
+    });
   }
 
   addFilter(filter: Filter): void {
