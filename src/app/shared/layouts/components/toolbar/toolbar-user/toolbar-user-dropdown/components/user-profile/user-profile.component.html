@@ -1,0 +1,129 @@
+<div class="flex items-center" mat-dialog-title>
+  <h2 class="headline m-0 flex-auto">
+    Mi perfil
+  </h2>
+
+  <button class="text-secondary"
+          mat-dialog-close
+          mat-icon-button
+          type="button">
+    <mat-icon svgIcon="mat:close"></mat-icon>
+  </button>
+</div>
+
+<mat-divider class="text-border"></mat-divider>
+
+<mat-dialog-content class="flex flex-col gap-3">
+  <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+    <mat-form-field class="flex-auto">
+      <mat-label>Nombre completo</mat-label>
+      <input
+        matInput
+        [value]="data.nombreCompleto"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Correo electrónico</mat-label>
+      <input
+        matInput
+        [value]="data.correo"
+        readonly
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+    <mat-form-field class="flex-auto">
+      <mat-label>Teléfono</mat-label>
+      <input
+        matInput
+        [value]="data.telefono"
+        readonly
+      />
+    </mat-form-field>
+
+    <mat-form-field class="flex-auto">
+      <mat-label>Fecha nacimiento</mat-label>
+      <input
+        matInput
+        [value]="data.fechaNacimiento | date:'dd-MM-y'"
+        readonly
+      />
+    </mat-form-field>
+  </div>
+
+  <div class="flex flex-col gap-3">
+    <mat-form-field class="flex-auto">
+      <mat-label>Tipo usuario</mat-label>
+      <input
+        matInput
+        [value]="data.tipo.valor"
+        readonly
+      />
+    </mat-form-field>
+  </div>
+
+  <ng-container *ngIf="data.tipo.opcionId === typeUser.ESCOLAR">
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Matricula</mat-label>
+        <input
+          matInput
+          [value]="data.escolar?.matricula"
+          readonly
+        />
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Tipo escolar</mat-label>
+        <input
+          matInput
+          [value]="data.escolar?.tipo?.valor"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="data.tipo.opcionId === typeUser.ALUMNO">
+    <div class="flex flex-col gap-3 md:flex-row md:gap-5">
+      <mat-form-field class="flex-auto">
+        <mat-label>Semestre</mat-label>
+        <input
+          matInput
+          [value]="data.alumno?.semestre"
+          readonly
+        />
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Carrera</mat-label>
+        <input
+          matInput
+          [value]="data.alumno?.carrera?.valor"
+          readonly
+        />
+      </mat-form-field>
+
+      <mat-form-field class="flex-auto">
+        <mat-label>Turno</mat-label>
+        <input
+          matInput
+          [value]="data.alumno?.turno?.valor"
+          readonly
+        />
+      </mat-form-field>
+    </div>
+  </ng-container>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    mat-dialog-close
+    type="button">
+    Cerrar
+  </button>
+</mat-dialog-actions>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { VexPopoverRef } from '@shared/components/vex-popover/vex-popover-ref';
 import { Router, RouterLink } from '@angular/router';
 import { NgClass, NgFor, NgIf } from '@angular/common';
@@ -9,6 +9,10 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   ChangePasswordComponent
 } from '@shared/layouts/components/toolbar/toolbar-user/toolbar-user-dropdown/components/change-password/change-password.component';
+import {
+  UserProfileComponent
+} from '@shared/layouts/components/toolbar/toolbar-user/toolbar-user-dropdown/components/user-profile/user-profile.component';
+import { UserService } from '@shared/services/user.service';
 
 @Component({
   selector: 'vex-toolbar-user-dropdown',
@@ -24,24 +28,19 @@ import {
     NgIf
   ]
 })
-export class ToolbarUserDropdownComponent implements OnInit {
+export class ToolbarUserDropdownComponent {
 
   constructor(
     private popoverRef: VexPopoverRef<ToolbarUserDropdownComponent>,
     private router: Router,
     private matDialog: MatDialog,
     private userSessionService: UserSessionService,
-    private authService: AuthService
+    private authService: AuthService,
+    private userService: UserService,
   ) {}
 
   get username(): string {
     return this.userSessionService.user.nombreCompleto;
-  }
-
-  ngOnInit() {}
-
-  close(): void {
-    this.popoverRef.close();
   }
 
   logout(): void {
@@ -52,8 +51,16 @@ export class ToolbarUserDropdownComponent implements OnInit {
   }
 
   openDialogChangePassword(): void {
-    this.popoverRef.close()
+    this.popoverRef.close();
 
     this.matDialog.open(ChangePasswordComponent);
+  }
+
+  showProfile(): void {
+    this.userService.showProfile().subscribe(user => {
+      this.popoverRef.close();
+
+      this.matDialog.open(UserProfileComponent, { data: user, panelClass: ['w-3/4', 'md:w-1/2'] });
+    });
   }
 }

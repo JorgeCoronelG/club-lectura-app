@@ -70,4 +70,9 @@ export class UserService {
     const url = `${this.url}find-for-loan`;
     return this.http.get<Usuario[]>(url);
   }
+
+  showProfile(): Observable<Usuario> {
+    const url = `${this.url}profile`;
+    return this.http.get<Usuario>(url);
+  }
 }
