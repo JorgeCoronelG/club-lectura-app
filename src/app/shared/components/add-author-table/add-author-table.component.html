@@ -15,6 +15,24 @@
 
 <mat-dialog-content class="flex flex-col">
   <vex-page-layout-content class="container">
+    <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+      <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+        <span>Autores</span>
+      </h2>
+
+      <span class="flex-1"></span>
+
+      <button
+        class="ml-4 flex-none"
+        color="primary"
+        mat-mini-fab
+        matTooltip="Agregar autor"
+        type="button"
+        (click)="createAuthor()">
+        <mat-icon svgIcon="mat:add"></mat-icon>
+      </button>
+    </div>
+
     <div class="card overflow-auto">
       <table @stagger
              [dataSource]="dataSource"

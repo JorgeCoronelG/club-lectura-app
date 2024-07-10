@@ -17,8 +17,12 @@ import { AuthorService } from '@shared/services/author.service';
 import { ManagmentMethods } from '@shared/interfaces/managment-methods.interface';
 import { Filter } from '@shared/interfaces/filters-http.interface';
 import { Sort } from '@angular/material/sort';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { stagger40ms } from '@shared/animations/stagger.animation';
+import {
+  AuthorCreateUpdateComponent
+} from '../../../dashboard/authors/components/author-create-update/author-create-update.component';
+import { AlertNotificationService } from '@shared/services/alert-notification.service';
 
 @Component({
   selector: 'app-add-author-table',
@@ -51,6 +55,8 @@ export class AddAuthorTableComponent implements OnInit, ManagmentMethods {
     private cd: ChangeDetectorRef,
     private authorService: AuthorService,
     private dialogRef: MatDialogRef<AddAuthorTableComponent>,
+    private dialog: MatDialog,
+    private alertNotificationService: AlertNotificationService,
   ) {
   }
 
@@ -58,6 +64,17 @@ export class AddAuthorTableComponent implements OnInit, ManagmentMethods {
     this.dataSource = new MatTableDataSource();
 
     this.getData();
+  }
+
+  createAuthor(): void {
+    this.dialog.open(AuthorCreateUpdateComponent)
+      .afterClosed()
+      .subscribe((updated) => {
+        if (updated) {
+          this.alertNotificationService.success('Registro creado');
+          this.getData();
+        }
+      });
   }
 
   addFilter(filter: Filter): void {
