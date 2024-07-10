@@ -5,13 +5,6 @@ import { Observable } from 'rxjs';
 import { CardInfo } from './interfaces/card-info';
 import { DashboardService } from '@shared/services/dashboard.service';
 
-interface Card {
-  icon: string;
-  value: string;
-  label: string;
-  iconClass?: string;
-}
-
 @Component({
   selector: 'app-home',
   standalone: true,
