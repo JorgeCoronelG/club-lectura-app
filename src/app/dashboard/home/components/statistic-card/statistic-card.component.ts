@@ -15,7 +15,7 @@ import { MaterialModule } from '@shared/material/material.module';
 })
 export class StatisticCardComponent {
   @Input({ required: true }) icon!: string;
-  @Input({ required: true }) value!: string;
+  @Input({ required: true }) value!: string | number;
   @Input({ required: true }) label!: string;
   @Input() iconClass = 'text-primary-600 bg-primary-600/10';
 

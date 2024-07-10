@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { StatisticCardComponent } from './components/statistic-card/statistic-card.component';
-import { NgFor } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { Observable } from 'rxjs';
+import { CardInfo } from './interfaces/card-info';
+import { DashboardService } from '@shared/services/dashboard.service';
 
 interface Card {
   icon: string;
@@ -14,32 +17,18 @@ interface Card {
   standalone: true,
   imports: [
     StatisticCardComponent,
-    NgFor
+    NgFor,
+    AsyncPipe
   ],
   templateUrl: './home.component.html',
   styles: []
 })
 export class HomeComponent {
-  cards: Card[] = [
-    {
-      icon: 'mat:menu_book',
-      value: '37',
-      label: 'Total Libros'
-    },
-    {
-      icon: 'mat:published_with_changes',
-      value: '17',
-      label: 'Total Préstamos'
-    },
-    {
-      icon: 'mat:handshake',
-      value: '8',
-      label: 'Préstamos activos'
-    },
-    {
-      icon: 'mat:event_busy',
-      value: '3',
-      label: 'Total Multas'
-    }
-  ];
+  cardInfo$: Observable<CardInfo[]>;
+
+  constructor(
+    private dashboardService: DashboardService,
+  ) {
+    this.cardInfo$ = this.dashboardService.getStadistics();
+  }
 }
