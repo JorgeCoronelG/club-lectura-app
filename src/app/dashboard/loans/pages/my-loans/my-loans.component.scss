@@ -1,0 +1,19 @@
+.on-loan {
+  @apply text-indigo-600;
+  @apply bg-indigo-600/10;
+}
+
+.off-loan, .fine-paid {
+  @apply text-green-600;
+  @apply bg-green-600/10;
+}
+
+.on-lost {
+  @apply text-red-600;
+  @apply bg-red-600/10;
+}
+
+.fine-pending {
+  @apply text-orange-600;
+  @apply bg-orange-600/10;
+}

@@ -1,1 +1,243 @@
-<p>my-loans works!</p>
+<vex-page-layout>
+  <vex-page-layout-header class="pb-16 flex flex-col items-start justify-center">
+    <div class="container w-full flex flex-col sm:flex-row justify-between">
+      <div>
+        <h1 class="title mt-0 mb-1">Mis préstamos</h1>
+
+        <vex-breadcrumbs [crumbs]="breadcrumbs"></vex-breadcrumbs>
+      </div>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content class="container -mt-6">
+    <div class="card overflow-auto -mt-16">
+      <div class="bg-app-bar px-6 h-16 border-b sticky left-0 flex items-center">
+        <h2 class="title my-0 ltr:pr-4 rtl:pl-4 ltr:mr-4 rtl:ml-4 ltr:border-r rtl:border-l hidden sm:block flex-none">
+          <span>Historial</span>
+        </h2>
+      </div>
+
+      <table @stagger
+             class="w-full"
+             mat-table
+             matSort
+             [dataSource]="dataSource"
+             (matSortChange)="sortChange($event)"
+             [trackBy]="trackById">
+        <!-- Columna Libro -->
+        <ng-container matColumnDef="libro">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Libro</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="text"
+                field="libro"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex flex-row items-center">
+              <a [href]="row.libros[0].imagen | url" target="_blank">
+                <img [alt]="row.libros[0].clave"
+                     [src]="row.libros[0].imagen | url"
+                     class="avatar h-8 w-8 align-middle" />
+              </a>
+              <span class="ml-2">{{ row.libros[0].titulo }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha préstamo -->
+        <ng-container matColumnDef="fechaPrestamo">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Fecha préstamo</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="date"
+                field="fecha_prestamo"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              {{ row.fechaPrestamo | date:'dd-MM-Y' }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha entrega estimada -->
+        <ng-container matColumnDef="fechaEntrega">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Fecha entrega estimada</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="date"
+                field="fecha_entrega"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              {{ row.fechaEntrega | date:'dd-MM-Y' }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Fecha entrega real -->
+        <ng-container matColumnDef="fechaRealEntrega">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase"
+                      mat-sort-header>
+                  <b>Fecha entrega real</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="date"
+                field="fecha_real_entrega"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              {{ (row.fechaRealEntrega) ? (row.fechaRealEntrega | date:'dd-MM-Y') : '' }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Estatus -->
+        <ng-container matColumnDef="estatusId">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Estatus</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="estatus_id"
+                [enumValues]="statusLoansOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              <span [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.estatus.claseCss">
+                {{ row.estatus.valor }}
+              </span>
+              <span class=" ml-1 rounded px-2 py-1 font-medium text-xs flex-none text-orange-600 bg-orange-600/10"
+                    *ngIf="row.multa">
+                Multa
+              </span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Multa -->
+        <ng-container matColumnDef="multa">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Multa</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="number"
+                field="multa"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center">
+              {{ (row.multa) ? (row.multa.costo | currency) : '' }}
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Columna Estatus multa -->
+        <ng-container matColumnDef="estatus_multa">
+          <th *matHeaderCellDef
+              mat-header-cell>
+            <div class="flex flex-col gap-2">
+              <div class="flex items-center justify-center mt-2">
+                <span class="uppercase">
+                  <b>Estatus multa</b>
+                </span>
+              </div>
+
+              <app-advanced-filter-table
+                type="enum"
+                field="estatus_multa"
+                [enumValues]="statusFineOptions"
+                (onOptionFilterChange)="addFilter($event)"
+              />
+            </div>
+          </th>
+          <td *matCellDef="let row"
+              mat-cell>
+            <div class="flex justify-center"
+                 *ngIf="row.multa">
+              <span [class]="'rounded px-2 py-1 font-medium text-xs flex-none ' + row.multa.estatus.claseCss">
+                {{ row.multa.estatus.valor }}
+              </span>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="visibleColumns(columns)" mat-header-row></tr>
+
+        <tr *matRowDef="let row; columns: visibleColumns(columns)"
+            @fadeInUp
+            class="hover:bg-hover transition duration-400 ease-out-swift"
+            mat-row></tr>
+      </table>
+
+      <ng-container *ngIf="loanResponse">
+        <app-paginator
+          [meta]="loanResponse.meta"
+          (onPaginationChange)="paginationChange($event)" />
+      </ng-container>
+    </div>
+  </vex-page-layout-content>
+</vex-page-layout>

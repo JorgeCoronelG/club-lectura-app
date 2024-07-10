@@ -44,4 +44,17 @@ export class LoanService {
     const url = `${this.url}delivered/${id}`;
     return this.http.patch<void>(url, data);
   }
+
+  findAllByReaderPaginated(filtersTable: FiltersTable)
+    : Observable<PaginationResponse<Prestamo>> {
+    const url = `${this.url}reader`;
+    const params = getPaginateParams(
+      filtersTable.orderBy,
+      filtersTable.pageSize,
+      filtersTable.currentPage,
+      filtersTable.searchQuery
+    );
+
+    return this.http.get<PaginationResponse<Prestamo>>(url, { params });
+  }
 }
