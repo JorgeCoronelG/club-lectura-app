@@ -24,7 +24,7 @@ const baseConfig: VexConfig = {
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    imageUrl: 'assets/img/logo/logo.svg',
+    imageUrl: 'assets/img/logo/logo.png',
     showCollapsePin: true,
     state: 'expanded'
   },
