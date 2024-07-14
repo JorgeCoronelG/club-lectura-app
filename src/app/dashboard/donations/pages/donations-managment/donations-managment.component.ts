@@ -202,6 +202,10 @@ export class DonationsManagmentComponent implements OnInit {
     });
   }
 
+  deleteBook(index: number): void {
+    this.booksFormArray.removeAt(index);
+  }
+
   getAuthorsFormArray(index: number): FormArray {
     return this.booksFormArray.at(index).get('autores') as FormArray;
   }
