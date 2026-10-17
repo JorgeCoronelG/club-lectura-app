@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - .:/app
+      - node_modules:/app/node_modules
+    environment:
+      - NG_CLI_ANALYTICS=false
+
+volumes:
+  node_modules:
